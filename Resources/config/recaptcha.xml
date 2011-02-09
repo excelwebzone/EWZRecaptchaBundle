@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://www.symfony-project.org/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="recaptcha.pubkey">null</parameter>
+        <parameter key="recaptcha.privkey">null</parameter>
+        <parameter key="recaptcha.secure">true</parameter>
+
+        <parameter key="recaptcha.validator.class">Bundle\RecaptchaBundle\Validator\Constraints\RecaptchaValidator</parameter>
+    </parameters>
+
+    <services>
+        <service id="validator.recaptcha" class="%recaptcha.validator.class%">
+            <argument type="service" id="service_container" />
+            <tag name="validator.constraint_validator" alias="validator.recaptcha" />
+        </service>
+    </services>
+</container>
