@@ -4,6 +4,7 @@ namespace Bundle\RecaptchaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class RecaptchaExtension extends Extension
@@ -23,7 +24,7 @@ class RecaptchaExtension extends Extension
      */
     protected function doConfigLoad(array $config, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         if (!$container->hasDefinition('recaptcha')) {
             $loader->load('recaptcha.xml');
@@ -59,7 +60,7 @@ class RecaptchaExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://www.symfony-project.org/schema/dic/symfony';
+        return 'http://www.symfony-project.org/schema/dic/recaptcha';
     }
 
     /**

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://www.symfony-project.org/schema/dic/recaptcha"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.symfony-project.org/schema/dic/recaptcha"
+    elementFormDefault="qualified">
+
+    <xsd:complexType name="config">
+        <xsd:attribute name="pubkey" type="xsd:string" />
+        <xsd:attribute name="privkey" type="xsd:string" />
+        <xsd:attribute name="secure" type="xsd:boolean" />
+    </xsd:complexType>
+</xsd:schema>
