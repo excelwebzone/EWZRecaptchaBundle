@@ -5,6 +5,8 @@
     targetNamespace="http://www.symfony-project.org/schema/dic/recaptcha"
     elementFormDefault="qualified">
 
+    <xsd:element name="config" type="config" />
+
     <xsd:complexType name="config">
         <xsd:attribute name="pubkey" type="xsd:string" />
         <xsd:attribute name="privkey" type="xsd:string" />
