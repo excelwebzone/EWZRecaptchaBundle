@@ -50,7 +50,7 @@ class RecaptchaField extends Field
         $this->secure = $container->getParameter('recaptcha.secure');
 
         if ($this->pubkey == null || $this->pubkey == '') {
-            throw new \FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
+            throw new FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
         }
 
 
