@@ -9,7 +9,7 @@
         <parameter key="recaptcha.privkey">null</parameter>
         <parameter key="recaptcha.secure">true</parameter>
 
-        <parameter key="recaptcha.validator.class">Bundle\RecaptchaBundle\Validator\Constraints\RecaptchaValidator</parameter>
+        <parameter key="recaptcha.validator.class">EWZ\RecaptchaBundle\Validator\Constraints\RecaptchaValidator</parameter>
     </parameters>
 
     <services>

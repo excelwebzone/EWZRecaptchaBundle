@@ -14,27 +14,35 @@ You can download it from here http://excelwebzone.github.com/RecaptchaBundle
     {
         return array(
             // ...
-            new Bundle\RecaptchaBundle\RecaptchaBundle(),
+            new EWZ\RecaptchaBundle\EWZRecaptchaBundle(),
             // ...
         );
     }
 
-**Add your private and public key for reCAPTCHA in configuration file.**
+**Add the EWZ namespace to your autoloader:**
+
+    // app/autoload.php
+    $loader->registerNamespaces(array(
+        ...
+        'EWZ' => __DIR__.'/../src',
+    ));
+
+**Add your private and public key for reCAPTCHA in configuration file:**
 
 If you use secure url for reCAPTCHA put true in secure.
 
     // app/config/config.yml
-    app.config:
+    framework:
         ...
         validation:
             enabled: true
             annotations:
                 namespaces:
-                    recaptcha: Bundle\RecaptchaBundle\Validator\Constraints\
+                    recaptcha: EWZ\RecaptchaBundle\Validator\Constraints\
 
     ...
 
-    recaptcha.config:
+    ewz_recaptcha:
         pubkey:   here_is_your_publick_key
         privkey:  here_is_your_private_key
         secure:   true
@@ -45,7 +53,7 @@ Use in forms
 
 In your form class add following lines
 
-    use use Bundle\RecaptchaBundle\Form\RecaptchaField;
+    use use EWZ\RecaptchaBundle\Form\RecaptchaField;
 
 When you create form (if you create it in separated class not in the controller) 
 you need pass container into the method that preparing form.
