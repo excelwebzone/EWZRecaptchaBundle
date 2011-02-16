@@ -24,7 +24,7 @@ class EWZRecaptchaExtension extends Extension
      */
     protected function doConfigLoad(array $config, ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('recaptcha')) {
+        if (!$container->hasDefinition('validator.recaptcha')) {
             $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
             $loader->load('recaptcha.xml');
         }
