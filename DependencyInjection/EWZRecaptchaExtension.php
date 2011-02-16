@@ -24,19 +24,15 @@ class EWZRecaptchaExtension extends Extension
      */
     protected function doConfigLoad(array $config, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('recaptcha.xml');
-
-        if (isset($config['pubkey'])) {
-            $container->setParameter('recaptcha.pubkey', $config['pubkey']);
+        if (!$container->hasDefinition('recaptcha')) {
+            $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            $loader->load('recaptcha.xml');
         }
 
-        if (isset($config['privkey'])) {
-            $container->setParameter('recaptcha.privkey', $config['privkey']);
-        }
-
-        if (isset($config['secure'])) {
-            $container->setParameter('recaptcha.secure', $config['secure']);
+        foreach (array('pubkey', 'privkey', 'secure') as $attribute) {
+            if (isset($config[$attribute])) {
+                $container->setParameter('recaptcha.'.$attribute, $config[$attribute]);
+            }
         }
     }
 
