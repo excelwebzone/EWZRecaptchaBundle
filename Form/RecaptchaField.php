@@ -44,10 +44,10 @@ class RecaptchaField extends Field
      *
      * @param ContainerInterface $container An ContainerInterface instance
      */
-    public function setScriptURLs(ContainerInterface $container)
+    public function setScriptURLs($publicKey, $isSecure))
     {
-        $this->pubkey = $container->getParameter('recaptcha.pubkey');
-        $this->secure = $container->getParameter('recaptcha.secure');
+        $this->pubkey = $publicKey;
+        $this->secure = $isSecure;
 
         if ($this->pubkey == null || $this->pubkey == '') {
             throw new FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
