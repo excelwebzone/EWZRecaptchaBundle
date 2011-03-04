@@ -23,7 +23,7 @@ class RecaptchaField extends Field
      *
      * @var string
      */
-    protected $scrips;
+    protected $scripts;
 
     /**
      * The public key
@@ -44,7 +44,7 @@ class RecaptchaField extends Field
      *
      * @param ContainerInterface $container An ContainerInterface instance
      */
-    public function setScriptURLs($publicKey, $isSecure))
+    public function setScriptURLs($publicKey, $isSecure)
     {
         $this->pubkey = $publicKey;
         $this->secure = $isSecure;
@@ -60,7 +60,7 @@ class RecaptchaField extends Field
             $server = self::RECAPTCHA_API_SERVER;
         }
 
-        $this->scrips = array(
+        $this->scripts = array(
             'challenge' => $server.'/challenge?k='.$this->pubkey,
             'noscript'  => $server.'/noscript?k='.$this->pubkey,
         );
@@ -75,7 +75,7 @@ class RecaptchaField extends Field
      */
     public function getScriptURL($key)
     {
-        return isset($this->scrips[$key]) ? $this->scrips[$key] : null;
+        return isset($this->scripts[$key]) ? $this->scripts[$key] : null;
     }
 
     /**
