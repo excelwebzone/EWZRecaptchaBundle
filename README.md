@@ -66,7 +66,10 @@ In the controller we have some action. In this action we try to create the form.
         ...
         $form = new RegisterForm('register');
         // init values
-        $form->get('recaptcha')->setScriptURLs($this->container);
+        $form->get('recaptcha')->setScriptURLs(
+            $this->container->getParameter('recaptcha.pubkey'),
+            $this->container->getParameter('recaptcha.secure')
+        );
         ...
     }
 

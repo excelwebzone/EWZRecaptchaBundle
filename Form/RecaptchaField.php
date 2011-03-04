@@ -42,9 +42,10 @@ class RecaptchaField extends Field
     /**
      * Sets the Javascript source URLs.
      *
-     * @param ContainerInterface $container An ContainerInterface instance
+     * @param string  $publicKey
+     * @param boolean $isSecure
      */
-    public function setScriptURLs($publicKey, $isSecure)
+    public function setScriptURLs($publicKey, $isSecure = true)
     {
         $this->pubkey = $publicKey;
         $this->secure = $isSecure;
