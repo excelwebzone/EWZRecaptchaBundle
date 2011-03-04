@@ -29,4 +29,3 @@ class Configuration
         return $treeBuilder->buildTree();
     }
 }
-

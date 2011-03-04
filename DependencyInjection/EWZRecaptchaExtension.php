@@ -22,7 +22,10 @@ class EWZRecaptchaExtension extends Extension
 
         $container->setParameter('recaptcha.pubkey', $config['pubkey']);
         $container->setParameter('recaptcha.privkey', $config['privkey']);
-        $container->setParameter('recaptcha.secure', $config['secure']);
+
+        if (isset($config['secure'])) {
+            $container->setParameter('recaptcha.secure', $config['secure']);
+        }
     }
 
     /**
