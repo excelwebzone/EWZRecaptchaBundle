@@ -14,7 +14,7 @@ You can download it from here http://excelwebzone.github.com/RecaptchaBundle
     {
         return array(
             // ...
-            new EWZ\RecaptchaBundle\EWZRecaptchaBundle(),
+            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             // ...
         );
     }
@@ -38,7 +38,7 @@ If you use secure url for reCAPTCHA put true in secure.
             enabled: true
             annotations:
                 namespaces:
-                    recaptcha: EWZ\RecaptchaBundle\Validator\Constraints\
+                    recaptcha: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\
 
     ...
 
@@ -53,7 +53,7 @@ Use in forms
 
 In your form class add following lines
 
-    use use EWZ\RecaptchaBundle\Form\RecaptchaField;
+    use EWZ\Bundle\RecaptchaBundle\Form\RecaptchaField;
 
 When you create form (if you create it in separated class not in the controller) 
 you need pass container into the method that preparing form.

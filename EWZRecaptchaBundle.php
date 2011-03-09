@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\RecaptchaBundle;
+namespace EWZ\Bundle\RecaptchaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

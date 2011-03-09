@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\RecaptchaBundle\DependencyInjection;
+namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;

@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\RecaptchaBundle\DependencyInjection;
+namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

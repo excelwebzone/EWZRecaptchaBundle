@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\RecaptchaBundle\Form;
+namespace EWZ\Bundle\RecaptchaBundle\Form;
 
 use Symfony\Component\Form\Field;
 use Symfony\Component\Form\Exception\FormException;
