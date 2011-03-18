@@ -2,7 +2,6 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
@@ -13,19 +12,20 @@ class Configuration
     /**
      * Generates the configuration tree.
      *
-     * @return \Symfony\Component\Config\Definition\NodeInterface
+     * @return \Symfony\Component\Config\Definition\ArrayNode The config tree
      */
     public function getConfigTree()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ewz_recaptcha', 'array');
+        $tree = new TreeBuilder();
 
-        $rootNode
-            ->scalarNode('pubkey')->end()
-            ->scalarNode('privkey')->end()
-            ->booleanNode('secure')->end()
+        $tree->root('ewz_recaptcha')
+            ->children()
+                ->scalarNode('pubkey')->end()
+                ->scalarNode('privkey')->end()
+                ->booleanNode('secure')->defaultValue(false)->end()
+            ->end()
         ;
 
-        return $treeBuilder->buildTree();
+        return $tree->buildTree();
     }
 }
