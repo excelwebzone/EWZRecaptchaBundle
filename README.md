@@ -3,10 +3,6 @@ Provides use reCAPTCHA as form field.
 Installation
 ============
 
-**Add RecaptchaBundle to your src/Bundle dir**
-
-You can download it from here http://excelwebzone.github.com/RecaptchaBundle
-
 **Add RecaptchaBundle to your application kernel:**
 
     // app/AppKernel.php
