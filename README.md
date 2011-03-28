@@ -87,7 +87,7 @@ In template add following lines
         'options' => array(
             'theme' => 'clean',
         ),
-    ), array(), 'RecaptchaBundle:Form:recaptcha_field.html.php') ?>
+    ), array(), 'Recaptcha:Form:recaptcha_field.html.php') ?>
 
 Or using JavaScript
 
