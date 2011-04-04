@@ -45,6 +45,6 @@ class EWZRecaptchaExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://symfony.com/schema/dic/ewz/recaptcha';
+        return 'http://excelwebzone.com/schema/dic/ewz/recaptcha';
     }
 }
