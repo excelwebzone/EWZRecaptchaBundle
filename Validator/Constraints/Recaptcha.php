@@ -16,7 +16,7 @@ class Recaptcha extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function targets()
+    public function getTargets()
     {
         return Constraint::PROPERTY_CONSTRAINT;
     }
