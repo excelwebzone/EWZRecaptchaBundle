@@ -1,7 +1,7 @@
 {% block recaptcha_field %}
     {% if attr.options is defined %}
         <script type="text/javascript">
-            var RecaptchaOptions = {{ attr.options|json_encode }}
+            var RecaptchaOptions = {{ attr.options|json_encode|raw }}
         </script>
     {% endif %}
     <script src="{{ field.scriptUrl('challenge') }} ?>" type="text/javascript"></script>
