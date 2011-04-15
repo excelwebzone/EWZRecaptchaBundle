@@ -4,7 +4,7 @@
             var RecaptchaOptions = {{ attr.options|json_encode|raw }}
         </script>
     {% endif %}
-    <script src="{{ field.scriptUrl('challenge') }} ?>" type="text/javascript"></script>
+    <script src="{{ field.scriptUrl('challenge') }}" type="text/javascript"></script>
     <noscript>
         <iframe src="{{ field.scriptUrl('noscript') }}" height="300" width="500" frameborder="0"></iframe><br/>
         <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
