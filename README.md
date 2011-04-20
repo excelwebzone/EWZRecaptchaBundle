@@ -42,7 +42,7 @@ If you use secure url for reCAPTCHA put true in secure.
         pubkey:   here_is_your_publick_key
         privkey:  here_is_your_private_key
         secure:   true
-    
+
 
 Use in forms
 ------------
@@ -51,12 +51,23 @@ In your form class add following lines:
 
     use EWZ\Bundle\RecaptchaBundle\Form\RecaptchaField;
 
-When you create form (if you create it in separated class not in the controller) 
-you need pass container into the method that preparing form.
+    ...
+    protected function configure()
+    {
+        ...
+        $this->add(new RecaptchaField('recaptcha'));
+        ...
+    }
 
-Let's see how it works.
+To validate the field use:
 
-In the controller we have some action. In this action we try to create the form. 
+    /**
+     * @recaptcha:Recaptcha
+     */
+    public $recaptcha;
+
+When you create form you need to pass the container into the method that 
+preparing form.
 
     public function someAction(){
         ...
@@ -69,14 +80,6 @@ In the controller we have some action. In this action we try to create the form.
         ...
     }
 
-In the Register form class:
-
-    protected function configure()
-    {
-        ...
-        $this->add(new RecaptchaField('recaptcha'));
-        ...
-    }
 
 Use in view
 -----------
