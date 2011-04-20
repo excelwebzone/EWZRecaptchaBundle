@@ -47,7 +47,7 @@ If you use secure url for reCAPTCHA put true in secure.
 Use in forms
 ------------
 
-In your form class add following lines
+In your form class add following lines:
 
     use EWZ\Bundle\RecaptchaBundle\Form\RecaptchaField;
 
@@ -69,7 +69,7 @@ In the controller we have some action. In this action we try to create the form.
         ...
     }
 
-In the Register form class
+In the Register form class:
 
     protected function configure()
     {
@@ -81,7 +81,9 @@ In the Register form class
 Use in view
 -----------
 
-In template add following lines
+In template add following lines:
+
+PHP:
 
     <?php echo $view['form']->render($form['recaptcha'], array(
         'options' => array(
@@ -89,7 +91,18 @@ In template add following lines
         ),
     ), array(), 'RecaptchaBundle:Form:recaptcha_field.html.php') ?>
 
-Or using JavaScript
+Twig:
+
+    {{ form_field(form.recaptcha, {
+        'options': {
+            'theme': 'clean',
+        },
+    }, [], 'EWZRecaptchaBundle:Form:recaptcha_field.html.twig') }}
+
+
+Or using JavaScript:
+
+PHP:
 
     <div id="recaptcha-container"></div>
     <script type="text/javascript">
@@ -100,4 +113,17 @@ Or using JavaScript
                 });
             });
         };
+    </script>
+
+Twig:
+
+    <div id="recaptcha-container"></div>
+    <script type="text/javascript">
+        NUI.onPageLoad(function () {
+            $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\RecaptchaField::RECAPTCHA_API_JS_SERVER') }}", function() {
+                Recaptcha.create("{{ form.recaptcha.getPublicKey() }}", "recaptcha-container", {
+                    theme: "clean"
+                });
+            });
+        });
     </script>
