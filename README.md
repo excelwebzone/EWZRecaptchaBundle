@@ -49,15 +49,14 @@ Use in forms
 
 In your form class add following lines:
 
-    use EWZ\Bundle\RecaptchaBundle\Form\RecaptchaField;
-
     ...
-    protected function configure()
+    public function buildForm(FormBuilder $builder, array $options)
     {
         ...
-        $this->add(new RecaptchaField('recaptcha'));
+        $builder->add('recaptcha', 'recaptcha');
         ...
     }
+    ...
 
 To validate the field use:
 
@@ -88,19 +87,22 @@ In template add following lines:
 
 PHP:
 
-    <?php echo $view['form']->render($form['recaptcha'], array(
-        'options' => array(
-            'theme' => 'clean',
+    <?php echo $view['form']->widget($form['recaptcha'], array(
+        'attr' => array(
+            'options' => array(
+                'theme' => 'clean',
+            ),
         ),
-    ), array(), 'RecaptchaBundle:Form:recaptcha_field.html.php') ?>
+        'theme' => 'EWZRecaptchaBundle:Form:recaptcha_widget.html.php',
+    )) ?>
 
 Twig:
 
-    {{ form_field(form.recaptcha, {
-        'options': {
-            'theme': 'clean',
+    {{ form_widget(form.recaptcha, { 'attr': {
+        'options' : {
+            'theme' : 'clean',
         },
-    }, [], 'EWZRecaptchaBundle:Form:recaptcha_field.html.twig') }}
+    } }, { 'theme' : 'EWZRecaptchaBundle:Form:recaptcha_widget.html.twig' }) }}
 
 
 Or using JavaScript:
@@ -109,9 +111,9 @@ PHP:
 
     <div id="recaptcha-container"></div>
     <script type="text/javascript">
-        window.onload = function () {
+        $(document).ready(function() {
             $.getScript("<?php echo $form['recaptcha']::RECAPTCHA_API_JS_SERVER ?>", function() {
-                Recaptcha.create("<?php echo $form['recaptcha']->getPublicKey() ?>", "recaptcha-container", {
+                Recaptcha.create("<?php echo $form['recaptcha']->get('pubkey') ?>", "recaptcha-container", {
                     theme: "clean",
                 });
             });
@@ -122,9 +124,9 @@ Twig:
 
     <div id="recaptcha-container"></div>
     <script type="text/javascript">
-        NUI.onPageLoad(function () {
-            $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\RecaptchaField::RECAPTCHA_API_JS_SERVER') }}", function() {
-                Recaptcha.create("{{ form.recaptcha.getPublicKey() }}", "recaptcha-container", {
+        $(document).ready(function() {
+            $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
+                Recaptcha.create("{{ form.recaptcha.get('pubkey') }}", "recaptcha-container", {
                     theme: "clean"
                 });
             });

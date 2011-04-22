@@ -5,17 +5,19 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="recaptcha.pubkey">null</parameter>
-        <parameter key="recaptcha.privkey">null</parameter>
-        <parameter key="recaptcha.secure">true</parameter>
-
-        <parameter key="recaptcha.validator.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\RecaptchaValidator</parameter>
+        <parameter key="form.type.recaptcha.class">EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType</parameter>
+        <parameter key="validator.recaptcha.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\RecaptchaValidator</parameter>
     </parameters>
 
     <services>
-        <service id="validator.recaptcha" class="%recaptcha.validator.class%">
+        <service id="form.type.recaptcha" class="%form.type.recaptcha.class%">
+            <tag name="form.type" alias="recaptcha" />
             <argument type="service" id="service_container" />
+        </service>
+
+        <service id="validator.recaptcha" class="%validator.recaptcha.class%">
             <tag name="validator.constraint_validator" alias="validator.recaptcha" />
+            <argument type="service" id="service_container" />
         </service>
     </services>
 </container>

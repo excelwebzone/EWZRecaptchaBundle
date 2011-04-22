@@ -1,15 +1,17 @@
 <?php
 
-namespace EWZ\Bundle\RecaptchaBundle\Form;
+namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
-use Symfony\Component\Form\Field;
-use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\Type\AbstractType;
+use Symfony\Component\Form\Exception\FormException;
 
 /**
  * A field for entering a recaptcha text.
  */
-class RecaptchaField extends Field
+class RecaptchaType extends AbstractType
 {
     /**
      * The reCAPTCHA server URL's
@@ -17,13 +19,6 @@ class RecaptchaField extends Field
     const RECAPTCHA_API_SERVER        = 'http://www.google.com/recaptcha/api';
     const RECAPTCHA_API_SECURE_SERVER = 'https://www.google.com/recaptcha/api';
     const RECAPTCHA_API_JS_SERVER     = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
-
-    /**
-     * The javascript src attributes (challenge, noscript)
-     *
-     * @var string
-     */
-    protected $scripts;
 
     /**
      * The public key
@@ -40,31 +35,63 @@ class RecaptchaField extends Field
     protected $secure;
 
     /**
-     * Sets the Javascript source URLs.
+     * Construct.
      *
-     * @param string  $publicKey
-     * @param boolean $isSecure
+     * @param ContainerInterface $container An ContainerInterface instance
      */
-    public function setScriptURLs($publicKey, $isSecure = true)
+    public function __construct(ContainerInterface $container)
     {
-        $this->pubkey = $publicKey;
-        $this->secure = $isSecure;
+        $this->pubkey = $container->getParameter('recaptcha.pubkey');
+        $this->secure = $container->getParameter('recaptcha.secure');
 
         if ($this->pubkey == null || $this->pubkey == '') {
             throw new FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
         }
+    }
 
-
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form)
+    {
         if ($this->secure) {
             $server = self::RECAPTCHA_API_SECURE_SERVER;
         } else {
             $server = self::RECAPTCHA_API_SERVER;
         }
 
-        $this->scripts = array(
-            'challenge' => $server.'/challenge?k='.$this->pubkey,
-            'noscript'  => $server.'/noscript?k='.$this->pubkey,
+        $view->set('url_challenge', $server.'/challenge?k='.$this->pubkey);
+        $view->set('url_noscript', $server.'/noscript?k='.$this->pubkey);
+
+        $view->set('pubkey', $this->pubkey);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'pubkey'        => null,
+            'url_challenge' => null,
+            'url_noscript'  => null,
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent(array $options)
+    {
+        return 'field';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'recaptcha';
     }
 
     /**

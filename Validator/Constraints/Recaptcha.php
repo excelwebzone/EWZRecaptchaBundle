@@ -8,11 +8,6 @@ class Recaptcha extends Constraint
 {
     public $message = 'This value is not a valid captcha';
 
-    public function validatedBy()
-    {
-        return 'validator.recaptcha';
-    }
-
     /**
      * {@inheritdoc}
      */
