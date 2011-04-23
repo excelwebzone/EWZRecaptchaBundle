@@ -112,7 +112,7 @@ PHP:
     <div id="recaptcha-container"></div>
     <script type="text/javascript">
         $(document).ready(function() {
-            $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
+            $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Extension\Core\Type\RecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
                 Recaptcha.create("<?php echo $form['recaptcha']->get('pubkey') ?>", "recaptcha-container", {
                     theme: "clean",
                 });
@@ -125,7 +125,7 @@ Twig:
     <div id="recaptcha-container"></div>
     <script type="text/javascript">
         $(document).ready(function() {
-            $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
+            $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Extension\\Core\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
                 Recaptcha.create("{{ form.recaptcha.get('pubkey') }}", "recaptcha-container", {
                     theme: "clean"
                 });

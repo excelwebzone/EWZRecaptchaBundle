@@ -1,11 +1,11 @@
 <?php
 
-namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
+namespace EWZ\Bundle\RecaptchaBundle\Form\Extension\Core\Type;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\Type\AbstractType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\FormException;
 
 /**
