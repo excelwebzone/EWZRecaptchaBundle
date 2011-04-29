@@ -4,7 +4,7 @@ namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-class Recaptcha extends Constraint
+class True extends Constraint
 {
     public $message = 'This value is not a valid captcha';
 
@@ -21,6 +21,6 @@ class Recaptcha extends Constraint
      */
     public function validatedBy()
     {
-        return 'validator.recaptcha';
+        return 'recaptcha.true';
     }
 }

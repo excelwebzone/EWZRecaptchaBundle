@@ -61,7 +61,7 @@ In your form class add following lines:
 To validate the field use:
 
     /**
-     * @recaptcha:Recaptcha
+     * @recaptcha:True
      */
     public $recaptcha;
 

@@ -6,7 +6,7 @@
 
     <parameters>
         <parameter key="form.type.recaptcha.class">EWZ\Bundle\RecaptchaBundle\Form\Extension\Core\Type\RecaptchaType</parameter>
-        <parameter key="validator.recaptcha.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\RecaptchaValidator</parameter>
+        <parameter key="recaptcha.validator.true.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\TrueValidator</parameter>
     </parameters>
 
     <services>
@@ -15,8 +15,8 @@
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="validator.recaptcha" class="%validator.recaptcha.class%">
-            <tag name="validator.constraint_validator" alias="validator.recaptcha" />
+        <service id="recaptcha.validator.true" class="%recaptcha.validator.true.class%">
+            <tag name="validator.constraint_validator" alias="recaptcha.true" />
             <argument type="service" id="service_container" />
         </service>
     </services>
