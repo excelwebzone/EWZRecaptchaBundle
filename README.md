@@ -25,8 +25,6 @@ Installation
 
 **Add your private and public key for reCAPTCHA in configuration file:**
 
-If you use secure url for reCAPTCHA put true in secure.
-
     // app/config/config.yml
     framework:
         ...
@@ -43,11 +41,13 @@ If you use secure url for reCAPTCHA put true in secure.
         privkey:  here_is_your_private_key
         secure:   true
 
+Note: If you use secure url for reCAPTCHA put true in secure.
+
 
 Use in forms
 ------------
 
-In your form class add following lines:
+**Add the following lines to your form class:**
 
     ...
     public function buildForm(FormBuilder $builder, array $options)
@@ -58,34 +58,20 @@ In your form class add following lines:
     }
     ...
 
-To validate the field use:
+**To validate the field use:**
 
     /**
      * @recaptcha:True
      */
     public $recaptcha;
 
-When you create form you need to pass the container into the method that 
-preparing form.
-
-    public function someAction(){
-        ...
-        $form = new RegisterForm('register');
-        // init values
-        $form->get('recaptcha')->setScriptURLs(
-            $this->container->getParameter('recaptcha.pubkey'),
-            $this->container->getParameter('recaptcha.secure')
-        );
-        ...
-    }
-
 
 Use in view
 -----------
 
-In template add following lines:
+**Display field using form widget:**
 
-PHP:
+PHP (Note: this is still under development):
 
     <?php echo $view['form']->widget($form['recaptcha'], array(
         'attr' => array(
@@ -93,19 +79,22 @@ PHP:
                 'theme' => 'clean',
             ),
         ),
+    ), array(
         'theme' => 'EWZRecaptchaBundle:Form:recaptcha_widget.html.php',
     )) ?>
 
 Twig:
 
+    {% form_theme form 'EWZRecaptchaBundle:Form:recaptcha_widget.html.twig' %}
+
     {{ form_widget(form.recaptcha, { 'attr': {
         'options' : {
             'theme' : 'clean',
         },
-    } }, { 'theme' : 'EWZRecaptchaBundle:Form:recaptcha_widget.html.twig' }) }}
+    } }) }}
 
 
-Or using JavaScript:
+**Or using JavaScript:**
 
 PHP:
 
