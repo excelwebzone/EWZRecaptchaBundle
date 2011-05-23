@@ -19,23 +19,15 @@ Installation
 
     // app/autoload.php
     $loader->registerNamespaces(array(
-        ...
+        // ...
         'EWZ' => __DIR__.'/../src',
+        // ...
     ));
 
 **Add your private and public key for reCAPTCHA in configuration file:**
 
     // app/config/config.yml
-    framework:
-        ...
-        validation:
-            enabled: true
-            annotations:
-                namespaces:
-                    recaptcha: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\
-
-    ...
-
+    // ...
     ewz_recaptcha:
         pubkey:   here_is_your_publick_key
         privkey:  here_is_your_private_key
@@ -49,19 +41,19 @@ Use in forms
 
 **Add the following lines to your form class:**
 
-    ...
     public function buildForm(FormBuilder $builder, array $options)
     {
-        ...
+        // ...
         $builder->add('recaptcha', 'recaptcha');
-        ...
+        // ...
     }
-    ...
 
 **To validate the field use:**
 
+    use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
+
     /**
-     * @recaptcha:True
+     * @Recaptcha\True
      */
     public $recaptcha;
 
