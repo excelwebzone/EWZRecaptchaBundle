@@ -20,9 +20,9 @@ class Configuration
 
         $tree->root('ewz_recaptcha')
             ->children()
-                ->scalarNode('pubkey')->end()
-                ->scalarNode('privkey')->end()
-                ->booleanNode('secure')->defaultValue(false)->end()
+                ->scalarNode('public_key')->isRequired()->end()
+                ->scalarNode('private_key')->isRequired()->end()
+                ->booleanNode('secure')->defaultFalse()->end()
             ->end()
         ;
 

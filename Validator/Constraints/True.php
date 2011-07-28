@@ -22,6 +22,6 @@ class True extends Constraint
      */
     public function validatedBy()
     {
-        return 'recaptcha.true';
+        return 'ewz_recaptcha.true';
     }
 }

@@ -20,12 +20,9 @@ class EWZRecaptchaExtension extends Extension
 
         $config = $processor->process($configuration->getConfigTree(), $configs);
 
-        $container->setParameter('recaptcha.pubkey', $config['pubkey']);
-        $container->setParameter('recaptcha.privkey', $config['privkey']);
-
-        if (isset($config['secure'])) {
-            $container->setParameter('recaptcha.secure', $config['secure']);
-        }
+        $container->setParameter('ewz_recaptcha.public_key', $config['public_key']);
+        $container->setParameter('ewz_recaptcha.private_key', $config['private_key']);
+        $container->setParameter('ewz_recaptcha.secure', $config['secure']);
     }
 
     /**

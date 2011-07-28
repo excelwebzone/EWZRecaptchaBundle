@@ -25,7 +25,7 @@ class RecaptchaType extends AbstractType
      *
      * @var string
      */
-    protected $pubkey;
+    protected $publicKey;
 
     /**
      * The security token
@@ -41,10 +41,10 @@ class RecaptchaType extends AbstractType
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->pubkey = $container->getParameter('recaptcha.pubkey');
-        $this->secure = $container->getParameter('recaptcha.secure');
+        $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
+        $this->secure = $container->getParameter('ewz_recaptcha.secure');
 
-        if ($this->pubkey == null || $this->pubkey == '') {
+        if (empty($this->publicKey)) {
             throw new FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
         }
     }
@@ -60,10 +60,10 @@ class RecaptchaType extends AbstractType
             $server = self::RECAPTCHA_API_SERVER;
         }
 
-        $view->set('url_challenge', $server.'/challenge?k='.$this->pubkey);
-        $view->set('url_noscript', $server.'/noscript?k='.$this->pubkey);
+        $view->set('url_challenge', $server.'/challenge?k='.$this->publicKey);
+        $view->set('url_noscript', $server.'/noscript?k='.$this->publicKey);
 
-        $view->set('pubkey', $this->pubkey);
+        $view->set('pubkey', $this->publicKey);
     }
 
     /**
@@ -72,7 +72,7 @@ class RecaptchaType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'pubkey'        => null,
+            'public_key'        => null,
             'url_challenge' => null,
             'url_noscript'  => null,
         );
@@ -113,6 +113,6 @@ class RecaptchaType extends AbstractType
      */
     public function getPublicKey()
     {
-        return $this->pubkey;
+        return $this->publicKey;
     }
 }
