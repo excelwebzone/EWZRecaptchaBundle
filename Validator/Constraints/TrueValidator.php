@@ -63,10 +63,6 @@ class TrueValidator extends ConstraintValidator
       */
     private function checkAnswer($privatekey, $remoteip, $challenge, $response, $extra_params = array())
     {
-        if (empty($privateKey)) {
-            throw new ValidatorException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
-        }
-
         if ($remoteip == null || $remoteip == '') {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
         }

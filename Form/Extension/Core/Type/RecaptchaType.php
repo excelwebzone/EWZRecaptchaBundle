@@ -43,10 +43,6 @@ class RecaptchaType extends AbstractType
     {
         $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
         $this->secure = $container->getParameter('ewz_recaptcha.secure');
-
-        if (empty($this->publicKey)) {
-            throw new FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
-        }
     }
 
     /**
