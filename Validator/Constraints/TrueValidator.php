@@ -30,8 +30,6 @@ class TrueValidator extends ConstraintValidator
     {
         // define variable for recaptcha check answer
         $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
-        
-        exit('okdfsdf');
 
         $remoteip   = $this->container->get('request')->server->get('REMOTE_ADDR');
         $challenge  = $this->container->get('request')->request->get('recaptcha_challenge_field');
@@ -61,7 +59,7 @@ class TrueValidator extends ConstraintValidator
       *
       * @return ReCaptchaResponse
       */
-    private function checkAnswer($privatekey, $remoteip, $challenge, $response, $extra_params = array())
+    private function checkAnswer($privateKey, $remoteip, $challenge, $response, $extra_params = array())
     {
         if ($remoteip == null || $remoteip == '') {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
