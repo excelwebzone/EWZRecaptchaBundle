@@ -48,6 +48,16 @@ Use in forms
         // ...
     }
 
+You can pass extra options to reCaptcha with the attr > options option:
+
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        // ...
+        $builder->add('recaptcha', 'ewz_recaptcha', array('attr' => array('options' => array('theme' => 'clean'))));
+        // ...
+    }
+
+
 **To validate the field use:**
 
     use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;

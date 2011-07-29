@@ -83,6 +83,7 @@ class RecaptchaType extends AbstractType
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
+            'attr'           => null,
         );
     }
 
