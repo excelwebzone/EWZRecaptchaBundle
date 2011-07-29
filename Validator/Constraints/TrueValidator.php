@@ -29,17 +29,19 @@ class TrueValidator extends ConstraintValidator
     public function isValid($value, Constraint $constraint)
     {
         // define variable for recaptcha check answer
-        $privkey = $this->container->getParameter('ewz_recaptcha.private_key');
+        $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
+        
+        exit('okdfsdf');
 
-        $remoteip  = $this->container->get('request')->server->get('REMOTE_ADDR');
-        $challenge = $this->container->get('request')->request->get('recaptcha_challenge_field');
-        $response  = $this->container->get('request')->request->get('recaptcha_response_field');
+        $remoteip   = $this->container->get('request')->server->get('REMOTE_ADDR');
+        $challenge  = $this->container->get('request')->request->get('recaptcha_challenge_field');
+        $response   = $this->container->get('request')->request->get('recaptcha_response_field');
 
         if (!$challenge && !$response) {
             return true;
         }
 
-        if (!$this->checkAnswer($privkey, $remoteip, $challenge, $response)) {
+        if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
             $this->setMessage($constraint->message, array('{{ value }}' => $value));
 
             return false;

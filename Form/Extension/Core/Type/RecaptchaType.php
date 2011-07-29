@@ -63,7 +63,7 @@ class RecaptchaType extends AbstractType
         $view->set('url_challenge', $server.'/challenge?k='.$this->publicKey);
         $view->set('url_noscript', $server.'/noscript?k='.$this->publicKey);
 
-        $view->set('pubkey', $this->publicKey);
+        $view->set('public_key', $this->publicKey);
     }
 
     /**
@@ -72,7 +72,7 @@ class RecaptchaType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'public_key'        => null,
+            'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
         );
@@ -91,7 +91,7 @@ class RecaptchaType extends AbstractType
      */
     public function getName()
     {
-        return 'recaptcha';
+        return 'ewz_recaptcha';
     }
 
     /**

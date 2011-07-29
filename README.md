@@ -29,11 +29,11 @@ Installation
     // app/config/config.yml
     // ...
     ewz_recaptcha:
-        pubkey:   here_is_your_publick_key
-        privkey:  here_is_your_private_key
-        secure:   true
+        public_key:   here_is_your_publick_key
+        private_key:  here_is_your_private_key
+        secure:       false
 
-Note: If you use secure url for reCAPTCHA put true in secure.
+Note: If you use secure url for reCAPTCHA put true in secure (false is the default value).
 
 
 Use in forms
@@ -44,7 +44,7 @@ Use in forms
     public function buildForm(FormBuilder $builder, array $options)
     {
         // ...
-        $builder->add('recaptcha', 'recaptcha');
+        $builder->add('recaptcha', 'ewz_recaptcha');
         // ...
     }
 
@@ -94,7 +94,7 @@ PHP:
     <script type="text/javascript">
         $(document).ready(function() {
             $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Extension\Core\Type\RecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
-                Recaptcha.create("<?php echo $form['recaptcha']->get('pubkey') ?>", "recaptcha-container", {
+                Recaptcha.create("<?php echo $form['recaptcha']->get('public_key') ?>", "recaptcha-container", {
                     theme: "clean",
                 });
             });
@@ -107,7 +107,7 @@ Twig:
     <script type="text/javascript">
         $(document).ready(function() {
             $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Extension\\Core\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
-                Recaptcha.create("{{ form.recaptcha.get('pubkey') }}", "recaptcha-container", {
+                Recaptcha.create("{{ form.recaptcha.get('public_key') }}", "recaptcha-container", {
                     theme: "clean"
                 });
             });
