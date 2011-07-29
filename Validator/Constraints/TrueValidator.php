@@ -28,6 +28,11 @@ class TrueValidator extends ConstraintValidator
 
     public function isValid($value, Constraint $constraint)
     {
+        // if recaptcha is disabled, always valid
+        if (!$this->container->getParameter('ewz_recaptcha.enabled')) {
+            return true;
+        }
+        
         // define variable for recaptcha check answer
         $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
 

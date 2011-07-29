@@ -113,3 +113,14 @@ Twig:
             });
         });
     </script>
+
+Disable reCaptcha
+-----------------
+
+You can easily disable reCaptcha (for example in a local or test environment):
+
+    // app/config/config.yml
+    // ...
+    ewz_recaptcha:
+        // ...
+        enabled: false

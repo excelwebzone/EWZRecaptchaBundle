@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('public_key')->isRequired()->end()
                 ->scalarNode('private_key')->isRequired()->end()
                 ->booleanNode('secure')->defaultFalse()->end()
+                ->booleanNode('enabled')->defaultTrue()->end()
             ->end()
         ;
 

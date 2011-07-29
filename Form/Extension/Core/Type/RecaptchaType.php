@@ -28,11 +28,18 @@ class RecaptchaType extends AbstractType
     protected $publicKey;
 
     /**
-     * The security token
+     * Use secure url?
      *
-     * @var string
+     * @var boolean
      */
     protected $secure;
+    
+    /**
+     * Enable recaptcha?
+     *
+     * @var boolean
+     */
+    protected $enabled;
 
     /**
      * Construct.
@@ -43,6 +50,7 @@ class RecaptchaType extends AbstractType
     {
         $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
         $this->secure = $container->getParameter('ewz_recaptcha.secure');
+        $this->enabled = $container->getParameter('ewz_recaptcha.enabled');
     }
 
     /**
@@ -50,6 +58,10 @@ class RecaptchaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form)
     {
+        if (!$this->enabled) {
+            return;
+        }
+        
         if ($this->secure) {
             $server = self::RECAPTCHA_API_SECURE_SERVER;
         } else {
@@ -58,8 +70,8 @@ class RecaptchaType extends AbstractType
 
         $view->set('url_challenge', $server.'/challenge?k='.$this->publicKey);
         $view->set('url_noscript', $server.'/noscript?k='.$this->publicKey);
-
         $view->set('public_key', $this->publicKey);
+        $view->set('ewz_recaptcha_enabled', $this->enabled);
     }
 
     /**
