@@ -36,6 +36,18 @@ Installation
 Note: If you use secure url for reCAPTCHA put true in secure (false is the default value).
 
 
+Disable reCAPTCHA
+-----------------
+
+You can easily disable reCAPTCHA (for example in a local or test environment):
+
+    // app/config/config.yml
+    // ...
+    ewz_recaptcha:
+        // ...
+        enabled: false
+
+
 Use in forms
 ------------
 
@@ -48,12 +60,18 @@ Use in forms
         // ...
     }
 
-You can pass extra options to reCaptcha with the attr > options option:
+You can pass extra options to reCAPTCHA with the attr > options option:
 
     public function buildForm(FormBuilder $builder, array $options)
     {
         // ...
-        $builder->add('recaptcha', 'ewz_recaptcha', array('attr' => array('options' => array('theme' => 'clean'))));
+        $builder->add('recaptcha', 'ewz_recaptcha', array(
+            'attr' => array(
+                'options' => array(
+                    'theme' => 'clean'
+                )
+            )
+        ));
         // ...
     }
 
@@ -123,14 +141,3 @@ Twig:
             });
         });
     </script>
-
-Disable reCaptcha
------------------
-
-You can easily disable reCaptcha (for example in a local or test environment):
-
-    // app/config/config.yml
-    // ...
-    ewz_recaptcha:
-        // ...
-        enabled: false

@@ -49,8 +49,8 @@ class RecaptchaType extends AbstractType
     public function __construct(ContainerInterface $container)
     {
         $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
-        $this->secure = $container->getParameter('ewz_recaptcha.secure');
-        $this->enabled = $container->getParameter('ewz_recaptcha.enabled');
+        $this->secure    = $container->getParameter('ewz_recaptcha.secure');
+        $this->enabled   = $container->getParameter('ewz_recaptcha.enabled');
     }
 
     /**
@@ -83,7 +83,7 @@ class RecaptchaType extends AbstractType
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
-            'attr'           => null,
+            'attr'          => null,
         );
     }
 

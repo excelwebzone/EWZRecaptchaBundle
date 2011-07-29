@@ -6,14 +6,17 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * EWZRecaptchaExtension configuration structure.
+ * This class contains the configuration information for the bundle
+ *
+ * This information is solely responsible for how the different configuration
+ * sections are normalized, and merged.
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * Generates the configuration tree.
+     * Generates the configuration tree builder.
      *
-     * @return TreeBuilder The config tree
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
      */
     public function getConfigTreeBuilder()
     {

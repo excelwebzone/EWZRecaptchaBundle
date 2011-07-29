@@ -8,16 +8,15 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * EWZRecaptchaExtension
+ * EWZRecaptchaExtension.
  */
 class EWZRecaptchaExtension extends Extension
 {
     /**
-     * Loads the extension configuration.
+     * Loads the recaptcha configuration.
      *
-     * @param  array            $configs
-     * @param  ContainerBuilder $container
-     * @return void
+     * @param array            $configs
+     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {
