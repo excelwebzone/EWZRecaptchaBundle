@@ -8,8 +8,8 @@
     <xsd:element name="config" type="config" />
 
     <xsd:complexType name="config">
-        <xsd:attribute name="pubkey" type="xsd:string" />
-        <xsd:attribute name="privkey" type="xsd:string" />
+        <xsd:attribute name="public_key" type="xsd:string" />
+        <xsd:attribute name="private_key" type="xsd:string" />
         <xsd:attribute name="secure" type="xsd:boolean" />
     </xsd:complexType>
 </xsd:schema>

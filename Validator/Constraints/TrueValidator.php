@@ -28,18 +28,23 @@ class TrueValidator extends ConstraintValidator
 
     public function isValid($value, Constraint $constraint)
     {
+        // if recaptcha is disabled, always valid
+        if (!$this->container->getParameter('ewz_recaptcha.enabled')) {
+            return true;
+        }
+        
         // define variable for recaptcha check answer
-        $privkey = $this->container->getParameter('recaptcha.privkey');
+        $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
 
-        $remoteip  = $this->container->get('request')->server->get('REMOTE_ADDR');
-        $challenge = $this->container->get('request')->request->get('recaptcha_challenge_field');
-        $response  = $this->container->get('request')->request->get('recaptcha_response_field');
+        $remoteip   = $this->container->get('request')->server->get('REMOTE_ADDR');
+        $challenge  = $this->container->get('request')->request->get('recaptcha_challenge_field');
+        $response   = $this->container->get('request')->request->get('recaptcha_response_field');
 
         if (!$challenge && !$response) {
             return true;
         }
 
-        if (!$this->checkAnswer($privkey, $remoteip, $challenge, $response)) {
+        if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
             $this->setMessage($constraint->message, array('{{ value }}' => $value));
 
             return false;
@@ -51,7 +56,7 @@ class TrueValidator extends ConstraintValidator
     /**
       * Calls an HTTP POST function to verify if the user's guess was correct
       *
-      * @param string $privkey
+      * @param string $privateKey
       * @param string $remoteip
       * @param string $challenge
       * @param string $response
@@ -59,12 +64,8 @@ class TrueValidator extends ConstraintValidator
       *
       * @return ReCaptchaResponse
       */
-    private function checkAnswer($privkey, $remoteip, $challenge, $response, $extra_params = array())
+    private function checkAnswer($privateKey, $remoteip, $challenge, $response, $extra_params = array())
     {
-        if ($privkey == null || $privkey == '') {
-            throw new ValidatorException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
-        }
-
         if ($remoteip == null || $remoteip == '') {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
         }
@@ -75,7 +76,7 @@ class TrueValidator extends ConstraintValidator
         }
 
         $response = $this->httpPost(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/verify', array(
-            'privatekey' => $privkey,
+            'privatekey' => $privateKey,
             'remoteip'   => $remoteip,
             'challenge'  => $challenge,
             'response'   => $response

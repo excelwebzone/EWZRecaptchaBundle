@@ -25,14 +25,21 @@ class RecaptchaType extends AbstractType
      *
      * @var string
      */
-    protected $pubkey;
+    protected $publicKey;
 
     /**
-     * The security token
+     * Use secure url?
      *
-     * @var string
+     * @var boolean
      */
     protected $secure;
+    
+    /**
+     * Enable recaptcha?
+     *
+     * @var boolean
+     */
+    protected $enabled;
 
     /**
      * Construct.
@@ -41,12 +48,9 @@ class RecaptchaType extends AbstractType
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->pubkey = $container->getParameter('recaptcha.pubkey');
-        $this->secure = $container->getParameter('recaptcha.secure');
-
-        if ($this->pubkey == null || $this->pubkey == '') {
-            throw new FormException('To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>');
-        }
+        $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
+        $this->secure = $container->getParameter('ewz_recaptcha.secure');
+        $this->enabled = $container->getParameter('ewz_recaptcha.enabled');
     }
 
     /**
@@ -54,16 +58,20 @@ class RecaptchaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form)
     {
+        if (!$this->enabled) {
+            return;
+        }
+        
         if ($this->secure) {
             $server = self::RECAPTCHA_API_SECURE_SERVER;
         } else {
             $server = self::RECAPTCHA_API_SERVER;
         }
 
-        $view->set('url_challenge', $server.'/challenge?k='.$this->pubkey);
-        $view->set('url_noscript', $server.'/noscript?k='.$this->pubkey);
-
-        $view->set('pubkey', $this->pubkey);
+        $view->set('url_challenge', $server.'/challenge?k='.$this->publicKey);
+        $view->set('url_noscript', $server.'/noscript?k='.$this->publicKey);
+        $view->set('public_key', $this->publicKey);
+        $view->set('ewz_recaptcha_enabled', $this->enabled);
     }
 
     /**
@@ -72,9 +80,10 @@ class RecaptchaType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'pubkey'        => null,
+            'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
+            'attr'           => null,
         );
     }
 
@@ -91,7 +100,7 @@ class RecaptchaType extends AbstractType
      */
     public function getName()
     {
-        return 'recaptcha';
+        return 'ewz_recaptcha';
     }
 
     /**
@@ -113,6 +122,6 @@ class RecaptchaType extends AbstractType
      */
     public function getPublicKey()
     {
-        return $this->pubkey;
+        return $this->publicKey;
     }
 }

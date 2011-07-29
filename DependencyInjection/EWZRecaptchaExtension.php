@@ -5,27 +5,32 @@ namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 
+/**
+ * EWZRecaptchaExtension
+ */
 class EWZRecaptchaExtension extends Extension
 {
+    /**
+     * Loads the extension configuration.
+     *
+     * @param  array            $configs
+     * @param  ContainerBuilder $container
+     * @return void
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('recaptcha.xml');
 
-        $processor = new Processor();
         $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
 
-        $config = $processor->process($configuration->getConfigTree(), $configs);
-
-        $container->setParameter('recaptcha.pubkey', $config['pubkey']);
-        $container->setParameter('recaptcha.privkey', $config['privkey']);
-
-        if (isset($config['secure'])) {
-            $container->setParameter('recaptcha.secure', $config['secure']);
-        }
+        $container->setParameter('ewz_recaptcha.public_key', $config['public_key']);
+        $container->setParameter('ewz_recaptcha.private_key', $config['private_key']);
+        $container->setParameter('ewz_recaptcha.secure', $config['secure']);
+        $container->setParameter('ewz_recaptcha.enabled', $config['enabled']);
     }
 
     /**
