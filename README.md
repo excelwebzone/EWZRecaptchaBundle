@@ -93,19 +93,19 @@ Use in view
 
 PHP (Note: this is still under development):
 
+    <?php $view['form']->setTheme($form, array('EWZRecaptchaBundle:Form')) ?>
+
     <?php echo $view['form']->widget($form['recaptcha'], array(
         'attr' => array(
             'options' => array(
                 'theme' => 'clean',
             ),
         ),
-    ), array(
-        'theme' => 'EWZRecaptchaBundle:Form:recaptcha_widget.html.php',
     )) ?>
 
 Twig:
 
-    {% form_theme form 'EWZRecaptchaBundle:Form:recaptcha_widget.html.twig' %}
+    {% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
 
     {{ form_widget(form.recaptcha, { 'attr': {
         'options' : {
