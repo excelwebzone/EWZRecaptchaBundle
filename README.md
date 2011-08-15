@@ -29,7 +29,7 @@ Installation
     // app/config/config.yml
     // ...
     ewz_recaptcha:
-        public_key:   here_is_your_publick_key
+        public_key:   here_is_your_public_key
         private_key:  here_is_your_private_key
         secure:       false
 
