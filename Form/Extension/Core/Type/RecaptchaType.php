@@ -30,16 +30,23 @@ class RecaptchaType extends AbstractType
     /**
      * Use secure url?
      *
-     * @var boolean
+     * @var Boolean
      */
     protected $secure;
     
     /**
      * Enable recaptcha?
      *
-     * @var boolean
+     * @var Boolean
      */
     protected $enabled;
+    
+    /**
+     * Language
+     *
+     * @var string
+     */
+    protected $language;
 
     /**
      * Construct.
@@ -51,6 +58,7 @@ class RecaptchaType extends AbstractType
         $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
         $this->secure    = $container->getParameter('ewz_recaptcha.secure');
         $this->enabled   = $container->getParameter('ewz_recaptcha.enabled');
+        $this->language  = $container->getParameter('session.default_locale');
     }
 
     /**
@@ -86,7 +94,8 @@ class RecaptchaType extends AbstractType
 
 	    	'attr' => array(
 	    	    'options' => array(
-	    	        'theme' => 'clean'
+	    	        'theme' => 'clean',
+	    	        'lang'  => $this->language,
     	        )
 	        ),
         );
