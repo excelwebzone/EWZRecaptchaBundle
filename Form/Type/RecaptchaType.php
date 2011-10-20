@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\Bundle\RecaptchaBundle\Form\Extension\Core\Type;
+namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;

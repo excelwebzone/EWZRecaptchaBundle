@@ -26,6 +26,9 @@ class TrueValidator extends ConstraintValidator
         $this->container = $container;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isValid($value, Constraint $constraint)
     {
         // if recaptcha is disabled, always valid
