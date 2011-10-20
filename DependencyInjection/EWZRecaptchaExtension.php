@@ -19,11 +19,11 @@ class EWZRecaptchaExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
-
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.xml');
 
         $container->setParameter('ewz_recaptcha.public_key', $config['public_key']);
         $container->setParameter('ewz_recaptcha.private_key', $config['private_key']);
