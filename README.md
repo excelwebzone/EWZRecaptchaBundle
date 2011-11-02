@@ -15,7 +15,7 @@ add the following entry to the `deps` in the root of your project file:
 ```
 [EWZTimeBundle]
     git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
-    target=/bundles/EWZ/Bundle/EWZRecaptchaBundle
+    target=/bundles/EWZ/Bundle/RecaptchaBundle
 ```
 
 Next, update your vendors by running:
@@ -38,7 +38,7 @@ $ mkdir -pv vendor/bundles/EWZ/Bundle
 Next, add the necessary submodule:
 
 ``` bash
-$ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/EWZRecaptchaBundle
+$ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/RecaptchaBundle
 ```
 
 ### Step2: Configure the autoloader
