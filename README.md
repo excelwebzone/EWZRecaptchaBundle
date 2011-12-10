@@ -85,6 +85,7 @@ ewz_recaptcha:
     public_key:   here_is_your_public_key
     private_key:  here_is_your_private_key
     secure:       false
+    locale_key:   kernel.default_locale
 ```
 
 **NOTE**: If you use secure url for reCAPTCHA put true in secure (false is the default value).
