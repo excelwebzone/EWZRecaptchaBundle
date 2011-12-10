@@ -58,7 +58,7 @@ class RecaptchaType extends AbstractType
         $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
         $this->secure    = $container->getParameter('ewz_recaptcha.secure');
         $this->enabled   = $container->getParameter('ewz_recaptcha.enabled');
-        $this->language  = $container->getParameter($container->getParameter('ewz_recaptcha_locale_key'));
+        $this->language  = $container->getParameter($container->getParameter('ewz_recaptcha.locale_key'));
     }
 
     /**
