@@ -1,7 +1,7 @@
 EWZRecaptchaBundle
 ==================
 
-This bundle provides easy reCAPTCHA form field for Symfony2.
+This bundle provides easy reCAPTCHA form field for Symfony.
 
 ## Installation
 
