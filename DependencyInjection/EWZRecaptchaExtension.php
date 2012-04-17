@@ -28,5 +28,33 @@ class EWZRecaptchaExtension extends Extension
         foreach ($config as $key => $value) {
             $container->setParameter('ewz_recaptcha.'.$key, $value);
         }
+
+        $this->registerWidget($container);
+    }
+
+    /**
+     * Registers the form widget.
+     */
+    protected function registerWidget(ContainerBuilder $container)
+    {
+        $templatingEngines = $container->getParameter('templating.engines');
+
+        if (in_array('php', $templatingEngines)) {
+            $formRessource = 'EWZRecaptchaBundle:Form';
+
+            $container->setParameter('templating.helper.form.resources', array_merge(
+                $container->getParameter('templating.helper.form.resources'),
+                array($formRessource)
+            ));
+        }
+
+        if (in_array('twig', $templatingEngines)) {
+            $formRessource = 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig';
+
+            $container->setParameter('twig.form.resources', array_merge(
+                $container->getParameter('twig.form.resources'),
+                array($formRessource)
+            ));
+        }
     }
 }
