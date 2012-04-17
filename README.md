@@ -13,7 +13,7 @@ If you're using the `bin/vendors.php` method to manage your vendor libraries,
 add the following entry to the `deps` in the root of your project file:
 
 ```
-[EWZTimeBundle]
+[EWZRecaptchaBundle]
     git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
     target=/bundles/EWZ/Bundle/RecaptchaBundle
 ```
