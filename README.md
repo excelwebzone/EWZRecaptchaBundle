@@ -3,43 +3,112 @@ EWZRecaptchaBundle
 
 This bundle provides easy reCAPTCHA form field for Symfony.
 
-## Installation
+## Step 1: Installation using Composer (recommended)
 
-Installation depends on how your project is setup:
+To install EWZRecaptchaBundle with Composer just add the following to your
+`composer.json` file:
 
-### Step 1: Installation using the `bin/vendors.php` method
+.. code-block :: js
 
-If you're using the `bin/vendors.php` method to manage your vendor libraries,
-add the following entry to the `deps` in the root of your project file:
+    // composer.json
+    {
+        // ...
+        require: {
+            // ...
+            "excelwebzone/recaptcha-bundle": "master-dev"
+        }
+    }
+    
+.. note ::
 
-```
-[EWZRecaptchaBundle]
-    git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
-    target=/bundles/EWZ/Bundle/RecaptchaBundle
-```
+    Please replace `master-dev` in the snippet above with the latest stable
+    branch, for example ``2.0.*``.
+    
+Then, you can install the new dependencies by running Composer's ``update``
+command from the directory where your ``composer.json`` file is located:
 
-Next, update your vendors by running:
+.. code-block :: bash
 
-``` bash
-$ ./bin/vendors
-```
+    $ php composer.phar update
+    
+Now, Composer will automatically download all required files, and install them
+for you. All that is left to do is to update your ``AppKernel.php`` file, and
+register the new bundle:
 
-Great! Now skip down to *Step 2*.
+.. code-block :: php
 
-### Step 1 (alternative): Installation with submodules
+    <?php
 
-If you're managing your vendor libraries with submodules, first create the
-`vendor/bundles/EWZ/Bundle` directory:
+    // in AppKernel::registerBundles()
+    $bundles = array(
+        // ...
+        new EWZ\RecaptchaBundle\EWZRecaptchaBundle(),
+        // ...
+    );
 
-``` bash
-$ mkdir -pv vendor/bundles/EWZ/Bundle
-```
+### Step 1 (alternative): Installation using ``deps`` file (Symfony 2.0.x)
 
-Next, add the necessary submodule:
+First, checkout a copy of the code. Just add the following to the ``deps`` 
+file of your Symfony Standard Distribution:
 
-``` bash
-$ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/RecaptchaBundle
-```
+.. code-block :: ini
+
+    [EWZRecaptchaBundle]
+        git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
+        target=/bundles/EWZ/Bundle/RecaptchaBundle
+
+.. note ::
+
+    Please add `version` tag in the snippet above with the latest stable
+    branch, for example ``version=2.0``.
+
+Then register the bundle with your kernel:
+
+.. code-block :: php
+
+    <?php
+
+    // in AppKernel::registerBundles()
+    $bundles = array(
+        // ...
+        new EWZ\RecaptchaBundle\EWZRecaptchaBundle(),
+        // ...
+    );
+
+Make sure that you also register the namespace with the autoloader:
+
+.. code-block :: php
+
+    <?php
+
+    // app/autoload.php
+    $loader->registerNamespaces(array(
+        // ...
+        'EWZ'              => __DIR__.'/../vendor/bundles',
+        // ...
+    ));
+
+Now use the ``vendors`` script to clone the newly added repositories 
+into your project:
+
+.. code-block :: bash
+
+    $ php bin/vendors install
+
+.. note ::
+
+    If you're managing your vendor libraries with submodules, first create the
+    `vendor/bundles/EWZ/Bundle` directory:
+
+    ``` bash
+    $ mkdir -pv vendor/bundles/EWZ/Bundle
+    ```
+
+    Next, add the necessary submodule:
+
+    ``` bash
+    $ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/RecaptchaBundle
+    ```
 
 ### Step2: Configure the autoloader
 
