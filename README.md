@@ -3,7 +3,9 @@ EWZRecaptchaBundle
 
 This bundle provides easy reCAPTCHA form field for Symfony.
 
-## Step 1: Installation using Composer (recommended)
+## Installation
+
+### Step 1: Using Composer (recommended)
 
 To install EWZRecaptchaBundle with Composer just add the following to your
 `composer.json` file:
@@ -19,10 +21,8 @@ To install EWZRecaptchaBundle with Composer just add the following to your
 }
 ```
     
-.. note ::
-
-    Please replace `master-dev` in the snippet above with the latest stable
-    branch, for example ``2.0.*``.
+**NOTE**: Please replace `master-dev` in the snippet above with the latest stable
+branch, for example ``2.0.*``.
     
 Then, you can install the new dependencies by running Composer's ``update``
 command from the directory where your ``composer.json`` file is located:
@@ -46,7 +46,7 @@ $bundles = array(
 );
 ```
 
-### Step 1 (alternative): Installation using ``deps`` file (Symfony 2.0.x)
+### Step 1 (alternative): Using ``deps`` file (Symfony 2.0.x)
 
 First, checkout a copy of the code. Just add the following to the ``deps`` 
 file of your Symfony Standard Distribution:
@@ -57,10 +57,8 @@ file of your Symfony Standard Distribution:
     target=/bundles/EWZ/Bundle/RecaptchaBundle
 ```
 
-.. note ::
-
-    Please add `version` tag in the snippet above with the latest stable
-    branch, for example ``version=2.0``.
+**NOTE**: You can add `version` tag in the snippet above with the latest stable
+branch, for example ``version=2.0``.
 
 Then register the bundle with your kernel:
 
@@ -95,20 +93,20 @@ into your project:
 $ php bin/vendors install
 ```
 
-.. note ::
+### Step 1 (alternative): Using submodules (Symfony 2.0.x)
 
-    If you're managing your vendor libraries with submodules, first create the
-    `vendor/bundles/EWZ/Bundle` directory:
+If you're managing your vendor libraries with submodules, first create the
+`vendor/bundles/EWZ/Bundle` directory:
 
-    ``` bash
-    $ mkdir -pv vendor/bundles/EWZ/Bundle
-    ```
+``` bash
+$ mkdir -pv vendor/bundles/EWZ/Bundle
+```
 
-    Next, add the necessary submodule:
+Next, add the necessary submodule:
 
-    ``` bash
-    $ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/RecaptchaBundle
-    ```
+``` bash
+$ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/RecaptchaBundle
+```
 
 ### Step2: Configure the autoloader
 
