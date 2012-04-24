@@ -58,7 +58,7 @@ file of your Symfony Standard Distribution:
 ```
 
 **NOTE**: You can add `version` tag in the snippet above with the latest stable
-branch, for example ``version=2.0``.
+branch, for example ``version=origin/2.0``.
 
 Then register the bundle with your kernel:
 
