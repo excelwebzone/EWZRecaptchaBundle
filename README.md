@@ -282,7 +282,7 @@ if you want to use a custom theme, put your chunk of code before setting the the
 
 ``` jinja
 
-<div id="recaptcha_widget">
+ <div id="recaptcha_widget">
 
    <div id="recaptcha_image"></div>
    <div class="recaptcha_only_if_incorrect_sol" style="color:red">Incorrect please try again</div>
@@ -298,9 +298,15 @@ if you want to use a custom theme, put your chunk of code before setting the the
 
    <div><a href="javascript:Recaptcha.showhelp()">Help</a></div>
 
-</div>
-
+ </div>
+ 
 {% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
+
+{{ form_widget(form.recaptcha, { 'attr': {
+    'options' : {
+        'theme' : 'custom',
+    },
+} }) }}
 
 ...
 ```
