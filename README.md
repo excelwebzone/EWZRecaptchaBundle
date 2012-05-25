@@ -276,3 +276,35 @@ using JavaScript:
     });
 </script>
 ```
+
+## Customization
+
+If you want to use a custom theme, put your chunk of code before setting the theme:
+
+``` jinja
+ <div id="recaptcha_widget">
+   <div id="recaptcha_image"></div>
+   <div class="recaptcha_only_if_incorrect_sol" style="color:red">Incorrect please try again</div>
+
+   <span class="recaptcha_only_if_image">Enter the words above:</span>
+   <span class="recaptcha_only_if_audio">Enter the numbers you hear:</span>
+
+   <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
+
+   <div><a href="javascript:Recaptcha.reload()">Get another CAPTCHA</a></div>
+   <div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')">Get an audio CAPTCHA</a></div>
+   <div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">Get an image CAPTCHA</a></div>
+
+   <div><a href="javascript:Recaptcha.showhelp()">Help</a></div>
+ </div>
+ 
+{% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
+
+{{ form_widget(form.recaptcha, { 'attr': {
+    'options' : {
+        'theme' : 'custom',
+    },
+} }) }}
+```
+
+**Further reading**: [Customizing the Look and Feel of reCAPTCHA](https://developers.google.com/recaptcha/docs/customization)
