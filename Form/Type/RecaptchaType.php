@@ -4,9 +4,10 @@ namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormViewInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\FormException;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * A field for entering a recaptcha text.
@@ -33,14 +34,14 @@ class RecaptchaType extends AbstractType
      * @var Boolean
      */
     protected $secure;
-    
+
     /**
      * Enable recaptcha?
      *
      * @var Boolean
      */
     protected $enabled;
-    
+
     /**
      * Language
      *
@@ -64,12 +65,12 @@ class RecaptchaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form)
+    public function buildView(FormViewInterface $view, FormInterface $form, array $options)
     {
         if (!$this->enabled) {
             return;
         }
-        
+
         if ($this->secure) {
             $server = self::RECAPTCHA_API_SECURE_SERVER;
         } else {
@@ -85,26 +86,25 @@ class RecaptchaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
-
-	    	'attr' => array(
-	    	    'options' => array(
-	    	        'theme' => 'clean',
-	    	        'lang'  => $this->language,
-    	        )
-	        ),
-        );
+            'attr'          => array(
+                'options' => array(
+                    'theme' => 'clean',
+	    	    'lang'  => $this->language,
+    	        ),
+	    ),
+        ));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'field';
     }
