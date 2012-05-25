@@ -1,14 +1,14 @@
 {% block ewz_recaptcha_widget %}
 {% spaceless %}
-    {% if form.get('ewz_recaptcha_enabled') %}
+    {% if form.getVar('ewz_recaptcha_enabled') %}
         {% if attr.options is defined %}
             <script type="text/javascript">
                 var RecaptchaOptions = {{ attr.options|json_encode|raw }}
             </script>
         {% endif %}
-        <script src="{{ form.get('url_challenge') }}" type="text/javascript"></script>
+        <script src="{{ form.getVar('url_challenge') }}" type="text/javascript"></script>
         <noscript>
-            <iframe src="{{ form.get('url_noscript') }}" height="300" width="500"></iframe><br/>
+            <iframe src="{{ form.getVar('url_noscript') }}" height="300" width="500"></iframe><br/>
             <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
             <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
         </noscript>
