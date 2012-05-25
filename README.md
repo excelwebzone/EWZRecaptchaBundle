@@ -276,14 +276,13 @@ using JavaScript:
     });
 </script>
 ```
+
 ## Customization
 
-if you want to use a custom theme, put your chunk of code before setting the theme
+If you want to use a custom theme, put your chunk of code before setting the theme:
 
 ``` jinja
-
  <div id="recaptcha_widget">
-
    <div id="recaptcha_image"></div>
    <div class="recaptcha_only_if_incorrect_sol" style="color:red">Incorrect please try again</div>
 
@@ -297,7 +296,6 @@ if you want to use a custom theme, put your chunk of code before setting the the
    <div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">Get an image CAPTCHA</a></div>
 
    <div><a href="javascript:Recaptcha.showhelp()">Help</a></div>
-
  </div>
  
 {% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
@@ -307,10 +305,6 @@ if you want to use a custom theme, put your chunk of code before setting the the
         'theme' : 'custom',
     },
 } }) }}
-
-...
 ```
 
-
-**Further reading**
-[Customizing the Look and Feel of reCAPTCHA](https://developers.google.com/recaptcha/docs/customization)
+**Further reading**: [Customizing the Look and Feel of reCAPTCHA](https://developers.google.com/recaptcha/docs/customization)
