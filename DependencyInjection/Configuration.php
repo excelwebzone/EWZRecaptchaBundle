@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ewz_recaptcha');
-        
+
         $rootNode
             ->children()
                 ->scalarNode('public_key')->isRequired()->end()

@@ -35,7 +35,7 @@ class TrueValidator extends ConstraintValidator
         if (!$this->container->getParameter('ewz_recaptcha.enabled')) {
             return true;
         }
-        
+
         // define variable for recaptcha check answer
         $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
 

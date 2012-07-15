@@ -20,17 +20,17 @@ To install EWZRecaptchaBundle with Composer just add the following to your
     }
 }
 ```
-    
+
 **NOTE**: Please replace `master-dev` in the snippet above with the latest stable
 branch, for example ``2.0.*``.
-    
+
 Then, you can install the new dependencies by running Composer's ``update``
 command from the directory where your ``composer.json`` file is located:
 
 ```bash
 $ php composer.phar update
 ```
-    
+
 Now, Composer will automatically download all required files, and install them
 for you. All that is left to do is to update your ``AppKernel.php`` file, and
 register the new bundle:
@@ -48,7 +48,7 @@ $bundles = array(
 
 ### Step 1 (alternative): Using ``deps`` file (Symfony 2.0.x)
 
-First, checkout a copy of the code. Just add the following to the ``deps`` 
+First, checkout a copy of the code. Just add the following to the ``deps``
 file of your Symfony Standard Distribution:
 
 ```ini
@@ -86,7 +86,7 @@ $loader->registerNamespaces(array(
 ));
 ```
 
-Now use the ``vendors`` script to clone the newly added repositories 
+Now use the ``vendors`` script to clone the newly added repositories
 into your project:
 
 ```bash
@@ -297,7 +297,7 @@ If you want to use a custom theme, put your chunk of code before setting the the
 
    <div><a href="javascript:Recaptcha.showhelp()">Help</a></div>
  </div>
- 
+
 {% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
 
 {{ form_widget(form.recaptcha, { 'attr': {
