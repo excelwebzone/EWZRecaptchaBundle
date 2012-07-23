@@ -17,6 +17,11 @@ To install EWZRecaptchaBundle with Composer just add the following to your
     require: {
         // ...
         "excelwebzone/recaptcha-bundle": "master-dev"
+    },
+    "autoload": {
+        "psr-0": { 
+            "EWZ": "vendor/excelwebzone/recaptcha-bundle/EWZ"
+        }
     }
 }
 ```
@@ -41,7 +46,7 @@ register the new bundle:
 // in AppKernel::registerBundles()
 $bundles = array(
     // ...
-    new EWZ\RecaptchaBundle\EWZRecaptchaBundle(),
+    new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
     // ...
 );
 ```
@@ -68,7 +73,7 @@ Then register the bundle with your kernel:
 // in AppKernel::registerBundles()
 $bundles = array(
     // ...
-    new EWZ\RecaptchaBundle\EWZRecaptchaBundle(),
+    new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
     // ...
 );
 ```
