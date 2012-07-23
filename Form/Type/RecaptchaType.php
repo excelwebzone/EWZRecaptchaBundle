@@ -77,12 +77,10 @@ class RecaptchaType extends AbstractType
             $server = self::RECAPTCHA_API_SERVER;
         }
 
-        $view->addVars(array(
-            'url_challenge'         => $server.'/challenge?k='.$this->publicKey,
-            'url_noscript'          => $server.'/noscript?k='.$this->publicKey,
-            'public_key'            => $this->publicKey,
-            'ewz_recaptcha_enabled' => $this->enabled,
-        ));
+        $view->set('url_challenge', $server.'/challenge?k='.$this->publicKey);
+        $view->set('url_noscript', $server.'/noscript?k='.$this->publicKey);
+        $view->set('public_key', $this->publicKey);
+        $view->set('ewz_recaptcha_enabled', $this->enabled);
     }
 
     /**
