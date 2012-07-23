@@ -216,6 +216,32 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 public $recaptcha;
 ```
 
+Another method would consist to pass the validation constraints as an options of your FormType. This way, your data class contains only meaningful properties.
+If we take the example from above, the buildForm method would look like this:
+
+``` php
+<?php
+
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', 'ewz_recaptcha', array(
+        'attr'          => array(
+            'options' => array(
+                'theme' => 'clean'
+            ) 
+        ),
+        'property_path' => false,
+        'constraints'   => array(
+            new True()
+        )
+    ));
+    // ...
+```
+
+
 Cool, now you are ready to implement the form widget:
 
 **PHP**:
