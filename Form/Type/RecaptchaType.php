@@ -67,6 +67,10 @@ class RecaptchaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars = array_replace($view->vars, array(
+            'ewz_recaptcha_enabled' => $this->enabled,
+        ));
+
         if (!$this->enabled) {
             return;
         }
@@ -78,10 +82,9 @@ class RecaptchaType extends AbstractType
         }
 
         $view->vars = array_replace($view->vars, array(
-            'url_challenge'         => $server.'/challenge?k='.$this->publicKey,
-            'url_noscript'          => $server.'/noscript?k='.$this->publicKey,
-            'public_key'            => $this->publicKey,
-            'ewz_recaptcha_enabled' => $this->enabled,
+            'url_challenge' => sprintf('%s/challenge?k=%s', $server, $this->publicKey),
+            'url_noscript'  => sprintf('%s/noscript?k=%s', $server, $this->publicKey),
+            'public_key'    => $this->publicKey,
         ));
     }
 
