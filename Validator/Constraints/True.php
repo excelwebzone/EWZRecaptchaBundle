@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /** @Annotation */
 class True extends Constraint
 {
-    public $message = 'This value is not a valid captcha';
+    public $message = 'This value is not a valid captcha.';
 
     /**
      * {@inheritdoc}
