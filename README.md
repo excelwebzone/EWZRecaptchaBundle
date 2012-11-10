@@ -21,7 +21,7 @@ To install EWZRecaptchaBundle with Composer just add the following to your
 }
 ```
 
-**NOTE**: Please replace `master-dev` in the snippet above with the latest stable
+**NOTE**: Please replace `dev-master` in the snippet above with the latest stable
 branch, for example ``2.0.*``.
 
 Then, you can install the new dependencies by running Composer's ``update``
@@ -231,7 +231,7 @@ public function buildForm(FormBuilder $builder, array $options)
         'attr'          => array(
             'options' => array(
                 'theme' => 'clean'
-            ) 
+            )
         ),
         'property_path' => false,
         'constraints'   => array(
