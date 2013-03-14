@@ -40,12 +40,8 @@ class TrueValidator extends ConstraintValidator
         $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
 
         $remoteip   = $this->container->get('request')->server->get('REMOTE_ADDR');
-        $challenge  = $this->container->get('request')->request->get('recaptcha_challenge_field');
-        $response   = $this->container->get('request')->request->get('recaptcha_response_field');
-
-        if (!$challenge && !$response) {
-            return true;
-        }
+        $challenge  = $this->container->get('request')->get('recaptcha_challenge_field');
+        $response   = $this->container->get('request')->get('recaptcha_response_field');
 
         if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
             $this->setMessage($constraint->message, array('{{ value }}' => $value));
