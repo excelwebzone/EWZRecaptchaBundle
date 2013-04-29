@@ -44,8 +44,6 @@ class TrueValidator extends ConstraintValidator
         $response   = $this->container->get('request')->get('recaptcha_response_field');
 
         if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
-            $this->setMessage($constraint->message, array('{{ value }}' => $value));
-
             $this->context->addViolation($constraint->message);
         }
 
