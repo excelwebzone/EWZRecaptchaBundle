@@ -233,7 +233,7 @@ public function buildForm(FormBuilder $builder, array $options)
                 'theme' => 'clean'
             )
         ),
-        'property_path' => false,
+        'mapped' => false,
         'constraints'   => array(
             new True()
         )
