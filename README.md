@@ -217,7 +217,8 @@ public $recaptcha;
 ```
 
 Another method would consist to pass the validation constraints as an options of your FormType. This way, your data class contains only meaningful properties.
-If we take the example from above, the buildForm method would look like this:
+If we take the example from above, the buildForm method would look like this. 
+Please note that if you set ```mapped=>false``` then the annotation will not work. You have to also set ```constraints```:
 
 ``` php
 <?php
