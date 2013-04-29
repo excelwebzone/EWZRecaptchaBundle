@@ -29,7 +29,7 @@ class TrueValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         // if recaptcha is disabled, always valid
         if (!$this->container->getParameter('ewz_recaptcha.enabled')) {
@@ -46,8 +46,6 @@ class TrueValidator extends ConstraintValidator
         if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
             $this->context->addViolation($constraint->message);
         }
-
-        return true;
     }
 
     /**
