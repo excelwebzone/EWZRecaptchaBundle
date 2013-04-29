@@ -46,7 +46,7 @@ class TrueValidator extends ConstraintValidator
         if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
             $this->setMessage($constraint->message, array('{{ value }}' => $value));
 
-            return false;
+            $this->context->addViolation($constraint->message);
         }
 
         return true;
