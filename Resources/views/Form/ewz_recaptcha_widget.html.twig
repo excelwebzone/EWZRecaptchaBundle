@@ -1,0 +1,18 @@
+{% block ewz_recaptcha_widget %}
+{% spaceless %}
+    {% if form.vars.ewz_recaptcha_enabled %}
+        {% if attr.options is defined %}
+            <script type="text/javascript">
+                var RecaptchaOptions = {{ attr.options|json_encode|raw }}
+            </script>
+        {% endif %}
+        <script src="{{ form.vars.url_challenge }}" type="text/javascript"></script>
+        <noscript>
+            <iframe src="{{ form.vars.url_noscript }}" height="300" width="500"></iframe><br/>
+            <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+            <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+        </noscript>
+    {% endif %}
+{% endspaceless %}
+{% endblock ewz_recaptcha_widget %}
+

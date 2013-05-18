@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="ewz_recaptcha.form.type.class">EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType</parameter>
+        <parameter key="ewz_recaptcha.validator.true.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\TrueValidator</parameter>
+    </parameters>
+
+    <services>
+        <service id="ewz_recaptcha.form.type" class="%ewz_recaptcha.form.type.class%">
+            <tag name="form.type" alias="ewz_recaptcha" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="ewz_recaptcha.validator.true" class="%ewz_recaptcha.validator.true.class%">
+            <tag name="validator.constraint_validator" alias="ewz_recaptcha.true" />
+            <argument type="service" id="service_container" />
+        </service>
+    </services>
+</container>
