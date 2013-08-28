@@ -16,7 +16,7 @@
         "symfony/framework-bundle": "2.*"
     },
     "autoload": {
-        "psr-0": { "EWZ\\Bundle\\RecaptchaBundle": "" }
+        "psr-0": { "EWZ\\Bundle\\RecaptchaBundle\\": "" }
     },
     "target-dir": "EWZ/Bundle/RecaptchaBundle"
 }
