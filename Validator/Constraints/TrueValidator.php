@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Exception\ValidatorException;
 class TrueValidator extends ConstraintValidator
 {
     protected $container;
+    protected $cache;
 
     /**
      * The reCAPTCHA server URL's
@@ -42,23 +43,33 @@ class TrueValidator extends ConstraintValidator
         $remoteip   = $this->container->get('request')->server->get('REMOTE_ADDR');
         $challenge  = $this->container->get('request')->get('recaptcha_challenge_field');
         $response   = $this->container->get('request')->get('recaptcha_response_field');
+        if(isset($this->cache[$privateKey]) &&
+            isset($this->cache[$privateKey][$remoteip]) &&
+            isset($this->cache[$privateKey][$remoteip][$challenge]) &&
+            isset($this->cache[$privateKey][$remoteip][$challenge][$response])
+        ){
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response];
+        }else{
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($privateKey, $remoteip, $challenge, $response);
+        }
 
-        if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
+        if (!$cached) {
             $this->context->addViolation($constraint->message);
         }
     }
 
     /**
-      * Calls an HTTP POST function to verify if the user's guess was correct
-      *
-      * @param string $privateKey
-      * @param string $remoteip
-      * @param string $challenge
-      * @param string $response
-      * @param array $extra_params an array of extra variables to post to the server
-      *
-      * @return ReCaptchaResponse
-      */
+     * Calls an HTTP POST function to verify if the user's guess was correct
+     *
+     * @param string $privateKey
+     * @param string $remoteip
+     * @param string $challenge
+     * @param string $response
+     * @param array $extra_params an array of extra variables to post to the server
+     *
+     * @throws \Symfony\Component\Validator\Exception\ValidatorException
+     * @return bool
+     */
     private function checkAnswer($privateKey, $remoteip, $challenge, $response, $extra_params = array())
     {
         if ($remoteip == null || $remoteip == '') {
@@ -71,11 +82,11 @@ class TrueValidator extends ConstraintValidator
         }
 
         $response = $this->httpPost(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/verify', array(
-            'privatekey' => $privateKey,
-            'remoteip'   => $remoteip,
-            'challenge'  => $challenge,
-            'response'   => $response
-        ) + $extra_params);
+                'privatekey' => $privateKey,
+                'remoteip'   => $remoteip,
+                'challenge'  => $challenge,
+                'response'   => $response
+            ) + $extra_params);
 
         $answers = explode ("\n", $response [1]);
 
