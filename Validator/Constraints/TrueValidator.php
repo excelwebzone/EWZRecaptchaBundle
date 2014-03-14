@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Exception\ValidatorException;
 class TrueValidator extends ConstraintValidator
 {
     protected $container;
+    protected $cache;
 
     /**
      * The reCAPTCHA server URL's
@@ -43,7 +44,18 @@ class TrueValidator extends ConstraintValidator
         $challenge  = $this->container->get('request')->get('recaptcha_challenge_field');
         $response   = $this->container->get('request')->get('recaptcha_response_field');
 
-        if (!$this->checkAnswer($privateKey, $remoteip, $challenge, $response)) {
+        if (
+            isset($this->cache[$privateKey]) &&
+            isset($this->cache[$privateKey][$remoteip]) &&
+            isset($this->cache[$privateKey][$remoteip][$challenge]) &&
+            isset($this->cache[$privateKey][$remoteip][$challenge][$response])
+        ) {
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response];
+        } else {
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($privateKey, $remoteip, $challenge, $response)
+        }
+
+        if (!$cached) {
             $this->context->addViolation($constraint->message);
         }
     }
@@ -57,7 +69,9 @@ class TrueValidator extends ConstraintValidator
       * @param string $response
       * @param array $extra_params an array of extra variables to post to the server
       *
-      * @return ReCaptchaResponse
+      * @throws ValidatorException When missing remote ip
+      *
+      * @return Boolean
       */
     private function checkAnswer($privateKey, $remoteip, $challenge, $response, $extra_params = array())
     {
