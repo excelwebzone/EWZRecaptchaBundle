@@ -52,7 +52,7 @@ class TrueValidator extends ConstraintValidator
         ) {
             $cached = $this->cache[$privateKey][$remoteip][$challenge][$response];
         } else {
-            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($privateKey, $remoteip, $challenge, $response)
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($privateKey, $remoteip, $challenge, $response);
         }
 
         if (!$cached) {
