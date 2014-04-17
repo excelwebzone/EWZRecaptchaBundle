@@ -151,11 +151,10 @@ Finally, add the following to your config file:
 ewz_recaptcha:
     public_key:   here_is_your_public_key
     private_key:  here_is_your_private_key
-    secure:       false
     locale_key:   kernel.default_locale
 ```
 
-**NOTE**: If you use secure url for reCAPTCHA put true in secure (false is the default value).
+**NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
 
 You can easily disable reCAPTCHA (for example in a local or test environment):
 
