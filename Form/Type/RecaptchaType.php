@@ -17,9 +17,8 @@ class RecaptchaType extends AbstractType
     /**
      * The reCAPTCHA server URL's
      */
-    const RECAPTCHA_API_SERVER        = 'http://www.google.com/recaptcha/api';
-    const RECAPTCHA_API_SECURE_SERVER = 'https://www.google.com/recaptcha/api';
-    const RECAPTCHA_API_JS_SERVER     = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+    const RECAPTCHA_API_SERVER        = '//www.google.com/recaptcha/api';
+    const RECAPTCHA_API_JS_SERVER     = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
 
     /**
      * The public key
@@ -27,13 +26,6 @@ class RecaptchaType extends AbstractType
      * @var string
      */
     protected $publicKey;
-
-    /**
-     * Use secure url?
-     *
-     * @var Boolean
-     */
-    protected $secure;
 
     /**
      * Enable recaptcha?
@@ -57,7 +49,6 @@ class RecaptchaType extends AbstractType
     public function __construct(ContainerInterface $container)
     {
         $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
-        $this->secure    = $container->getParameter('ewz_recaptcha.secure');
         $this->enabled   = $container->getParameter('ewz_recaptcha.enabled');
         $this->language  = $container->getParameter($container->getParameter('ewz_recaptcha.locale_key'));
     }
@@ -75,11 +66,7 @@ class RecaptchaType extends AbstractType
             return;
         }
 
-        if ($this->secure) {
-            $server = self::RECAPTCHA_API_SECURE_SERVER;
-        } else {
-            $server = self::RECAPTCHA_API_SERVER;
-        }
+        $server = self::RECAPTCHA_API_SERVER;
 
         $view->vars = array_replace($view->vars, array(
             'url_challenge' => sprintf('%s/challenge?k=%s', $server, $this->publicKey),
