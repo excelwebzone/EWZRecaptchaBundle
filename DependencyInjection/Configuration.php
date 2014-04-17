@@ -24,7 +24,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('public_key')->isRequired()->end()
                 ->scalarNode('private_key')->isRequired()->end()
-                ->booleanNode('secure')->defaultFalse()->end()
                 ->booleanNode('enabled')->defaultTrue()->end()
                 ->scalarNode('locale_key')->defaultValue('kernel.default_locale')->end()
             ->end()
