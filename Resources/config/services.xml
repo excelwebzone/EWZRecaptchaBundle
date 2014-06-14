@@ -12,12 +12,16 @@
     <services>
         <service id="ewz_recaptcha.form.type" class="%ewz_recaptcha.form.type.class%">
             <tag name="form.type" alias="ewz_recaptcha" />
-            <argument type="service" id="service_container" />
+            <argument>%ewz_recaptcha.public_key%</argument>
+            <argument>%ewz_recaptcha.enabled%</argument>
+            <argument>%ewz_recaptcha.locale_key%</argument>
         </service>
 
         <service id="ewz_recaptcha.validator.true" class="%ewz_recaptcha.validator.true.class%">
             <tag name="validator.constraint_validator" alias="ewz_recaptcha.true" />
-            <argument type="service" id="service_container" />
+            <argument>%ewz_recaptcha.enabled%</argument>
+            <argument>%ewz_recaptcha.private_key%</argument>
+            <argument type="service" id="request_stack" />
         </service>
     </services>
 </container>
