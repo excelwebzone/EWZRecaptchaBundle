@@ -3,9 +3,11 @@ EWZRecaptchaBundle
 
 This bundle provides easy reCAPTCHA form field for Symfony.
 
+A bridge for the Silex framework has been implemented too : [Jump to documentation](Bridge/README.md).
+
 ## Installation
 
-### Step 1: Using Composer (recommended)
+### Step 1: Use composer and enable Bundle
 
 To install EWZRecaptchaBundle with Composer just add the following to your
 `composer.json` file:
@@ -46,104 +48,9 @@ $bundles = array(
 );
 ```
 
-### Step 1 (alternative): Using ``deps`` file (Symfony 2.0.x)
+### Step2: Configure the bundle's
 
-First, checkout a copy of the code. Just add the following to the ``deps``
-file of your Symfony Standard Distribution:
-
-```ini
-[EWZRecaptchaBundle]
-    git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
-    target=/bundles/EWZ/Bundle/RecaptchaBundle
-```
-
-**NOTE**: You can add `version` tag in the snippet above with the latest stable
-branch, for example ``version=origin/2.0``.
-
-Then register the bundle with your kernel:
-
-```php
-<?php
-
-// in AppKernel::registerBundles()
-$bundles = array(
-    // ...
-    new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
-    // ...
-);
-```
-
-Make sure that you also register the namespace with the autoloader:
-
-```php
-<?php
-
-// app/autoload.php
-$loader->registerNamespaces(array(
-    // ...
-    'EWZ'              => __DIR__.'/../vendor/bundles',
-    // ...
-));
-```
-
-Now use the ``vendors`` script to clone the newly added repositories
-into your project:
-
-```bash
-$ php bin/vendors install
-```
-
-### Step 1 (alternative): Using submodules (Symfony 2.0.x)
-
-If you're managing your vendor libraries with submodules, first create the
-`vendor/bundles/EWZ/Bundle` directory:
-
-``` bash
-$ mkdir -pv vendor/bundles/EWZ/Bundle
-```
-
-Next, add the necessary submodule:
-
-``` bash
-$ git submodule add git://github.com/excelwebzone/EWZRecaptchaBundle.git vendor/bundles/EWZ/Bundle/RecaptchaBundle
-```
-
-### Step2: Configure the autoloader
-
-Add the following entry to your autoloader:
-
-``` php
-<?php
-// app/autoload.php
-
-$loader->registerNamespaces(array(
-    // ...
-
-    'EWZ' => __DIR__.'/../vendor/bundles',
-));
-```
-
-### Step3: Enable the bundle
-
-Finally, enable the bundle in the kernel:
-
-``` php
-<?php
-// app/AppKernel.php
-
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-
-        new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
-    );
-}
-```
-
-### Step4: Configure the bundle's
-
-Finally, add the following to your config file:
+Add the following to your config file:
 
 ``` yaml
 # app/config/config.yml
@@ -151,7 +58,7 @@ Finally, add the following to your config file:
 ewz_recaptcha:
     public_key:   here_is_your_public_key
     private_key:  here_is_your_private_key
-    locale_key:   kernel.default_locale
+    locale_key:   %kernel.default_locale%
 ```
 
 **NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
@@ -216,7 +123,7 @@ public $recaptcha;
 ```
 
 Another method would consist to pass the validation constraints as an options of your FormType. This way, your data class contains only meaningful properties.
-If we take the example from above, the buildForm method would look like this. 
+If we take the example from above, the buildForm method would look like this.
 Please note that if you set ```mapped=>false``` then the annotation will not work. You have to also set ```constraints```:
 
 ``` php
@@ -242,7 +149,8 @@ public function buildForm(FormBuilder $builder, array $options)
 ```
 
 
-Cool, now you are ready to implement the form widget:
+The form template resource is now auto registered via an extension of the container.
+However, you can always implement your own custom form widget.
 
 **PHP**:
 

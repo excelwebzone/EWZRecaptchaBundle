@@ -2,11 +2,9 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -28,13 +26,6 @@ class RecaptchaType extends AbstractType
     protected $publicKey;
 
     /**
-     * Use secure url?
-     *
-     * @var Boolean
-     */
-    protected $secure;
-
-    /**
      * Enable recaptcha?
      *
      * @var Boolean
@@ -51,13 +42,15 @@ class RecaptchaType extends AbstractType
     /**
      * Construct.
      *
-     * @param ContainerInterface $container An ContainerInterface instance
+     * @param string $publicKey Recaptcha public key
+     * @param boolean $enabled Recaptache status
+     * @param string $language language or locale code
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct($publicKey, $enabled, $language)
     {
-        $this->publicKey = $container->getParameter('ewz_recaptcha.public_key');
-        $this->enabled   = $container->getParameter('ewz_recaptcha.enabled');
-        $this->language  = $container->getParameter($container->getParameter('ewz_recaptcha.locale_key'));
+        $this->publicKey = $publicKey;
+        $this->enabled   = $enabled;
+        $this->language  = $language;
     }
 
     /**
