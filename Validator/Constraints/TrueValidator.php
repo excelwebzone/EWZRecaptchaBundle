@@ -2,35 +2,15 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
 class TrueValidator extends ConstraintValidator
 {
+    protected $container;
     protected $cache;
-
-    /**
-     * Enable recaptcha?
-     *
-     * @var Boolean
-     */
-    protected $enabled;
-
-    /**
-     * Recaptcha Private Key
-     *
-     * @var Boolean
-     */
-    protected $privateKey;
-
-    /**
-     * Request Stack
-     *
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
 
     /**
      * The reCAPTCHA server URL's
@@ -42,11 +22,9 @@ class TrueValidator extends ConstraintValidator
      *
      * @param ContainerInterface $container An ContainerInterface instance
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack)
+    public function __construct(ContainerInterface $container)
     {
-        $this->enabled = $enabled;
-        $this->privateKey = $privateKey;
-        $this->requestStack = $requestStack;
+        $this->container = $container;
     }
 
     /**
@@ -55,24 +33,26 @@ class TrueValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         // if recaptcha is disabled, always valid
-        if (!$this->enabled) {
+        if (!$this->container->getParameter('ewz_recaptcha.enabled')) {
             return true;
         }
 
         // define variable for recaptcha check answer
-        $remoteip   = $this->requestStack->getMasterRequest()->server->get('REMOTE_ADDR');
-        $challenge  = $this->requestStack->getMasterRequest()->get('recaptcha_challenge_field');
-        $response   = $this->requestStack->getMasterRequest()->get('recaptcha_response_field');
+        $privateKey = $this->container->getParameter('ewz_recaptcha.private_key');
+
+        $remoteip   = $this->container->get('request')->server->get('REMOTE_ADDR');
+        $challenge  = $this->container->get('request')->get('recaptcha_challenge_field');
+        $response   = $this->container->get('request')->get('recaptcha_response_field');
 
         if (
-            isset($this->cache[$this->privateKey]) &&
-            isset($this->cache[$this->privateKey][$remoteip]) &&
-            isset($this->cache[$this->privateKey][$remoteip][$challenge]) &&
-            isset($this->cache[$this->privateKey][$remoteip][$challenge][$response])
+            isset($this->cache[$privateKey]) &&
+            isset($this->cache[$privateKey][$remoteip]) &&
+            isset($this->cache[$privateKey][$remoteip][$challenge]) &&
+            isset($this->cache[$privateKey][$remoteip][$challenge][$response])
         ) {
-            $cached = $this->cache[$this->privateKey][$remoteip][$challenge][$response];
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response];
         } else {
-            $cached = $this->cache[$this->privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($this->privateKey, $remoteip, $challenge, $response);
+            $cached = $this->cache[$privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($privateKey, $remoteip, $challenge, $response);
         }
 
         if (!$cached) {
