@@ -1,5 +1,5 @@
 {
-    "name": "excelwebzone-local/recaptcha-bundle",
+    "name": "excelwebzone/recaptcha-bundle",
     "description": "This bundle provides easy reCAPTCHA form field integration",
     "keywords": ["recaptcha"],
     "homepage": "https://github.com/excelwebzone/EWZRecaptchaBundle",
