@@ -33,6 +33,13 @@ class RecaptchaType extends AbstractType
     protected $enabled;
 
     /**
+     * Use AJAX api?
+     *
+     * @var Boolean
+     */
+    protected $ajax;
+
+    /**
      * Language
      *
      * @var string
@@ -46,10 +53,11 @@ class RecaptchaType extends AbstractType
      * @param boolean $enabled Recaptache status
      * @param string $language language or locale code
      */
-    public function __construct($publicKey, $enabled, $language)
+    public function __construct($publicKey, $enabled, $ajax, $language)
     {
         $this->publicKey = $publicKey;
         $this->enabled   = $enabled;
+        $this->ajax      = $ajax;
         $this->language  = $language;
     }
 
@@ -60,19 +68,25 @@ class RecaptchaType extends AbstractType
     {
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_enabled' => $this->enabled,
+            'ewz_recaptcha_ajax'    => $this->ajax,
         ));
 
         if (!$this->enabled) {
             return;
         }
 
-        $server = self::RECAPTCHA_API_SERVER;
-
-        $view->vars = array_replace($view->vars, array(
-            'url_challenge' => sprintf('%s/challenge?k=%s', $server, $this->publicKey),
-            'url_noscript'  => sprintf('%s/noscript?k=%s', $server, $this->publicKey),
-            'public_key'    => $this->publicKey,
-        ));
+        if (!$this->ajax) {
+            $view->vars = array_replace($view->vars, array(
+                'url_challenge' => sprintf('%s/challenge?k=%s', self::RECAPTCHA_API_SERVER, $this->publicKey),
+                'url_noscript'  => sprintf('%s/noscript?k=%s', self::RECAPTCHA_API_SERVER, $this->publicKey),
+                'public_key'    => $this->publicKey,
+            ));
+        } else {
+            $view->vars = array_replace($view->vars, array(
+                'url_api'    => self::RECAPTCHA_API_JS_SERVER,
+                'public_key' => $this->publicKey,
+            ));
+        }
     }
 
     /**
