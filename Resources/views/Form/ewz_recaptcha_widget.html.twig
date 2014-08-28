@@ -16,6 +16,7 @@
         {% else %}
             <div id="ewz_recaptcha_div"></div>
 
+            <script src="{{ form.vars.url_api }}" type="text/javascript"></script>
             <script type="text/javascript">
                 $(function() {
                     Recaptcha.create('{{ form.vars.public_key }}', 'ewz_recaptcha_div', {{ attr.options|default({})|json_encode|raw }});

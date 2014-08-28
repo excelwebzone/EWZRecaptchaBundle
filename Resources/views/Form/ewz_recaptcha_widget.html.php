@@ -14,6 +14,7 @@
     <?php else ?>
         <div id="ewz_recaptcha_div"></div>
 
+        <script src="<?php echo $url_api ?>" type="text/javascript"></script>
         <script type="text/javascript">
             $(function() {
                 Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
