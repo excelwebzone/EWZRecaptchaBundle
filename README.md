@@ -73,6 +73,16 @@ ewz_recaptcha:
     enabled: false
 ```
 
+Or even load reCAPTCHA using Ajax:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    ajax: true
+```
+
 Congratulations! You're ready!
 
 ## Basic Usage
