@@ -14,6 +14,7 @@
             <tag name="form.type" alias="ewz_recaptcha" />
             <argument>%ewz_recaptcha.public_key%</argument>
             <argument>%ewz_recaptcha.enabled%</argument>
+            <argument>%ewz_recaptcha.ajax%</argument>
             <argument>%ewz_recaptcha.locale_key%</argument>
         </service>
 

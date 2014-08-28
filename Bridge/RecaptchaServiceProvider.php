@@ -22,6 +22,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
         $app['ewz_recaptcha.private_key'] = null;
         $app['ewz_recaptcha.locale_key'] = $app['locale'];
         $app['ewz_recaptcha.enabled'] = true;
+        $app['ewz_recaptcha.ajax'] = false;
 
         // add loader for EWZ Template
         if (isset($app['twig'])) {

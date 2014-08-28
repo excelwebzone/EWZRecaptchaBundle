@@ -39,6 +39,7 @@ class RecaptchaExtension extends AbstractExtension
             new RecaptchaType(
                 $this->app['ewz_recaptcha.public_key'],
                 $this->app['ewz_recaptcha.enabled'],
+                $this->app['ewz_recaptcha.ajax'],
                 $this->app['ewz_recaptcha.locale_key']
             )
         );
