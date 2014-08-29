@@ -15,9 +15,12 @@
         <div id="ewz_recaptcha_div"></div>
 
         <script type="text/javascript">
-            $(function() {
+            var s = document.createElement('script');
+            s.onload = function() {
                 Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
-            });
+            };
+            s.src = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+            document.getElementById('ewz_recaptcha_div').appendChild(s);
         </script>
     <?php endif ?>
 <?php endif ?>
