@@ -16,9 +16,12 @@
 
         <script src="<?php echo $url_api ?>" type="text/javascript"></script>
         <script type="text/javascript">
-            $(function() {
+            var s = document.createElement('script');
+            s.onload = function() {
                 Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
-            });
+            };
+            s.src = '<?php echo $url_api ?>';
+            document.getElementById('ewz_recaptcha_div').appendChild(s);
         </script>
     <?php endif ?>
 <?php endif ?>
