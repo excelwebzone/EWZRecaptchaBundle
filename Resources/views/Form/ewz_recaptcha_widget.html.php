@@ -19,7 +19,7 @@
             s.onload = function() {
                 Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
             };
-            s.src = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+            s.src = '<?php echo $url_api ?>';
             document.getElementById('ewz_recaptcha_div').appendChild(s);
         </script>
     <?php endif ?>

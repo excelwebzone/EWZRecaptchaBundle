@@ -21,7 +21,7 @@
                 s.onload = function() {
                     Recaptcha.create('{{ form.vars.public_key }}', 'ewz_recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
                 };
-                s.src = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+                s.src = '{{ form.vars.url_api }}';
                 document.getElementById('ewz_recaptcha_div').appendChild(s);
             </script>
         {% endif %}
