@@ -16,11 +16,14 @@
         {% else %}
             <div id="ewz_recaptcha_div"></div>
 
-            <script src="{{ form.vars.url_api }}" type="text/javascript"></script>
             <script type="text/javascript">
-                $(function() {
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.onload = function() {
                     Recaptcha.create('{{ form.vars.public_key }}', 'ewz_recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
-                });
+                }
+                script.src = '{{ form.vars.url_api }}';
+                document.getElementsByTagName('head')[0].appendChild(script);
             </script>
         {% endif %}
     {% endif %}

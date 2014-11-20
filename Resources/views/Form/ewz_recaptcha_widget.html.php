@@ -14,11 +14,14 @@
     <?php else ?>
         <div id="ewz_recaptcha_div"></div>
 
-        <script src="<?php echo $url_api ?>" type="text/javascript"></script>
         <script type="text/javascript">
-            $(function() {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.onload = function() {
                 Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
-            });
+            }
+            script.src = '<?php echo $url_api ?>';
+            document.getElementsByTagName('head')[0].appendChild(script);
         </script>
     <?php endif ?>
 <?php endif ?>
