@@ -148,7 +148,8 @@ public function buildForm(FormBuilder $builder, array $options)
     $builder->add('recaptcha', 'ewz_recaptcha', array(
         'attr'          => array(
             'options' => array(
-                'theme' => 'clean'
+                'theme' => 'light',
+                'type' => 'image'
             )
         ),
         'mapped' => false,
@@ -171,7 +172,8 @@ However, you can always implement your own custom form widget.
 <?php echo $view['form']->widget($form['recaptcha'], array(
     'attr' => array(
         'options' => array(
-            'theme' => 'clean',
+            'theme' => 'light',
+            'type' => 'image'
         ),
     ),
 )) ?>
@@ -184,7 +186,8 @@ However, you can always implement your own custom form widget.
 
 {{ form_widget(form.recaptcha, { 'attr': {
     'options' : {
-        'theme' : 'clean',
+        'theme' : 'light',
+        'type' : 'image'
     },
 } }) }}
 ```

@@ -92,7 +92,7 @@ class TrueValidator extends ConstraintValidator
         }
 
         $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
-            'privatekey' => $privateKey,
+            'secret' => $privateKey,
             'remoteip'   => $remoteip,
             'response'   => $response
         ));
@@ -102,7 +102,7 @@ class TrueValidator extends ConstraintValidator
         if ($response['success'] == true) {
             return true;
         }
-
+        
         return false;
     }
 
@@ -118,7 +118,7 @@ class TrueValidator extends ConstraintValidator
      */
     private function httpGet($host, $path, $data)
     {
-        $host = $host . $path . http_build_query($data);
+        $host = $host . $path . '?' . http_build_query($data);
         
         return file_get_contents($host);
     }
