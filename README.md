@@ -111,7 +111,8 @@ public function buildForm(FormBuilder $builder, array $options)
     $builder->add('recaptcha', 'ewz_recaptcha', array(
         'attr' => array(
             'options' => array(
-                'theme' => 'clean'
+                'theme' => 'light',
+                'type' => 'image'
             )
         )
     ));

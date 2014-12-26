@@ -15,7 +15,7 @@ class RecaptchaType extends AbstractType
     /**
      * The reCAPTCHA server URL's
      */
-    const RECAPTCHA_API_SERVER        = '//www.google.com/recaptcha/api';
+    const RECAPTCHA_API_SERVER        = 'https://www.google.com/recaptcha/api.js';
     const RECAPTCHA_API_JS_SERVER     = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
 
     /**
@@ -77,8 +77,7 @@ class RecaptchaType extends AbstractType
 
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
-                'url_challenge' => sprintf('%s/challenge?k=%s', self::RECAPTCHA_API_SERVER, $this->publicKey),
-                'url_noscript'  => sprintf('%s/noscript?k=%s', self::RECAPTCHA_API_SERVER, $this->publicKey),
+                'url_challenge' => self::RECAPTCHA_API_SERVER . "?hl=" . $this->language,
                 'public_key'    => $this->publicKey,
             ));
         } else {
@@ -101,8 +100,8 @@ class RecaptchaType extends AbstractType
             'url_noscript'  => null,
             'attr'          => array(
                 'options' => array(
-                    'theme' => 'clean',
-	    	    'lang'  => $this->language,
+                    'theme' => 'light',
+                    'type' => 'image'
     	        ),
 	    ),
         ));

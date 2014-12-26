@@ -2,17 +2,8 @@
 {% spaceless %}
     {% if form.vars.ewz_recaptcha_enabled %}
         {% if not form.vars.ewz_recaptcha_ajax %}
-            {% if attr.options is defined %}
-                <script type="text/javascript">
-                    var RecaptchaOptions = {{ attr.options|json_encode|raw }}
-                </script>
-            {% endif %}
             <script src="{{ form.vars.url_challenge }}" type="text/javascript"></script>
-            <noscript>
-                <iframe src="{{ form.vars.url_noscript }}" height="300" width="500"></iframe><br/>
-                <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-                <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
-            </noscript>
+            <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}"></div>
         {% else %}
             <div id="ewz_recaptcha_div"></div>
 
