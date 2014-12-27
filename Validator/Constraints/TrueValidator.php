@@ -9,8 +9,6 @@ use Symfony\Component\Validator\Exception\ValidatorException;
 
 class TrueValidator extends ConstraintValidator
 {
-    protected $cache;
-
     /**
      * Enable recaptcha?
      *
@@ -35,7 +33,7 @@ class TrueValidator extends ConstraintValidator
     /**
      * The reCAPTCHA server URL's
      */
-    const RECAPTCHA_VERIFY_SERVER = 'www.google.com';
+    const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
     /**
      * Construct.
@@ -61,21 +59,12 @@ class TrueValidator extends ConstraintValidator
 
         // define variable for recaptcha check answer
         $remoteip   = $this->requestStack->getMasterRequest()->server->get('REMOTE_ADDR');
-        $challenge  = $this->requestStack->getMasterRequest()->get('recaptcha_challenge_field');
-        $response   = $this->requestStack->getMasterRequest()->get('recaptcha_response_field');
+        $response   = $this->requestStack->getMasterRequest()->get('g-recaptcha-response');
 
-        if (
-            isset($this->cache[$this->privateKey]) &&
-            isset($this->cache[$this->privateKey][$remoteip]) &&
-            isset($this->cache[$this->privateKey][$remoteip][$challenge]) &&
-            isset($this->cache[$this->privateKey][$remoteip][$challenge][$response])
-        ) {
-            $cached = $this->cache[$this->privateKey][$remoteip][$challenge][$response];
-        } else {
-            $cached = $this->cache[$this->privateKey][$remoteip][$challenge][$response] = $this->checkAnswer($this->privateKey, $remoteip, $challenge, $response);
-        }
+        
+        $isValid = $this->checkAnswer($this->privateKey, $remoteip, $response);
 
-        if (!$cached) {
+        if (!$isValid) {
             $this->context->addViolation($constraint->message);
         }
     }
@@ -85,38 +74,35 @@ class TrueValidator extends ConstraintValidator
       *
       * @param string $privateKey
       * @param string $remoteip
-      * @param string $challenge
       * @param string $response
-      * @param array $extra_params an array of extra variables to post to the server
       *
       * @throws ValidatorException When missing remote ip
       *
       * @return Boolean
       */
-    private function checkAnswer($privateKey, $remoteip, $challenge, $response, $extra_params = array())
+    private function checkAnswer($privateKey, $remoteip, $response)
     {
         if ($remoteip == null || $remoteip == '') {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
         }
 
         // discard spam submissions
-        if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0) {
+        if ($response == null || strlen($response) == 0) {
             return false;
         }
 
-        $response = $this->httpPost(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/verify', array(
-            'privatekey' => $privateKey,
+        $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
+            'secret' => $privateKey,
             'remoteip'   => $remoteip,
-            'challenge'  => $challenge,
             'response'   => $response
-        ) + $extra_params);
+        ));
 
-        $answers = explode ("\n", $response [1]);
+        $response = json_decode($response, true);
 
-        if (trim($answers[0]) == 'true') {
+        if ($response['success'] == true) {
             return true;
         }
-
+        
         return false;
     }
 
@@ -130,52 +116,10 @@ class TrueValidator extends ConstraintValidator
      *
      * @return array response
      */
-    private function httpPost($host, $path, $data, $port = 80)
+    private function httpGet($host, $path, $data)
     {
-        $req = $this->getQSEncode($data);
-
-        $http_request  = "POST $path HTTP/1.0\r\n";
-        $http_request .= "Host: $host\r\n";
-        $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-        $http_request .= "Content-Length: ".strlen($req)."\r\n";
-        $http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
-        $http_request .= "\r\n";
-        $http_request .= $req;
-
-        $response = null;
-        if (!$fs = @fsockopen($host, $port, $errno, $errstr, 10)) {
-            throw new ValidatorException('Could not open socket');
-        }
-
-        fwrite($fs, $http_request);
-
-        while (!feof($fs)) {
-            $response .= fgets($fs, 1160); // one TCP-IP packet
-        }
-
-        fclose($fs);
-
-        $response = explode("\r\n\r\n", $response, 2);
-
-        return $response;
-    }
-
-    /**
-     * Encodes the given data into a query string format
-     *
-     * @param $data - array of string elements to be encoded
-     *
-     * @return string - encoded request
-     */
-    private function getQSEncode($data)
-    {
-        $req = null;
-        foreach ($data as $key => $value) {
-            $req .= $key.'='.urlencode(stripslashes($value)).'&';
-        }
-
-        // cut the last '&'
-        $req = substr($req,0,strlen($req)-1);
-        return $req;
+        $host = $host . $path . '?' . http_build_query($data);
+        
+        return file_get_contents($host);
     }
 }
