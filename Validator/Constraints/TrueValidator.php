@@ -26,7 +26,7 @@ class TrueValidator extends ConstraintValidator
     /**
      * Request Stack
      *
-     * @var \Symfony\Component\HttpFoundation\RequestStack
+     * @var RequestStack
      */
     protected $requestStack;
 
@@ -58,10 +58,9 @@ class TrueValidator extends ConstraintValidator
         }
 
         // define variable for recaptcha check answer
-        $remoteip   = $this->requestStack->getMasterRequest()->server->get('REMOTE_ADDR');
-        $response   = $this->requestStack->getMasterRequest()->get('g-recaptcha-response');
+        $remoteip = $this->requestStack->getMasterRequest()->server->get('REMOTE_ADDR');
+        $response = $this->requestStack->getMasterRequest()->get('g-recaptcha-response');
 
-        
         $isValid = $this->checkAnswer($this->privateKey, $remoteip, $response);
 
         if (!$isValid) {
@@ -70,7 +69,7 @@ class TrueValidator extends ConstraintValidator
     }
 
     /**
-      * Calls an HTTP POST function to verify if the user's guess was correct
+      * Calls an HTTP POST function to verify if the user's guess was correct.
       *
       * @param string $privateKey
       * @param string $remoteip
@@ -92,9 +91,9 @@ class TrueValidator extends ConstraintValidator
         }
 
         $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
-            'secret' => $privateKey,
-            'remoteip'   => $remoteip,
-            'response'   => $response
+            'secret'   => $privateKey,
+            'remoteip' => $remoteip,
+            'response' => $response
         ));
 
         $response = json_decode($response, true);
@@ -102,24 +101,23 @@ class TrueValidator extends ConstraintValidator
         if ($response['success'] == true) {
             return true;
         }
-        
+
         return false;
     }
 
     /**
-     * Submits an HTTP POST to a reCAPTCHA server
+     * Submits an HTTP POST to a reCAPTCHA server.
      *
      * @param string $host
      * @param string $path
-     * @param array $data
-     * @param int port
+     * @param array  $data
      *
      * @return array response
      */
     private function httpGet($host, $path, $data)
     {
-        $host = $host . $path . '?' . http_build_query($data);
-        
+        $host = sprintf('%s%s?%s', $host, $path, http_build_query($data));
+
         return file_get_contents($host);
     }
 }

@@ -15,8 +15,8 @@ class RecaptchaType extends AbstractType
     /**
      * The reCAPTCHA server URL's
      */
-    const RECAPTCHA_API_SERVER        = 'https://www.google.com/recaptcha/api.js';
-    const RECAPTCHA_API_JS_SERVER     = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+    const RECAPTCHA_API_SERVER    = 'https://www.google.com/recaptcha/api.js';
+    const RECAPTCHA_API_JS_SERVER = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
 
     /**
      * The public key
@@ -49,9 +49,9 @@ class RecaptchaType extends AbstractType
     /**
      * Construct.
      *
-     * @param string $publicKey Recaptcha public key
-     * @param boolean $enabled Recaptache status
-     * @param string $language language or locale code
+     * @param string  $publicKey Recaptcha public key
+     * @param Boolean $enabled Recaptache status
+     * @param string  $language language or locale code
      */
     public function __construct($publicKey, $enabled, $ajax, $language)
     {
@@ -77,7 +77,7 @@ class RecaptchaType extends AbstractType
 
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
-                'url_challenge' => self::RECAPTCHA_API_SERVER . "?hl=" . $this->language,
+                'url_challenge' => sprintf('%s?hi=%s', self::RECAPTCHA_API_SERVER, $this->language),
                 'public_key'    => $this->publicKey,
             ));
         } else {
@@ -101,9 +101,9 @@ class RecaptchaType extends AbstractType
             'attr'          => array(
                 'options' => array(
                     'theme' => 'light',
-                    'type' => 'image'
-    	        ),
-	    ),
+                    'type'  => 'image'
+                )
+            )
         ));
     }
 

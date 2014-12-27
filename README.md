@@ -56,9 +56,9 @@ Add the following to your config file:
 # app/config/config.yml
 
 ewz_recaptcha:
-    public_key:   here_is_your_public_key
-    private_key:  here_is_your_private_key
-    locale_key:   %kernel.default_locale%
+    public_key:  here_is_your_public_key
+    private_key: here_is_your_private_key
+    locale_key:  %kernel.default_locale%
 ```
 
 **NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
@@ -112,7 +112,7 @@ public function buildForm(FormBuilder $builder, array $options)
         'attr' => array(
             'options' => array(
                 'theme' => 'light',
-                'type' => 'image'
+                'type'  => 'image'
             )
         )
     ));
@@ -146,14 +146,14 @@ public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
     $builder->add('recaptcha', 'ewz_recaptcha', array(
-        'attr'          => array(
+        'attr'        => array(
             'options' => array(
                 'theme' => 'light',
-                'type' => 'image'
+                'type'  => 'image'
             )
         ),
-        'mapped' => false,
-        'constraints'   => array(
+        'mapped'      => false,
+        'constraints' => array(
             new True()
         )
     ));
@@ -173,7 +173,7 @@ However, you can always implement your own custom form widget.
     'attr' => array(
         'options' => array(
             'theme' => 'light',
-            'type' => 'image'
+            'type'  => 'image'
         ),
     ),
 )) ?>
@@ -186,8 +186,8 @@ However, you can always implement your own custom form widget.
 
 {{ form_widget(form.recaptcha, { 'attr': {
     'options' : {
-        'theme' : 'light',
-        'type' : 'image'
+        'theme': 'light',
+        'type': 'image'
     },
 } }) }}
 ```
