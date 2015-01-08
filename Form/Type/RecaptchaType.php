@@ -77,7 +77,7 @@ class RecaptchaType extends AbstractType
 
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
-                'url_challenge' => sprintf('%s?hi=%s', self::RECAPTCHA_API_SERVER, $this->language),
+                'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $this->language),
                 'public_key'    => $this->publicKey,
             ));
         } else {
