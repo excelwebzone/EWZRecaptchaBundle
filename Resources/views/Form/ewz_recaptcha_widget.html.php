@@ -1,5 +1,5 @@
 <?php if ($ewz_recaptcha_enabled): ?>
-    <?php if !($ewz_recaptcha_ajax): ?>
+    <?php if (!$ewz_recaptcha_ajax): ?>
         <script src="<?php echo $url_challenge ?>" type="text/javascript"></script>
         <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme'] ?>" data-type="<?php echo $attr['options']['type'] ?>" data-sitekey="<?php echo $public_key ?>"></div>
         <noscript>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </noscript>
-    <?php else ?>
+    <?php else: ?>
         <div id="ewz_recaptcha_div"></div>
 
         <script type="text/javascript">
