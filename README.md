@@ -24,7 +24,7 @@ To install EWZRecaptchaBundle with Composer just add the following to your
 ```
 
 **NOTE**: Please replace `dev-master` in the snippet above with the latest stable
-branch, for example ``2.0.*``.
+branch, for example ``2.3.*``.
 
 Then, you can install the new dependencies by running Composer's ``update``
 command from the directory where your ``composer.json`` file is located:
