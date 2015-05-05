@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * A field for entering a recaptcha text.
@@ -47,18 +48,40 @@ class RecaptchaType extends AbstractType
     protected $language;
 
     /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
+     * @var boolean
+     */
+    protected $remember = false;
+
+	/**
+	 * @var int
+	 */
+	protected $maxValidationTryCount = 5;
+
+    /**
      * Construct.
      *
      * @param string  $publicKey Recaptcha public key
      * @param Boolean $enabled Recaptache status
+     * @param Boolean $ajax ajax mode
      * @param string  $language language or locale code
+     * @param \Symfony\Component\HttpFoundation\Session\Session  $session session service
+     * @param Boolean $remember remember mode
+     * @param int $maxValidationTryCount the maximum number of times a user can pass validation without having to revalidate the captcha field
      */
-    public function __construct($publicKey, $enabled, $ajax, $language)
+    public function __construct($publicKey, $enabled, $ajax, $language, $session, $remember, $maxValidationTryCount)
     {
         $this->publicKey = $publicKey;
         $this->enabled   = $enabled;
         $this->ajax      = $ajax;
         $this->language  = $language;
+        $this->session = $session;
+        $this->remember = $remember;
+        $this->maxValidationTryCount = $maxValidationTryCount;
     }
 
     /**
@@ -66,7 +89,21 @@ class RecaptchaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        /*if(array_key_exists('remember', $options)){
+            $this->remember = (bool)((int)$options['remember']); // TODO thinking of a proper way to store this for validation of this form only
+        }
+        if(array_key_exists('max_validation_try_count', $options)){
+            $this->maxVvalidationTryCount = (int)(''.$options['max_validation_try_count']); // TODO thinking of a proper way to store this for validation of this form only
+        }*/
+
+        if($this->remember && $this->session->get('reCaptcha.isNotARobot') && $this->session->get('reCaptcha.validationTryCount') < $this->maxValidationTryCount){
+            $this->enabled = false;
+        }
+
         $view->vars = array_replace($view->vars, array(
+            'ewz_recaptcha_try' => $this->session->get('reCaptcha.validationTryCount'),
+            'ewz_recaptcha_max_try' => $this->maxValidationTryCount,
+            'ewz_recaptcha_remember' => $this->remember,
             'ewz_recaptcha_enabled' => $this->enabled,
             'ewz_recaptcha_ajax'    => $this->ajax,
         ));
@@ -95,6 +132,8 @@ class RecaptchaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'compound'      => false,
+            //'remember'      => false, // TODO thinking of a proper way to store this for validation of this form only
+            //'max_validation_try_count' => 5, // TODO thinking of a proper way to store this for validation of this form only
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,

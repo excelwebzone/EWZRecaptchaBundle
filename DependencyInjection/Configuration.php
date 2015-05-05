@@ -26,6 +26,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('private_key')->isRequired()->end()
                 ->booleanNode('enabled')->defaultTrue()->end()
                 ->booleanNode('ajax')->defaultFalse()->end()
+                ->booleanNode('remember')->defaultFalse()->end()
+                ->scalarNode('max_validation_try_count')->defaultValue(5)->end()
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
             ->end()
         ;

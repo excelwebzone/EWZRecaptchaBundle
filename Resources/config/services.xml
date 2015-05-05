@@ -16,6 +16,9 @@
             <argument>%ewz_recaptcha.enabled%</argument>
             <argument>%ewz_recaptcha.ajax%</argument>
             <argument>%ewz_recaptcha.locale_key%</argument>
+            <argument type="service" id="session" />
+            <argument>%ewz_recaptcha.remember%</argument>
+            <argument>%ewz_recaptcha.max_validation_try_count%</argument>
         </service>
 
         <service id="ewz_recaptcha.validator.true" class="%ewz_recaptcha.validator.true.class%">
@@ -23,6 +26,9 @@
             <argument>%ewz_recaptcha.enabled%</argument>
             <argument>%ewz_recaptcha.private_key%</argument>
             <argument type="service" id="request_stack" />
+            <argument type="service" id="session" />
+            <argument>%ewz_recaptcha.remember%</argument>
+            <argument>%ewz_recaptcha.max_validation_try_count%</argument>
         </service>
     </services>
 </container>
