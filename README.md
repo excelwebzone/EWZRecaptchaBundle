@@ -59,7 +59,13 @@ ewz_recaptcha:
     public_key:  here_is_your_public_key
     private_key: here_is_your_private_key
     locale_key:  %kernel.default_locale%
+    remember:  false
+    max_validation_try_count:  5
 ```
+
+`remember` is useful if you doesn't want to display the reCaptcha field when the user already passed validation before (using server session)
+
+`max_validation_try_count` is the number of time a user can validate a reCaptcha form without having captcha displayed/checked if already validated once (only working if `remember: true`)
 
 **NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
 

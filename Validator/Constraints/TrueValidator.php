@@ -2,6 +2,7 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -31,20 +32,40 @@ class TrueValidator extends ConstraintValidator
     protected $requestStack;
 
     /**
+     * @var Session
+     */
+    protected $session;
+    /**
+     * @var boolean
+     */
+    protected $remember = false;
+
+    /**
+     * @var int
+     */
+    protected $maxValidationTryCount = 5;
+
+    /**
      * The reCAPTCHA server URL's
      */
     const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
     /**
-     * Construct.
-     *
-     * @param ContainerInterface $container An ContainerInterface instance
+     * @param $enabled
+     * @param $privateKey
+     * @param RequestStack $requestStack
+     * @param Session $session session service
+     * @param boolean $remember
+     * @param int $maxValidationTryCount
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack)
+    public function __construct($enabled, $privateKey, RequestStack $requestStack, Session $session, $remember, $maxValidationTryCount)
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
         $this->requestStack = $requestStack;
+        $this->session = $session;
+        $this->remember = $remember;
+        $this->maxValidationTryCount = $maxValidationTryCount;
     }
 
     /**
@@ -52,8 +73,15 @@ class TrueValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        $validationTryCount = $this->session->get('reCaptcha.validationTryCount');
+        if(!is_integer($validationTryCount)){
+            $validationTryCount = 0;
+        }
+        $validationTryCount++;
+        $this->session->set('reCaptcha.validationTryCount', $validationTryCount);
+
         // if recaptcha is disabled, always valid
-        if (!$this->enabled) {
+        if (!$this->enabled || ($this->remember && $this->session->get('reCaptcha.isNotARobot') && $validationTryCount <= $this->maxValidationTryCount) ) {
             return true;
         }
 
@@ -63,7 +91,12 @@ class TrueValidator extends ConstraintValidator
 
         $isValid = $this->checkAnswer($this->privateKey, $remoteip, $response);
 
-        if (!$isValid) {
+        if ($isValid) {
+            $this->session->set('reCaptcha.isNotARobot', true);
+            $this->session->set('reCaptcha.validationTryCount', 0);
+        }
+        else{
+            $this->session->set('reCaptcha.isNotARobot', false);
             $this->context->addViolation($constraint->message);
         }
     }
