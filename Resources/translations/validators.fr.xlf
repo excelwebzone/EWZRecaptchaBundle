@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>This value is not a valid captcha.</source>
-                <target>Cette valeur n'est pas un captcha valide.</target>
+                <target>Vous devez cocher la case "Je ne suis pas un robot"</target>
             </trans-unit>
         </body>
     </file>
