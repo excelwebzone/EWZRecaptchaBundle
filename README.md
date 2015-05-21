@@ -128,7 +128,7 @@ To validate the field use:
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 /**
- * @Recaptcha\True
+ * @Recaptcha\IsTrue
  */
 public $recaptcha;
 ```
@@ -140,7 +140,7 @@ Please note that if you set ```mapped=>false``` then the annotation will not wor
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
@@ -154,7 +154,7 @@ public function buildForm(FormBuilder $builder, array $options)
         ),
         'mapped'      => false,
         'constraints' => array(
-            new True()
+            new IsTrue()
         )
     ));
     // ...
