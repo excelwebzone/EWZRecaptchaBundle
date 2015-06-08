@@ -4,7 +4,7 @@ namespace EWZ\Bundle\RecaptchaBundle\Bridge;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\TrueValidator;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator;
 
 /**
  * Silex Service Provider
@@ -48,7 +48,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
         // Register recaptcha validator constraint
         if (isset($app['validator.validator_factory'])) {
             $app['ewz_recaptcha.true'] = $app->share(function ($app) {
-                $validator = new TrueValidator(
+                $validator = new IsTrueValidator(
                     $app['ewz_recaptcha.enabled'],
                     $app['ewz_recaptcha.private_key'],
                     $app['request_stack']
