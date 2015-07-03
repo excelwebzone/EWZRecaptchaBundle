@@ -2,6 +2,7 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -30,6 +31,24 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
 
+        $this->addHttpClientConfiguration($rootNode);
+
         return $treeBuilder;
+    }
+
+    private function addHttpClientConfiguration(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('http_proxy')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('host')->defaultValue(null)->end()
+                        ->scalarNode('port')->defaultValue(null)->end()
+                        ->scalarNode('auth')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }
