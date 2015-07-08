@@ -58,7 +58,7 @@ Add the following to your config file:
 ewz_recaptcha:
     public_key:  here_is_your_public_key
     private_key: here_is_your_private_key
-    locale_key:  %kernel.default_locale%
+    default_locale_key:  %kernel.default_locale%
 ```
 
 **NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
@@ -115,6 +115,22 @@ public function buildForm(FormBuilder $builder, array $options)
                 'type'  => 'image'
             )
         )
+    ));
+    // ...
+}
+```
+
+If you need to configure the language of the captcha depending on your site language (multisite languages) you can pass the language with the "language" option:
+
+``` php
+<?php
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', 'ewz_recaptcha', array(
+        'language' => 'en'
+        // ...
     ));
     // ...
 }

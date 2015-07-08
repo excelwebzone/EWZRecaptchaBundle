@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * A field for entering a recaptcha text.
@@ -44,21 +45,21 @@ class RecaptchaType extends AbstractType
      *
      * @var string
      */
-    protected $language;
+    protected $defaultLanguage;
 
     /**
      * Construct.
      *
      * @param string  $publicKey Recaptcha public key
      * @param Boolean $enabled Recaptache status
-     * @param string  $language language or locale code
+     * @param string  $defaultLanguage language or locale code
      */
-    public function __construct($publicKey, $enabled, $ajax, $language)
+    public function __construct($publicKey, $enabled, $ajax, $defaultLanguage)
     {
         $this->publicKey = $publicKey;
         $this->enabled   = $enabled;
         $this->ajax      = $ajax;
-        $this->language  = $language;
+        $this->defaultLanguage  = $defaultLanguage;
     }
 
     /**
@@ -77,7 +78,7 @@ class RecaptchaType extends AbstractType
 
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
-                'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $this->language),
+                'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $options['language']),
                 'public_key'    => $this->publicKey,
             ));
         } else {
@@ -88,24 +89,23 @@ class RecaptchaType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'compound'      => false,
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
+            'language'      => $this->defaultLanguage,
             'attr'          => array(
                 'options' => array(
                     'theme' => 'light',
-                    'type'  => 'image'
+                    'type'  => 'image',
                 )
             )
         ));
     }
+
 
     /**
      * {@inheritdoc}

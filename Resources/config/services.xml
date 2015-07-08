@@ -15,7 +15,7 @@
             <argument>%ewz_recaptcha.public_key%</argument>
             <argument>%ewz_recaptcha.enabled%</argument>
             <argument>%ewz_recaptcha.ajax%</argument>
-            <argument>%ewz_recaptcha.locale_key%</argument>
+            <argument>%ewz_recaptcha.default_locale_key%</argument>
         </service>
 
         <service id="ewz_recaptcha.validator.true" class="%ewz_recaptcha.validator.true.class%">
