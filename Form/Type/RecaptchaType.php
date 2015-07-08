@@ -101,7 +101,8 @@ class RecaptchaType extends AbstractType
             'attr'          => array(
                 'options' => array(
                     'theme' => 'light',
-                    'type'  => 'image'
+                    'type'  => 'image',
+                    'expiredCallback' => null,
                 )
             )
         ));
