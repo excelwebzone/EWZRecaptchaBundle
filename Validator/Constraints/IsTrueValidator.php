@@ -31,6 +31,12 @@ class IsTrueValidator extends ConstraintValidator
     protected $requestStack;
 
     /**
+     * HTTP Proxy informations
+     * @var Array
+     */
+    protected $httpProxy;
+
+    /**
      * The reCAPTCHA server URL's
      */
     const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
@@ -40,11 +46,12 @@ class IsTrueValidator extends ConstraintValidator
      *
      * @param ContainerInterface $container An ContainerInterface instance
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack)
+    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy)
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
         $this->requestStack = $requestStack;
+        $this->httpProxy = $httpProxy;
     }
 
     /**
@@ -118,6 +125,30 @@ class IsTrueValidator extends ConstraintValidator
     {
         $host = sprintf('%s%s?%s', $host, $path, http_build_query($data));
 
-        return file_get_contents($host);
+        $context = $this->getResourceContext();
+
+        return file_get_contents($host, false, $context);
+    }
+
+    private function getResourceContext()
+    {
+        if (null === $this->httpProxy['host'] || null === $this->httpProxy['port']) {
+            return null;
+        }
+
+        $options = array();
+        foreach (array('http', 'https') as $protocol) {
+            $options[$protocol] = array(
+                'method' => 'GET',
+                'proxy' => sprintf('tcp://%s:%s', $this->httpProxy['host'], $this->httpProxy['port']),
+                'request_fulluri' => true,
+            );
+
+            if (null !== $this->httpProxy['auth']) {
+                $options[$protocol]['header'] = sprintf('Proxy-Authorization: Basic %s', base64_encode($this->httpProxy['auth']));
+            }
+        }
+
+        return stream_context_create($options);
     }
 }

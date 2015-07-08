@@ -23,6 +23,7 @@
             <argument>%ewz_recaptcha.enabled%</argument>
             <argument>%ewz_recaptcha.private_key%</argument>
             <argument type="service" id="request_stack" />
+            <argument>%ewz_recaptcha.http_proxy%</argument>
         </service>
     </services>
 </container>

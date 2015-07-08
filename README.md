@@ -83,6 +83,18 @@ ewz_recaptcha:
     ajax: true
 ```
 
+You can add HTTP Proxy configuration:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    host: proxy.mycompany.com
+    port: 3128
+    auth: proxy_username:proxy_password
+```
+
 Congratulations! You're ready!
 
 ## Basic Usage
