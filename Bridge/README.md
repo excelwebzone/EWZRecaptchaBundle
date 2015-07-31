@@ -24,6 +24,7 @@ $app->register(new \EWZ\Bundle\RecaptchaBundle\Bridge\RecaptchaServiceProvider()
 
 **NOTE**: The service should be registered after the form and validator service because it add the recaptcha form type and validator constraint.
 In case you have services overriding this parameters, you can extends :
+
     * 'twig.form.templates' to add the ewz_recaptcha_widget.html.twig in Resources/views/Form
     * 'validator.validator_service_ids' to add the validator constraint services ewz_recaptcha.true
 
@@ -31,14 +32,10 @@ In case you have services overriding this parameters, you can extends :
 
 ```php
 <?php
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as CaptchaTrue;
 
 $form = $app['form.factory']->createBuilder('form')
     ->add('captcha', 'ewz_recaptcha', array(
-        'constraints' => new CaptchaTrue(),
-        'attr' => array(
-            'options' => array(
-                'theme' => 'clean'
-            )
-        )
+        'constraints' => new CaptchaTrue()
     ))
 ```

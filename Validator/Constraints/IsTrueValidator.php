@@ -46,7 +46,7 @@ class IsTrueValidator extends ConstraintValidator
      *
      * @param ContainerInterface $container An ContainerInterface instance
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy)
+    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy = array())
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
