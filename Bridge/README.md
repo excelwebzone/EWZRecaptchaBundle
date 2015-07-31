@@ -32,10 +32,11 @@ In case you have services overriding this parameters, you can extends :
 
 ```php
 <?php
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as CaptchaTrue;
+
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 $form = $app['form.factory']->createBuilder('form')
     ->add('captcha', 'ewz_recaptcha', array(
-        'constraints' => new CaptchaTrue()
+        'constraints' => new RecaptchaTrue()
     ))
 ```

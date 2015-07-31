@@ -152,7 +152,7 @@ Please note that if you set ```mapped=>false``` then the annotation will not wor
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
@@ -166,7 +166,7 @@ public function buildForm(FormBuilder $builder, array $options)
         ),
         'mapped'      => false,
         'constraints' => array(
-            new IsTrue()
+            new RecaptchaTrue()
         )
     ));
     // ...
