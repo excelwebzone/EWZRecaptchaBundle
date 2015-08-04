@@ -266,5 +266,3 @@ If you want to use a custom theme, put your chunk of code before setting the the
     },
 } }) }}
 ```
-
-**Further reading**: [Customizing the Look and Feel of reCAPTCHA](https://developers.google.com/recaptcha/docs/customization)
