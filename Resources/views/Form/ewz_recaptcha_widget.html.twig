@@ -3,7 +3,7 @@
     {% if form.vars.ewz_recaptcha_enabled %}
         {% if not form.vars.ewz_recaptcha_ajax %}
             <script src="{{ form.vars.url_challenge }}" type="text/javascript"></script>
-            <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}" {% if attr.options.expiredCallback is defined %}data-expired-callback="{{ attr.options.expiredCallback }}{% endif %}></div>
+            <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}" {% if attr.options.expiredCallback is defined %}data-expired-callback="{{ attr.options.expiredCallback }}"{% endif %}></div>
             <noscript>
                 <div style="width: 302px; height: 352px;">
                     <div style="width: 302px; height: 352px; position: relative;">
