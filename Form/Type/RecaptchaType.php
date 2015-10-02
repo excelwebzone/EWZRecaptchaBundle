@@ -145,4 +145,14 @@ class RecaptchaType extends AbstractType
     {
         return $this->publicKey;
     }
+
+    /**
+     * Set language.
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
 }
