@@ -1,5 +1,5 @@
 {
-    "name": "lethak/EWZRecaptchaBundle ",
+    "name": "lethak/excelwebzonerecaptcha-bundle",
     "description": "This bundle provides easy reCAPTCHA form field integration (forked from excelwebzone) ",
     "keywords": ["recaptcha"],
     "homepage": "https://github.com/lethak/EWZRecaptchaBundle",
