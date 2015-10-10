@@ -44,17 +44,17 @@ class IsTrueValidator extends ConstraintValidator
     /**
      * Construct.
      *
-     * @param Boolean $enabled
-     * @param string $privateKey
+     * @param Boolean      $enabled
+     * @param string       $privateKey
      * @param RequestStack $requestStack
-     * @param array $httpProxy
+     * @param array        $httpProxy
      */
     public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy)
     {
-        $this->enabled = $enabled;
-        $this->privateKey = $privateKey;
+        $this->enabled      = $enabled;
+        $this->privateKey   = $privateKey;
         $this->requestStack = $requestStack;
-        $this->httpProxy = $httpProxy;
+        $this->httpProxy    = $httpProxy;
     }
 
     /**

@@ -50,8 +50,8 @@ class RecaptchaType extends AbstractType
      * Construct.
      *
      * @param string  $publicKey Recaptcha public key
-     * @param Boolean $enabled Recaptache status
-     * @param string  $language language or locale code
+     * @param Boolean $enabled   Recaptache status
+     * @param string  $language  Language or locale code
      */
     public function __construct($publicKey, $enabled, $ajax, $language)
     {

@@ -17,16 +17,16 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        // Parameters
-        $app['ewz_recaptcha.public_key'] = null;
+        // parameters
+        $app['ewz_recaptcha.public_key']  = null;
         $app['ewz_recaptcha.private_key'] = null;
-        $app['ewz_recaptcha.locale_key'] = $app['locale'];
-        $app['ewz_recaptcha.enabled'] = true;
-        $app['ewz_recaptcha.ajax'] = false;
-        $app['ewz_recaptcha.http_proxy'] = array(
+        $app['ewz_recaptcha.locale_key']  = $app['locale'];
+        $app['ewz_recaptcha.enabled']     = true;
+        $app['ewz_recaptcha.ajax']        = false;
+        $app['ewz_recaptcha.http_proxy']  = array(
             'host' => null,
             'port' => null,
-            'auth' => null,
+            'auth' => null
         );
 
         // add loader for EWZ Template
@@ -40,7 +40,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
             );
         }
 
-        // Register recaptcha form type
+        // register recaptcha form type
         if (isset($app['form.extensions'])) {
             $app['form.extensions'] = $app->share($app->extend('form.extensions',
                 function($extensions) use ($app) {
@@ -50,7 +50,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
             }));
         }
 
-        // Register recaptcha validator constraint
+        // register recaptcha validator constraint
         if (isset($app['validator.validator_factory'])) {
             $app['ewz_recaptcha.true'] = $app->share(function ($app) {
                 $validator = new IsTrueValidator(
@@ -71,7 +71,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
             );
         }
 
-        // Register translation files
+        // register translation files
         if (isset($app['translator'])) {
             $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
                 $translator->addResource(
