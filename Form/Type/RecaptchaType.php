@@ -95,7 +95,7 @@ class RecaptchaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'compound'      => false,
-            'langauge'      => $this->language,
+            'language'      => $this->language,
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
