@@ -75,6 +75,10 @@ class RecaptchaType extends AbstractType
             return;
         }
 
+        if (!isset($options['language'])) {
+            $options['language'] = $this->language;
+        }
+
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
                 'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $options['language']),
