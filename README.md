@@ -9,28 +9,10 @@ A bridge for the Silex framework has been implemented too : [Jump to documentati
 
 ### Step 1: Use composer and enable Bundle
 
-To install EWZRecaptchaBundle with Composer just add the following to your
-`composer.json` file:
-
-```js
-// composer.json
-{
-    // ...
-    "require": {
-        // ...
-        "excelwebzone/recaptcha-bundle": "dev-master"
-    }
-}
-```
-
-**NOTE**: Please replace `dev-master` in the snippet above with the latest stable
-branch, for example ``2.3.*``.
-
-Then, you can install the new dependencies by running Composer's ``update``
-command from the directory where your ``composer.json`` file is located:
+To install EWZRecaptchaBundle with Composer just type in your terminal:
 
 ```bash
-$ php composer.phar update
+php composer.phar require excelwebzone/recaptcha-bundle
 ```
 
 Now, Composer will automatically download all required files, and install them
