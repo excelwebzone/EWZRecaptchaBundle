@@ -124,7 +124,7 @@ class RecaptchaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'ewz_recaptcha';
     }

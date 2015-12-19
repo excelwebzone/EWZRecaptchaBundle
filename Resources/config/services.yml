@@ -1,0 +1,20 @@
+services:
+    ewz_recaptcha.form.type:
+        class: EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType
+        arguments:
+            - '%ewz_recaptcha.public_key%'
+            - '%ewz_recaptcha.enabled%'
+            - '%ewz_recaptcha.ajax%'
+            - '%ewz_recaptcha.locale_key%'
+        tags:
+            - { name: form.type, alias: ewz_recaptcha }
+
+    ewz_recaptcha.validator.true:
+            class: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator
+            arguments:
+                - '%ewz_recaptcha.enabled%'
+                - '%ewz_recaptcha.private_key%'
+                - '%ewz_recaptcha.http_proxy%'
+                - '@request_stack'
+            tags:
+                - { name: validator.constraint_validator }
