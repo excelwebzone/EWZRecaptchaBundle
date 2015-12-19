@@ -1,13 +1,13 @@
 services:
     ewz_recaptcha.form.type:
-        class: EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType
+        class: EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType
         arguments:
             - '%ewz_recaptcha.public_key%'
             - '%ewz_recaptcha.enabled%'
             - '%ewz_recaptcha.ajax%'
             - '%ewz_recaptcha.locale_key%'
         tags:
-            - { name: form.type, alias: ewz_recaptcha }
+            - { name: form.type }
 
     ewz_recaptcha.validator.true:
             class: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator

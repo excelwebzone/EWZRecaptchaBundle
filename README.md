@@ -107,7 +107,7 @@ When creating a new form class add the following line to create the field:
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', 'ewz_recaptcha');
+    $builder->add('recaptcha', EWZRecaptchaType::class);
     // ...
 }
 ```
@@ -120,7 +120,7 @@ You can pass extra options to reCAPTCHA with the "attr > options" option:
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', 'ewz_recaptcha', array(
+    $builder->add('recaptcha', EWZRecaptchaType::class, array(
         'attr' => array(
             'options' => array(
                 'theme' => 'light',
@@ -157,7 +157,7 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', 'ewz_recaptcha', array(
+    $builder->add('recaptcha', EWZRecaptchaType::class, array(
         'attr'        => array(
             'options' => array(
                 'theme' => 'light',
@@ -213,7 +213,7 @@ using JavaScript:
 <div id="recaptcha-container"></div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
+        $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
             Recaptcha.create("<?php echo $form['recaptcha']->get('public_key') ?>", "recaptcha-container", {
                 theme: "clean",
             });
@@ -228,7 +228,7 @@ using JavaScript:
 <div id="recaptcha-container"></div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
+        $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
             Recaptcha.create("{{ form.recaptcha.get('public_key') }}", "recaptcha-container", {
                 theme: "clean"
             });

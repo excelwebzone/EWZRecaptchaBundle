@@ -4,7 +4,7 @@ namespace EWZ\Bundle\RecaptchaBundle\Bridge\Form\Extension;
 
 use Silex\Application;
 use Symfony\Component\Form\AbstractExtension;
-use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 /**
  * Extends form to register captcha type
@@ -36,7 +36,7 @@ class RecaptchaExtension extends AbstractExtension
     protected function loadTypes()
     {
         return array(
-            new RecaptchaType(
+            new EWZRecaptchaType(
                 $this->app['ewz_recaptcha.public_key'],
                 $this->app['ewz_recaptcha.enabled'],
                 $this->app['ewz_recaptcha.ajax'],

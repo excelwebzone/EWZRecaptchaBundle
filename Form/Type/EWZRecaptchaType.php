@@ -1,7 +1,7 @@
 <?php
 
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A field for entering a recaptcha text.
  */
-class RecaptchaType extends AbstractType
+class EWZRecaptchaType extends AbstractType
 {
     /**
      * The reCAPTCHA server URL's
@@ -118,7 +118,7 @@ class RecaptchaType extends AbstractType
      */
     public function getParent()
     {
-        return 'form';
+        return TextType::class;
     }
 
     /**
