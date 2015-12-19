@@ -13,10 +13,9 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.7"
+        "symfony/framework-bundle": "~3.0"
     },
     "autoload": {
-        "psr-0": { "EWZ\\Bundle\\RecaptchaBundle\\": "" }
-    },
-    "target-dir": "EWZ/Bundle/RecaptchaBundle"
+        "psr-4": { "EWZ\\Bundle\\RecaptchaBundle\\": "" }
+    }
 }

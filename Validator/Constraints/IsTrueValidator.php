@@ -64,7 +64,7 @@ class IsTrueValidator extends ConstraintValidator
     {
         // if recaptcha is disabled, always valid
         if (!$this->enabled) {
-            return true;
+            return;
         }
 
         // define variable for recaptcha check answer
