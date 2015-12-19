@@ -14,7 +14,7 @@ services:
             arguments:
                 - '%ewz_recaptcha.enabled%'
                 - '%ewz_recaptcha.private_key%'
-                - '%ewz_recaptcha.http_proxy%'
                 - '@request_stack'
+                - '%ewz_recaptcha.http_proxy%'
             tags:
-                - { name: validator.constraint_validator }
+                - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
