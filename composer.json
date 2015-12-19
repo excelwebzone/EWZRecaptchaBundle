@@ -17,6 +17,5 @@
     },
     "autoload": {
         "psr-4": { "EWZ\\Bundle\\RecaptchaBundle\\": "" }
-    },
-    "target-dir": "EWZ/Bundle/RecaptchaBundle"
+    }
 }
