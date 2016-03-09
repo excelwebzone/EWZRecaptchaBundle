@@ -104,6 +104,8 @@ When creating a new form class add the following line to create the field:
 ``` php
 <?php
 
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType as EWZRecaptchaType;
+
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
