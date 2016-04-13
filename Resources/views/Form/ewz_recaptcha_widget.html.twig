@@ -32,6 +32,7 @@
             <div id="ewz_recaptcha_div"></div>
 
             <script type="text/javascript">
+            (function() {
                 var script = document.createElement('script');
                 script.type = 'text/javascript';
                 script.onload = function() {
@@ -41,6 +42,7 @@
                 {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
                 {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
                 document.getElementsByTagName('head')[0].appendChild(script);
+            })();
             </script>
         {% endif %}
     {% endif %}
