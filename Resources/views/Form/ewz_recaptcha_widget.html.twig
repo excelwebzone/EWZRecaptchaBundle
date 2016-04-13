@@ -2,7 +2,11 @@
 {% spaceless %}
     {% if form.vars.ewz_recaptcha_enabled %}
         {% if not form.vars.ewz_recaptcha_ajax %}
-            <script src="{{ form.vars.url_challenge }}" type="text/javascript"></script>
+            <script type="text/javascript"
+                src="{{ form.vars.url_challenge }}"
+                {% if attr.options.defer is defined and attr.options.defer %}defer{% endif %}
+                {% if attr.options.async is defined and attr.options.async %}async{% endif %}
+            ></script>
             <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}" {% if attr.options.expiredCallback is defined %}data-expired-callback="{{ attr.options.expiredCallback }}"{% endif %}></div>
             <noscript>
                 <div style="width: 302px; height: 352px;">
@@ -34,6 +38,8 @@
                     Recaptcha.create('{{ form.vars.public_key }}', 'ewz_recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
                 };
                 script.src = '{{ form.vars.url_api }}';
+                {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
+                {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
                 document.getElementsByTagName('head')[0].appendChild(script);
             </script>
         {% endif %}
