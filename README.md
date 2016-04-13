@@ -107,6 +107,8 @@ public function buildForm(FormBuilder $builder, array $options)
             'options' => array(
                 'theme' => 'light',
                 'type'  => 'image'
+                'defer' => true,
+                'async' => true
             )
         )
     ));

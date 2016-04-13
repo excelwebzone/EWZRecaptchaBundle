@@ -107,9 +107,11 @@ class EWZRecaptchaType extends AbstractType
             'url_noscript'  => null,
             'attr'          => array(
                 'options' => array(
-                    'theme' => 'light',
-                    'type'  => 'image',
+                    'theme'           => 'light',
+                    'type'            => 'image',
                     'expiredCallback' => null,
+                    'defer'           => false,
+                    'async'           => false,
                 )
             )
         ));
