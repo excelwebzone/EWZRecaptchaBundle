@@ -7,7 +7,7 @@
                 {% if attr.options.defer is defined and attr.options.defer %}defer{% endif %}
                 {% if attr.options.async is defined and attr.options.async %}async{% endif %}
             ></script>
-            <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}" {% if attr.options.expiredCallback is defined %}data-expired-callback="{{ attr.options.expiredCallback }}"{% endif %}></div>
+            <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-size="{{ attr.options.size }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}" {% if attr.options.expiredCallback is defined %}data-expired-callback="{{ attr.options.expiredCallback }}"{% endif %}></div>
             <noscript>
                 <div style="width: 302px; height: 352px;">
                     <div style="width: 302px; height: 352px; position: relative;">
