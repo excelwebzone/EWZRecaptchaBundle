@@ -106,7 +106,8 @@ public function buildForm(FormBuilder $builder, array $options)
         'attr' => array(
             'options' => array(
                 'theme' => 'light',
-                'type'  => 'image'
+                'type'  => 'image',
+                'size'  => 'normal',
                 'defer' => true,
                 'async' => true
             )
@@ -145,7 +146,8 @@ public function buildForm(FormBuilder $builder, array $options)
         'attr'        => array(
             'options' => array(
                 'theme' => 'light',
-                'type'  => 'image'
+                'type'  => 'image',
+                'size'  => 'normal'
             )
         ),
         'mapped'      => false,
@@ -169,7 +171,8 @@ However, you can always implement your own custom form widget.
     'attr' => array(
         'options' => array(
             'theme' => 'light',
-            'type'  => 'image'
+            'type'  => 'image',
+            'size'  => 'normal'
         ),
     ),
 )) ?>
@@ -183,7 +186,8 @@ However, you can always implement your own custom form widget.
 {{ form_widget(form.recaptcha, { 'attr': {
     'options' : {
         'theme': 'light',
-        'type': 'image'
+        'type': 'image',
+        'size': 'normal'
     },
 } }) }}
 ```
