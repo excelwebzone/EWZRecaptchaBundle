@@ -114,8 +114,9 @@ class RecaptchaType extends AbstractType
             'url_noscript'  => null,
             'attr'          => array(
                 'options' => array(
-                    'theme' => 'light',
-                    'type'  => 'image',
+                    'theme'           => 'light',
+                    'type'            => 'image',
+                    'size'            => 'normal',
                     'expiredCallback' => null,
                 )
             )
