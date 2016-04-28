@@ -40,7 +40,7 @@ Add the following to your config file:
 ewz_recaptcha:
     public_key:  here_is_your_public_key
     private_key: here_is_your_private_key
-    locale_key:  %kernel.default_locale%
+    locale_key:  "%kernel.default_locale%"
 ```
 
 **NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
