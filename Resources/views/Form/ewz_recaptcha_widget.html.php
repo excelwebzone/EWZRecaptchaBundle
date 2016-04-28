@@ -1,7 +1,7 @@
 <?php if ($ewz_recaptcha_enabled): ?>
     <?php if (!$ewz_recaptcha_ajax): ?>
         <script src="<?php echo $url_challenge ?>" type="text/javascript"></script>
-        <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme'] ?>" data-type="<?php echo $attr['options']['type'] ?>" data-sitekey="<?php echo $public_key ?>"  <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>></div>
+        <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme'] ?>" data-size="<?php echo $attr['options']['size'] ?>" data-type="<?php echo $attr['options']['type'] ?>" data-sitekey="<?php echo $public_key ?>"  <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>></div>
         <noscript>
             <div style="width: 302px; height: 352px;">
                 <div style="width: 302px; height: 352px; position: relative;">
