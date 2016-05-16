@@ -6,7 +6,7 @@
 
     <parameters>
         <parameter key="ewz_recaptcha.form.type.class">EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType</parameter>
-        <parameter key="ewz_recaptcha.validator.true.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\TrueValidator</parameter>
+        <parameter key="ewz_recaptcha.validator.true.class">EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator</parameter>
     </parameters>
 
     <services>
