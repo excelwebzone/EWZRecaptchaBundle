@@ -86,7 +86,7 @@ When creating a new form class add the following line to create the field:
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
@@ -101,7 +101,7 @@ You can pass extra options to reCAPTCHA with the "attr > options" option:
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
@@ -141,7 +141,7 @@ Please note that if you set ```mapped=>false``` then the annotation will not wor
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 public function buildForm(FormBuilder $builder, array $options)
