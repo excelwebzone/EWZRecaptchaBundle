@@ -37,6 +37,13 @@ class IsTrueValidator extends ConstraintValidator
     protected $httpProxy;
 
     /**
+     * Enable serverside host check
+     *
+     * @var Boolean
+     */
+    protected $verifyHost;
+
+    /**
      * The reCAPTCHA server URL's
      */
     const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
@@ -48,13 +55,15 @@ class IsTrueValidator extends ConstraintValidator
      * @param string       $privateKey
      * @param RequestStack $requestStack
      * @param array        $httpProxy
+     * @param Boolean      $verifyHost
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy)
+    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy, $verifyHost)
     {
         $this->enabled      = $enabled;
         $this->privateKey   = $privateKey;
         $this->requestStack = $requestStack;
         $this->httpProxy    = $httpProxy;
+        $this->verifyHost   = $verifyHost;
     }
 
     /**
@@ -68,12 +77,18 @@ class IsTrueValidator extends ConstraintValidator
         }
 
         // define variable for recaptcha check answer
-        $remoteip = $this->requestStack->getMasterRequest()->getClientIp();
-        $response = $this->requestStack->getMasterRequest()->get('g-recaptcha-response');
+        $masterRequest = $this->requestStack->getMasterRequest();
+        $remoteip = $masterRequest->getClientIp();
+        $answer = $masterRequest->get('g-recaptcha-response');
 
-        $isValid = $this->checkAnswer($this->privateKey, $remoteip, $response);
+        // Verify user response with Google
+        $response = $this->checkAnswer($this->privateKey, $remoteip, $answer);
 
-        if (!$isValid) {
+        // Perform server side hostname check
+        if ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
+            $this->context->addViolation($constraint->invalidHostMessage);
+        }
+        elseif ($response['success'] !== true) {
             $this->context->addViolation($constraint->message);
         }
     }
@@ -83,36 +98,30 @@ class IsTrueValidator extends ConstraintValidator
       *
       * @param string $privateKey
       * @param string $remoteip
-      * @param string $response
+      * @param string $answer
       *
       * @throws ValidatorException When missing remote ip
       *
       * @return Boolean
       */
-    private function checkAnswer($privateKey, $remoteip, $response)
+    private function checkAnswer($privateKey, $remoteip, $answer)
     {
         if ($remoteip == null || $remoteip == '') {
             throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
         }
 
         // discard spam submissions
-        if ($response == null || strlen($response) == 0) {
+        if ($answer == null || strlen($answer) == 0) {
             return false;
         }
 
         $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
             'secret'   => $privateKey,
             'remoteip' => $remoteip,
-            'response' => $response
+            'response' => $answer,
         ));
 
-        $response = json_decode($response, true);
-
-        if ($response['success'] == true) {
-            return true;
-        }
-
-        return false;
+        return json_decode($response, true);
     }
 
     /**

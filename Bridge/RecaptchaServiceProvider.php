@@ -22,6 +22,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
         $app['ewz_recaptcha.private_key'] = null;
         $app['ewz_recaptcha.locale_key']  = $app['locale'];
         $app['ewz_recaptcha.enabled']     = true;
+        $app['ewz_recaptcha.verify_host'] = false;
         $app['ewz_recaptcha.ajax']        = false;
         $app['ewz_recaptcha.http_proxy']  = array(
             'host' => null,
@@ -57,7 +58,8 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
                     $app['ewz_recaptcha.enabled'],
                     $app['ewz_recaptcha.private_key'],
                     $app['request_stack'],
-                    $app['ewz_recaptcha.http_proxy']
+                    $app['ewz_recaptcha.http_proxy'],
+                    $app['ewz_recaptcha.verify_host']
                 );
 
                 return $validator;

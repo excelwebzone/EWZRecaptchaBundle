@@ -16,5 +16,6 @@ services:
                 - '%ewz_recaptcha.private_key%'
                 - '@request_stack'
                 - '%ewz_recaptcha.http_proxy%'
+                - '%ewz_recaptcha.verify_host%'
             tags:
                 - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
