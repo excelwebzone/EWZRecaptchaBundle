@@ -2,6 +2,7 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
+use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -41,11 +42,9 @@ class EWZRecaptchaType extends AbstractType
     protected $ajax;
 
     /**
-     * Language
-     *
-     * @var string
+     * @var LocaleResolver
      */
-    protected $language;
+    protected $localeResolver;
 
     /**
      * Construct.
@@ -53,14 +52,14 @@ class EWZRecaptchaType extends AbstractType
      * @param string  $publicKey Recaptcha public key
      * @param Boolean $enabled   Recaptache status
      * @param Boolean $ajax      Ajax status
-     * @param string  $language  Language or locale code
+     * @param string  $localeResolver
      */
-    public function __construct($publicKey, $enabled, $ajax, $language)
+    public function __construct($publicKey, $enabled, $ajax, $localeResolver)
     {
         $this->publicKey = $publicKey;
         $this->enabled   = $enabled;
         $this->ajax      = $ajax;
-        $this->language  = $language;
+        $this->localeResolver  = $localeResolver;
     }
 
     /**
@@ -78,7 +77,7 @@ class EWZRecaptchaType extends AbstractType
         }
 
         if (!isset($options['language'])) {
-            $options['language'] = $this->language;
+            $options['language'] = $this->localeResolver->resolve();
         }
 
         if (!$this->ajax) {
@@ -101,7 +100,7 @@ class EWZRecaptchaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'compound'      => false,
-            'language'      => $this->language,
+            'language'      => $this->localeResolver->resolve(),
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
