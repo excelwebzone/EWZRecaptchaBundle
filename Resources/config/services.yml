@@ -1,11 +1,19 @@
 services:
+    ewz_recaptcha.locale.resolver:
+        class: EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver
+        public: false
+        arguments:
+            - '%ewz_recaptcha.locale_key%'
+            - '%ewz_recaptcha.locale_from_request%'
+            - '@request_stack'
+
     ewz_recaptcha.form.type:
         class: EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType
         arguments:
             - '%ewz_recaptcha.public_key%'
             - '%ewz_recaptcha.enabled%'
             - '%ewz_recaptcha.ajax%'
-            - '%ewz_recaptcha.locale_key%'
+            - '@ewz_recaptcha.locale.resolver'
         tags:
             - { name: form.type }
 

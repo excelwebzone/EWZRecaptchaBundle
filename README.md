@@ -40,10 +40,22 @@ Add the following to your config file:
 ewz_recaptcha:
     public_key:  here_is_your_public_key
     private_key: here_is_your_private_key
+    # Not needed as "%kernel.default_locale%" is the default value for the locale key
     locale_key:  %kernel.default_locale%
 ```
 
 **NOTE**: This Bundle lets the client browser choose the secure https or unsecure http API.
+
+If you want to use the language default for the reCAPTCHA the same as the
+request locale you must activate the resolver (deactivated by default):
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    locale_from_request: true
+```
 
 You can easily disable reCAPTCHA (for example in a local or test environment):
 
