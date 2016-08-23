@@ -131,7 +131,7 @@ option:
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', 'ewz_recaptcha', array(
+    $builder->add('recaptcha', EWZRecaptchaType::class, array(
         'language' => 'en'
         // ...
     ));
