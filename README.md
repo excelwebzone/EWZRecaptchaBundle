@@ -121,6 +121,24 @@ public function buildForm(FormBuilder $builder, array $options)
 }
 ```
 
+If you need to configure the language of the captcha depending on your site
+language (multisite languages) you can pass the language with the "language"
+option:
+
+``` php
+<?php
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', 'ewz_recaptcha', array(
+        'language' => 'en'
+        // ...
+    ));
+    // ...
+}
+```
+
 To validate the field use:
 
 ``` php
