@@ -187,7 +187,7 @@ public function buildForm(FormBuilder $builder, array $options)
         ),
         'mapped'      => false,
         'constraints' => array(
-            new RecaptchaTrue()
+            new IsTrue()
         )
     ));
     // ...
