@@ -1,4 +1,4 @@
-Silex Recaptcha Service Provider
+Silex2 Recaptcha Service Provider
 ================================
 
 The silex recaptcha service provider is a bridge to use the different form type in Silex when the form component is loaded.
@@ -16,7 +16,7 @@ Add the recaptcha service provider to your bootstrap
 ```php
 <?php
 
-$app->register(new \EWZ\Bundle\RecaptchaBundle\Bridge\RecaptchaServiceProvider(), array(
+$app->register(new \EWZ\Bundle\RecaptchaBundle\Bridge\Silex2\RecaptchaServiceProvider(), array(
     'ewz_recaptcha.public_key' => here_is_your_public_key,
     'ewz_recaptcha.private_key' => here_is_your_private_key
 ));
@@ -36,7 +36,7 @@ In case you have services overriding this parameters, you can extends :
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 $form = $app['form.factory']->createBuilder('form')
-    ->add('captcha', 'ewz_recaptcha', array(
+    ->add('captcha', 'EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType', array(
         'constraints' => new RecaptchaTrue()
     ))
 ```
