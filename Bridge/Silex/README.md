@@ -16,7 +16,7 @@ Add the recaptcha service provider to your bootstrap
 ```php
 <?php
 
-$app->register(new \EWZ\Bundle\RecaptchaBundle\Bridge\RecaptchaServiceProvider(), array(
+$app->register(new \EWZ\Bundle\RecaptchaBundle\Bridge\Silex\RecaptchaServiceProvider(), array(
     'ewz_recaptcha.public_key' => here_is_your_public_key,
     'ewz_recaptcha.private_key' => here_is_your_private_key
 ));
