@@ -85,7 +85,7 @@ class IsTrueValidator extends ConstraintValidator
         $this->session->set('reCaptcha.rememberTryCount', $rememberTryCount);
 
         // if recaptcha is disabled, always valid
-        if (!$this->enabled || ($this->rememberMaxCount && $this->session->get('reCaptcha.isNotARobot') && $rememberTryCount <= $this->maxValidationTryCount) ) {
+        if (!$this->enabled || ($this->rememberMaxCount && $this->session->get('reCaptcha.isNotARobot') && $rememberTryCount <= $this->rememberMaxCount) ) {
             return;
         }
 
