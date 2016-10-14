@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('ajax')->defaultFalse()->end()
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
                 ->booleanNode('locale_from_request')->defaultFalse()->end()
+                ->scalarNode('remember_max_count')->defaultValue(0)->end()
             ->end()
         ;
 
