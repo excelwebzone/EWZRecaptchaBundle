@@ -88,6 +88,15 @@ ewz_recaptcha:
     port: 3128
     auth: proxy_username:proxy_password
 ```
+You can remember if the captcha was already validated and not again requiring it for a certain number of time (default: 0):
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    remember_max_count: 5
+```
 
 Congratulations! You're ready!
 

@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * A field for entering a recaptcha text.
@@ -47,19 +48,33 @@ class EWZRecaptchaType extends AbstractType
     protected $localeResolver;
 
     /**
+	 * @var Session
+	 */
+    protected $session;
+
+    /**
+	 * @var int
+	 */
+    protected $rememberMaxCount;
+
+    /**
      * Construct.
      *
      * @param string  $publicKey Recaptcha public key
      * @param Boolean $enabled   Recaptache status
      * @param Boolean $ajax      Ajax status
      * @param string  $localeResolver
+     * @param Session  $session
+     * @param int  $rememberMaxCount
      */
-    public function __construct($publicKey, $enabled, $ajax, $localeResolver)
+    public function __construct($publicKey, $enabled, $ajax, $localeResolver, $session, $rememberMaxCount=0)
     {
         $this->publicKey = $publicKey;
         $this->enabled   = $enabled;
         $this->ajax      = $ajax;
         $this->localeResolver  = $localeResolver;
+        $this->session  = $session;
+        $this->rememberMaxCount  = $rememberMaxCount;
     }
 
     /**
@@ -67,9 +82,19 @@ class EWZRecaptchaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        if(
+            $this->rememberMaxCount
+            && $this->session->get('reCaptcha.isNotARobot')
+            && $this->session->get('reCaptcha.rememberTryCount') < $this->rememberMaxCount
+        ){
+            $this->enabled = false;
+        }
+
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_enabled' => $this->enabled,
             'ewz_recaptcha_ajax'    => $this->ajax,
+            'ewz_recaptcha_remember_max_count' => $this->rememberMaxCount,
+            'ewz_recaptcha_remember_try_count' => $this->session->get('reCaptcha.rememberTryCount'),
         ));
 
         if (!$this->enabled) {
@@ -104,6 +129,7 @@ class EWZRecaptchaType extends AbstractType
             'public_key'    => null,
             'url_challenge' => null,
             'url_noscript'  => null,
+            //'rememberMaxCount'  => 0, // TODO thinking of a proper way to store this for validation of this form only
             'attr'          => array(
                 'options' => array(
                     'theme'           => 'light',

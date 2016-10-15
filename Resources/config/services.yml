@@ -14,6 +14,8 @@ services:
             - '%ewz_recaptcha.enabled%'
             - '%ewz_recaptcha.ajax%'
             - '@ewz_recaptcha.locale.resolver'
+            - '@session'
+            - '%ewz_recaptcha.remember_max_count%'
         tags:
             - { name: form.type }
 
@@ -24,5 +26,7 @@ services:
                 - '%ewz_recaptcha.private_key%'
                 - '@request_stack'
                 - '%ewz_recaptcha.http_proxy%'
+                - '@session'
+                - '%ewz_recaptcha.remember_max_count%'
             tags:
                 - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
