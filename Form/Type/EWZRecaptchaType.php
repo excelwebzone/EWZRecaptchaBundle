@@ -126,6 +126,14 @@ class EWZRecaptchaType extends AbstractType
     }
 
     /**
+     * @deprecated since 1.4.2 and will be removed in 2.0. guarantees backward compatibility to 2.8 and lower.
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getBlockPrefix()
