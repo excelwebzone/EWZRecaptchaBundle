@@ -89,6 +89,16 @@ ewz_recaptcha:
     auth: proxy_username:proxy_password
 ```
 
+In case you have turned off the domain name checking on reCAPTCHA's end, you'll need to check the origin of the response by enabling the ``verify_host`` option:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    verify_host: true
+```
+
 Congratulations! You're ready!
 
 ## Basic Usage

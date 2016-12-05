@@ -6,6 +6,10 @@
                 <source>This value is not a valid captcha.</source>
                 <target>Vous devez cocher la case "Je ne suis pas un robot"</target>
             </trans-unit>
+            <trans-unit id="2">
+                <source>The captcha was not resolved on the right domain.</source>
+                <target>Le captcha est rempli sur un domaine inconnu.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

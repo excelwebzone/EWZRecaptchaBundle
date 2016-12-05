@@ -12,6 +12,8 @@ class IsTrue extends Constraint
 {
     public $message = 'This value is not a valid captcha.';
 
+    public $invalidHostMessage = 'The captcha was not resolved on the right domain.';
+
     /**
      * {@inheritdoc}
      */
