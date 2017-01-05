@@ -109,6 +109,7 @@ class EWZRecaptchaType extends AbstractType
                     'theme'           => 'light',
                     'type'            => 'image',
                     'size'            => 'normal',
+                    'callback'        => null,
                     'expiredCallback' => null,
                     'defer'           => false,
                     'async'           => false,
