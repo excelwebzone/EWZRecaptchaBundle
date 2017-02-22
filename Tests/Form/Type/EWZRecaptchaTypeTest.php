@@ -4,7 +4,12 @@ namespace EWZ\Bundle\RecaptchaBundle\Tests\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Oskar Stark <oskarstark@googlemail.com>
@@ -12,14 +17,90 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class EWZRecaptchaTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var EWZRecaptchaType
+     */
+    protected $type;
+
+    protected function setUp()
+    {
+        $requestStack = $this->createMock(RequestStack::class);
+        $localeResolver = new LocaleResolver('de', false, $requestStack);
+        $this->type = new EWZRecaptchaType('key', true, true, $localeResolver);
+    }
+
+    /**
+     * @test
+     */
+    public function buildView()
+    {
+        $view = new FormView();
+
+        /** @var FormInterface $form */
+        $form = $this->createMock(FormInterface::class);
+
+        $this->assertArrayNotHasKey('ewz_recaptcha_enabled', $view->vars);
+        $this->assertArrayNotHasKey('ewz_recaptcha_ajax', $view->vars);
+
+        $this->type->buildView($view, $form, array());
+
+        $this->assertTrue($view->vars['ewz_recaptcha_enabled']);
+        $this->assertTrue($view->vars['ewz_recaptcha_ajax']);
+    }
+
+    /**
+     * @test
+     */
+    public function getParent()
+    {
+        $this->assertSame(TextType::class, $this->type->getParent());
+    }
+
+    /**
+     * @test
+     */
+    public function getPublicKey()
+    {
+        $this->assertSame('key', $this->type->getPublicKey());
+    }
+
+    /**
+     * @test
+     */
+    public function configureOptions()
+    {
+        $optionsResolver = new OptionsResolver();
+
+        $this->type->configureOptions($optionsResolver);
+
+        $options = $optionsResolver->resolve();
+
+        $expected = array(
+            'compound' => false,
+            'language' => 'de',
+            'public_key' => null,
+            'url_challenge' => null,
+            'url_noscript' => null,
+            'attr' => array(
+                'options' => array(
+                    'theme' => 'light',
+                    'type' => 'image',
+                    'size' => 'normal',
+                    'callback' => null,
+                    'expiredCallback' => null,
+                    'defer' => false,
+                    'async' => false,
+                ),
+            ),
+        );
+
+        $this->assertSame($expected, $options);
+    }
+
+    /**
      * @test
      */
     public function getBlockPrefix()
     {
-        $requestStack = $this->createMock(RequestStack::class);
-        $localeResolver = new LocaleResolver('foo', false, $requestStack);
-
-        $type = new EWZRecaptchaType('foo', true, true, $localeResolver);
-        $this->assertEquals('ewz_recaptcha', $type->getBlockPrefix());
+        $this->assertEquals('ewz_recaptcha', $this->type->getBlockPrefix());
     }
 }
