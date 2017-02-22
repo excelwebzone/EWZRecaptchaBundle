@@ -8,7 +8,7 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator;
 
 /**
  * Silex Service Provider
- * Inject recaptcha configuration in pimple
+ * Inject recaptcha configuration in pimple.
  */
 class RecaptchaServiceProvider implements ServiceProviderInterface
 {
@@ -18,16 +18,16 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // parameters
-        $app['ewz_recaptcha.public_key']  = null;
+        $app['ewz_recaptcha.public_key'] = null;
         $app['ewz_recaptcha.private_key'] = null;
-        $app['ewz_recaptcha.locale_key']  = $app['locale'];
-        $app['ewz_recaptcha.enabled']     = true;
+        $app['ewz_recaptcha.locale_key'] = $app['locale'];
+        $app['ewz_recaptcha.enabled'] = true;
         $app['ewz_recaptcha.verify_host'] = false;
-        $app['ewz_recaptcha.ajax']        = false;
-        $app['ewz_recaptcha.http_proxy']  = array(
+        $app['ewz_recaptcha.ajax'] = false;
+        $app['ewz_recaptcha.http_proxy'] = array(
             'host' => null,
             'port' => null,
-            'auth' => null
+            'auth' => null,
         );
 
         // add loader for EWZ Template
@@ -44,11 +44,11 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
         // register recaptcha form type
         if (isset($app['form.extensions'])) {
             $app['form.extensions'] = $app->share($app->extend('form.extensions',
-                function($extensions) use ($app) {
+                function ($extensions) use ($app) {
                     $extensions[] = new Form\Extension\RecaptchaExtension($app);
 
                     return $extensions;
-            }));
+                }));
         }
 
         // register recaptcha validator constraint
@@ -75,7 +75,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
 
         // register translation files
         if (isset($app['translator'])) {
-            $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+            $app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
                 $translator->addResource(
                     'xliff',
                     dirname(__FILE__).'/../Resources/translations/validators.'.$app['ewz_recaptcha.locale_key'].'.xlf',

@@ -12,58 +12,57 @@ class IsTrueValidator extends ConstraintValidator
     /**
      * Enable recaptcha?
      *
-     * @var Boolean
+     * @var bool
      */
     protected $enabled;
 
     /**
-     * Recaptcha Private Key
+     * Recaptcha Private Key.
      *
-     * @var Boolean
+     * @var bool
      */
     protected $privateKey;
 
     /**
-     * Request Stack
+     * Request Stack.
      *
      * @var RequestStack
      */
     protected $requestStack;
 
     /**
-     * HTTP Proxy informations
-     * @var Array
+     * HTTP Proxy informations.
+     *
+     * @var array
      */
     protected $httpProxy;
 
     /**
-     * Enable serverside host check
+     * Enable serverside host check.
      *
-     * @var Boolean
+     * @var bool
      */
     protected $verifyHost;
 
     /**
-     * The reCAPTCHA server URL's
+     * The reCAPTCHA server URL's.
      */
     const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
     /**
-     * Construct.
-     *
-     * @param Boolean      $enabled
+     * @param bool         $enabled
      * @param string       $privateKey
      * @param RequestStack $requestStack
      * @param array        $httpProxy
-     * @param Boolean      $verifyHost
+     * @param bool         $verifyHost
      */
     public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy, $verifyHost)
     {
-        $this->enabled      = $enabled;
-        $this->privateKey   = $privateKey;
+        $this->enabled = $enabled;
+        $this->privateKey = $privateKey;
         $this->requestStack = $requestStack;
-        $this->httpProxy    = $httpProxy;
-        $this->verifyHost   = $verifyHost;
+        $this->httpProxy = $httpProxy;
+        $this->verifyHost = $verifyHost;
     }
 
     /**
@@ -91,20 +90,19 @@ class IsTrueValidator extends ConstraintValidator
         elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
             $this->context->addViolation($constraint->invalidHostMessage);
         }
-
     }
 
     /**
-      * Calls an HTTP POST function to verify if the user's guess was correct.
-      *
-      * @param string $privateKey
-      * @param string $remoteip
-      * @param string $answer
-      *
-      * @throws ValidatorException When missing remote ip
-      *
-      * @return Boolean
-      */
+     * Calls an HTTP POST function to verify if the user's guess was correct.
+     *
+     * @param string $privateKey
+     * @param string $remoteip
+     * @param string $answer
+     *
+     * @throws ValidatorException When missing remote ip
+     *
+     * @return bool
+     */
     private function checkAnswer($privateKey, $remoteip, $answer)
     {
         if ($remoteip == null || $remoteip == '') {
@@ -117,7 +115,7 @@ class IsTrueValidator extends ConstraintValidator
         }
 
         $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
-            'secret'   => $privateKey,
+            'secret' => $privateKey,
             'remoteip' => $remoteip,
             'response' => $answer,
         ));
@@ -143,6 +141,9 @@ class IsTrueValidator extends ConstraintValidator
         return file_get_contents($host, false, $context);
     }
 
+    /**
+     * @return null|resource
+     */
     private function getResourceContext()
     {
         if (null === $this->httpProxy['host'] || null === $this->httpProxy['port']) {

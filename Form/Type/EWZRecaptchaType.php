@@ -15,13 +15,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EWZRecaptchaType extends AbstractType
 {
     /**
-     * The reCAPTCHA server URL's
+     * The reCAPTCHA server URL's.
      */
-    const RECAPTCHA_API_SERVER    = 'https://www.google.com/recaptcha/api.js';
+    const RECAPTCHA_API_SERVER = 'https://www.google.com/recaptcha/api.js';
     const RECAPTCHA_API_JS_SERVER = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
 
     /**
-     * The public key
+     * The public key.
      *
      * @var string
      */
@@ -30,14 +30,14 @@ class EWZRecaptchaType extends AbstractType
     /**
      * Enable recaptcha?
      *
-     * @var Boolean
+     * @var bool
      */
     protected $enabled;
 
     /**
      * Use AJAX api?
      *
-     * @var Boolean
+     * @var bool
      */
     protected $ajax;
 
@@ -47,19 +47,17 @@ class EWZRecaptchaType extends AbstractType
     protected $localeResolver;
 
     /**
-     * Construct.
-     *
-     * @param string  $publicKey Recaptcha public key
-     * @param Boolean $enabled   Recaptache status
-     * @param Boolean $ajax      Ajax status
-     * @param string  $localeResolver
+     * @param string $publicKey      Recaptcha public key
+     * @param bool   $enabled        Recaptache status
+     * @param bool   $ajax           Ajax status
+     * @param string $localeResolver
      */
     public function __construct($publicKey, $enabled, $ajax, $localeResolver)
     {
         $this->publicKey = $publicKey;
-        $this->enabled   = $enabled;
-        $this->ajax      = $ajax;
-        $this->localeResolver  = $localeResolver;
+        $this->enabled = $enabled;
+        $this->ajax = $ajax;
+        $this->localeResolver = $localeResolver;
     }
 
     /**
@@ -69,7 +67,7 @@ class EWZRecaptchaType extends AbstractType
     {
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_enabled' => $this->enabled,
-            'ewz_recaptcha_ajax'    => $this->ajax,
+            'ewz_recaptcha_ajax' => $this->ajax,
         ));
 
         if (!$this->enabled) {
@@ -83,11 +81,11 @@ class EWZRecaptchaType extends AbstractType
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
                 'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $options['language']),
-                'public_key'    => $this->publicKey,
+                'public_key' => $this->publicKey,
             ));
         } else {
             $view->vars = array_replace($view->vars, array(
-                'url_api'    => self::RECAPTCHA_API_JS_SERVER,
+                'url_api' => self::RECAPTCHA_API_JS_SERVER,
                 'public_key' => $this->publicKey,
             ));
         }
@@ -99,22 +97,22 @@ class EWZRecaptchaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'compound'      => false,
-            'language'      => $this->localeResolver->resolve(),
-            'public_key'    => null,
+            'compound' => false,
+            'language' => $this->localeResolver->resolve(),
+            'public_key' => null,
             'url_challenge' => null,
-            'url_noscript'  => null,
-            'attr'          => array(
+            'url_noscript' => null,
+            'attr' => array(
                 'options' => array(
-                    'theme'           => 'light',
-                    'type'            => 'image',
-                    'size'            => 'normal',
-                    'callback'        => null,
+                    'theme' => 'light',
+                    'type' => 'image',
+                    'size' => 'normal',
+                    'callback' => null,
                     'expiredCallback' => null,
-                    'defer'           => false,
-                    'async'           => false,
-                )
-            )
+                    'defer' => false,
+                    'async' => false,
+                ),
+            ),
         ));
     }
 
