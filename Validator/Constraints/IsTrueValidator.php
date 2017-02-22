@@ -93,6 +93,24 @@ class IsTrueValidator extends ConstraintValidator
         }
 
     }
+    
+    /**
+     * Submits an HTTP POST to a reCAPTCHA server.
+     *
+     * @param string $host
+     * @param string $path
+     * @param array  $data
+     *
+     * @return array response
+     */
+    protected function httpGet($host, $path, $data)
+    {
+        $host = sprintf('%s%s?%s', $host, $path, http_build_query($data));
+
+        $context = $this->getResourceContext();
+
+        return file_get_contents($host, false, $context);
+    }
 
     /**
       * Calls an HTTP POST function to verify if the user's guess was correct.
@@ -123,24 +141,6 @@ class IsTrueValidator extends ConstraintValidator
         ));
 
         return json_decode($response, true);
-    }
-
-    /**
-     * Submits an HTTP POST to a reCAPTCHA server.
-     *
-     * @param string $host
-     * @param string $path
-     * @param array  $data
-     *
-     * @return array response
-     */
-    private function httpGet($host, $path, $data)
-    {
-        $host = sprintf('%s%s?%s', $host, $path, http_build_query($data));
-
-        $context = $this->getResourceContext();
-
-        return file_get_contents($host, false, $context);
     }
 
     private function getResourceContext()
