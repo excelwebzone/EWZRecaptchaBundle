@@ -84,13 +84,14 @@ class IsTrueValidator extends ConstraintValidator
         // Verify user response with Google
         $response = $this->checkAnswer($this->privateKey, $remoteip, $answer);
 
-        // Perform server side hostname check
-        if ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
-            $this->context->addViolation($constraint->invalidHostMessage);
-        }
-        elseif ($response['success'] !== true) {
+        if ($response['success'] !== true) {
             $this->context->addViolation($constraint->message);
         }
+        // Perform server side hostname check
+        elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
+            $this->context->addViolation($constraint->invalidHostMessage);
+        }
+
     }
 
     /**
