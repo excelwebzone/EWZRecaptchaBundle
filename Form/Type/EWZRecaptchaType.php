@@ -47,12 +47,12 @@ class EWZRecaptchaType extends AbstractType
     protected $localeResolver;
 
     /**
-     * @param string $publicKey      Recaptcha public key
-     * @param bool   $enabled        Recaptache status
-     * @param bool   $ajax           Ajax status
-     * @param string $localeResolver
+     * @param string         $publicKey      Recaptcha public key
+     * @param bool           $enabled        Recaptache status
+     * @param bool           $ajax           Ajax status
+     * @param LocaleResolver $localeResolver
      */
-    public function __construct($publicKey, $enabled, $ajax, $localeResolver)
+    public function __construct($publicKey, $enabled, $ajax, LocaleResolver $localeResolver)
     {
         $this->publicKey = $publicKey;
         $this->enabled = $enabled;
