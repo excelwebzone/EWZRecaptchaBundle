@@ -7,20 +7,18 @@ use Symfony\Component\Form\AbstractExtension;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 /**
- * Extends form to register captcha type
+ * Extends form to register captcha type.
  */
 class RecaptchaExtension extends AbstractExtension
 {
     /**
-     * Container
+     * Container.
      *
      * @var \Silex\Application
      */
     private $app;
 
     /**
-     * Constructor
-     *
      * @param \Silex\Application $app container
      */
     public function __construct(Application $app)
@@ -29,7 +27,7 @@ class RecaptchaExtension extends AbstractExtension
     }
 
     /**
-     * Register the captche form type
+     * Register the captche form type.
      *
      * @return array
      */
@@ -41,7 +39,7 @@ class RecaptchaExtension extends AbstractExtension
                 $this->app['ewz_recaptcha.enabled'],
                 $this->app['ewz_recaptcha.ajax'],
                 $this->app['ewz_recaptcha.locale_key']
-            )
+            ),
         );
     }
 }
