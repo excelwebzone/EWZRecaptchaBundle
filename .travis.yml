@@ -1,0 +1,30 @@
+language: php
+
+sudo: false
+
+git:
+    depth: 1
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+env:
+  global:
+    - SYMFONY_DEPRECATIONS_HELPER=weak
+
+php:
+  - '5.6'
+  - '7.0'
+  - '7.1'
+
+matrix:
+  fast_finish: true
+
+before_script:
+  - composer install --prefer-dist
+  - composer require friendsofphp/php-cs-fixer:^2.1
+
+script:
+  - vendor/bin/php-cs-fixer fix . --rules=@Symfony
+  - vendor/bin/phpunit
