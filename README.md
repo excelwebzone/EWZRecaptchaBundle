@@ -1,6 +1,8 @@
 EWZRecaptchaBundle
 ==================
 
+[![Build Status](https://api.travis-ci.org/excelwebzone/EWZRecaptchaBundle.svg)](https://travis-ci.org/excelwebzone/EWZRecaptchaBundle)
+
 This bundle provides easy reCAPTCHA form field for Symfony.
 
 A bridge for the Silex framework has been implemented too : [Jump to documentation](Bridge/README.md).

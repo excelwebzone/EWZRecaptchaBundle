@@ -1,36 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
 
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false"
-         bootstrap="Tests/tests/bootstrap.php"
->
-    <testsuites>
-        <testsuite name="EWZRecaptchaBundle Test Suite">
-            <directory>./Tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./Tests/</directory>
-                <directory>./Resources/</directory>
-                <directory>./vendor/</directory>
-                <directory>./coverage/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
-    <php>
-        <ini name="precision" value="8"/>
-    </php>
+  <testsuites>
+    <testsuite name="EWZRecaptchaBundle">
+      <directory>tests/</directory>
+    </testsuite>
+  </testsuites>
 
 </phpunit>

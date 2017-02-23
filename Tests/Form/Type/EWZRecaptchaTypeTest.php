@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\Bundle\RecaptchaBundle\Tests\Form\Type;
+namespace EWZ\Tests\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
@@ -10,14 +10,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @author Oskar Stark <oskarstark@googlemail.com>
- */
 class EWZRecaptchaTypeTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var EWZRecaptchaType
-     */
+    /** @var EWZRecaptchaType */
     protected $type;
 
     protected function setUp()

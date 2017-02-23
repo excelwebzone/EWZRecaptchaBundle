@@ -5,10 +5,7 @@ namespace EWZ\Bundle\RecaptchaBundle\Locale;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Depending on the configuration resolves the correct locale
- * for the reCAPTCHA.
- *
- * @author Patrik Karisch <patrik@karisch.guru>
+ * Depending on the configuration resolves the correct locale for the reCAPTCHA.
  */
 final class LocaleResolver
 {
