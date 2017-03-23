@@ -7,6 +7,11 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
+/**
+ * Class IsTrueValidator
+ *
+ * @package EWZ\Bundle\RecaptchaBundle\Validator\Constraints
+ */
 class IsTrueValidator extends ConstraintValidator
 {
     /**
@@ -85,8 +90,7 @@ class IsTrueValidator extends ConstraintValidator
 
         if ($response['success'] !== true) {
             $this->context->addViolation($constraint->message);
-        }
-        // Perform server side hostname check
+        } // Perform server side hostname check
         elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
             $this->context->addViolation($constraint->invalidHostMessage);
         }
@@ -114,11 +118,11 @@ class IsTrueValidator extends ConstraintValidator
             return false;
         }
 
-        $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
-            'secret' => $privateKey,
+        $response = $this->httpGet(self::RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', [
+            'secret'   => $privateKey,
             'remoteip' => $remoteip,
             'response' => $answer,
-        ));
+        ]);
 
         return json_decode($response, true);
     }
@@ -150,13 +154,13 @@ class IsTrueValidator extends ConstraintValidator
             return null;
         }
 
-        $options = array();
-        foreach (array('http', 'https') as $protocol) {
-            $options[$protocol] = array(
-                'method' => 'GET',
-                'proxy' => sprintf('tcp://%s:%s', $this->httpProxy['host'], $this->httpProxy['port']),
+        $options = [];
+        foreach (['http', 'https'] as $protocol) {
+            $options[$protocol] = [
+                'method'          => 'GET',
+                'proxy'           => sprintf('tcp://%s:%s', $this->httpProxy['host'], $this->httpProxy['port']),
                 'request_fulluri' => true,
-            );
+            ];
 
             if (null !== $this->httpProxy['auth']) {
                 $options[$protocol]['header'] = sprintf('Proxy-Authorization: Basic %s', base64_encode($this->httpProxy['auth']));

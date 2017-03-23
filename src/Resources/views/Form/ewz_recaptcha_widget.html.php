@@ -1,7 +1,13 @@
 <?php if ($ewz_recaptcha_enabled): ?>
     <?php if (!$ewz_recaptcha_ajax): ?>
         <script src="<?php echo $url_challenge ?>" type="text/javascript"></script>
-        <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme'] ?>" data-size="<?php echo $attr['options']['size'] ?>" data-type="<?php echo $attr['options']['type'] ?>" data-sitekey="<?php echo $public_key ?>" <?php if (isset($attr['options']['callback'])): ?>data-callback="<?php echo $attr['options']['callback'] ?>"<?php endif ?> <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>></div>
+        <div class="g-recaptcha"
+             data-theme="<?php echo $attr['options']['theme'] ?>"
+             data-size="<?php echo $attr['options']['size'] ?>"
+             data-type="<?php echo $attr['options']['type'] ?>"
+             data-sitekey="<?php echo $public_key ?>"
+             <?php if (isset($attr['options']['callback'])): ?>data-callback="<?php echo $attr['options']['callback'] ?>"<?php endif ?>
+             <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>></div>
         <noscript>
             <div style="width: 302px; height: 352px;">
                 <div style="width: 302px; height: 352px; position: relative;">
@@ -28,7 +34,7 @@
         <script type="text/javascript">
             var script = document.createElement('script');
             script.type = 'text/javascript';
-            script.onload = function() {
+            script.onload = function () {
                 Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
             };
             script.src = '<?php echo $url_api ?>';
