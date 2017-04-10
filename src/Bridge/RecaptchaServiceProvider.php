@@ -24,20 +24,20 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
         $app['ewz_recaptcha.enabled'] = true;
         $app['ewz_recaptcha.verify_host'] = false;
         $app['ewz_recaptcha.ajax'] = false;
-        $app['ewz_recaptcha.http_proxy'] = array(
+        $app['ewz_recaptcha.http_proxy'] = [
             'host' => null,
             'port' => null,
             'auth' => null,
-        );
+        ];
 
         // add loader for EWZ Template
         if (isset($app['twig'])) {
-            $path = dirname(__FILE__).'/../Resources/views/Form';
+            $path = dirname(__FILE__) . '/../Resources/views/Form';
             $app['twig.loader']->addLoader(new \Twig_Loader_Filesystem($path));
 
             $app['twig.form.templates'] = array_merge(
                 $app['twig.form.templates'],
-                array('ewz_recaptcha_widget.html.twig')
+                ['ewz_recaptcha_widget.html.twig']
             );
         }
 
@@ -66,10 +66,10 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
             });
 
             $app['validator.validator_service_ids'] =
-                    isset($app['validator.validator_service_ids']) ? $app['validator.validator_service_ids'] : array();
+                isset($app['validator.validator_service_ids']) ? $app['validator.validator_service_ids'] : [];
             $app['validator.validator_service_ids'] = array_merge(
                 $app['validator.validator_service_ids'],
-                array('ewz_recaptcha.true' => 'ewz_recaptcha.true')
+                ['ewz_recaptcha.true' => 'ewz_recaptcha.true']
             );
         }
 
@@ -78,7 +78,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
             $app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
                 $translator->addResource(
                     'xliff',
-                    dirname(__FILE__).'/../Resources/translations/validators.'.$app['ewz_recaptcha.locale_key'].'.xlf',
+                    dirname(__FILE__) . '/../Resources/translations/validators.' . $app['ewz_recaptcha.locale_key'] . '.xlf',
                     $app['ewz_recaptcha.locale_key'],
                     'validators'
                 );

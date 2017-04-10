@@ -1,53 +1,62 @@
 {% block ewz_recaptcha_widget %}
-{% spaceless %}
-    {% if form.vars.ewz_recaptcha_enabled %}
-        {% if not form.vars.ewz_recaptcha_ajax %}
-            <script type="text/javascript" src="{{ form.vars.url_challenge }}"
-                {%- if attr.options.defer is defined and attr.options.defer %} defer{% endif -%}
-                {%- if attr.options.async is defined and attr.options.async %} async{% endif -%}
-            ></script>
-            <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-size="{{ attr.options.size }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}"
-                 {%- if attr.options.callback is defined %} data-callback="{{ attr.options.callback }}"{% endif -%}
-                 {%- if attr.options.expiredCallback is defined %} data-expired-callback="{{ attr.options.expiredCallback }}"{% endif -%}
-            ></div>
-            <noscript>
-                <div style="width: 302px; height: 352px;">
-                    <div style="width: 302px; height: 352px; position: relative;">
-                        <div style="width: 302px; height: 352px; position: absolute;">
-                            <iframe src="https://www.google.com/recaptcha/api/fallback?k={{ form.vars.public_key }}"
-                                    frameborder="0" scrolling="no"
-                                    style="width: 302px; height:352px; border-style: none;"
-                            >
-                            </iframe>
-                        </div>
-                        <div style="width: 250px; height: 80px; position: absolute; border-style: none; bottom: 21px; left: 25px; margin: 0; padding: 0; right: 25px;">
-                            <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+    {% spaceless %}
+        {% if form.vars.ewz_recaptcha_enabled %}
+            {% if not form.vars.ewz_recaptcha_ajax %}
+                <script type="text/javascript"
+                        src="{{ form.vars.url_challenge }}&onload=CaptchaCallback&render=explicit"
+                        {%- if attr.options.defer is defined and attr.options.defer %} defer{% endif -%}
+                        {%- if attr.options.async is defined and attr.options.async %} async{% endif -%}
+                ></script>
+                <div class="g-recaptcha"
+                     data-theme="{{ attr.options.theme }}"
+                     data-size="{{ attr.options.size }}"
+                     data-type="{{ attr.options.type }}"
+                     data-sitekey="{{ form.vars.public_key }}"
+                        {%- if attr.options.callback is defined %} data-callback="{{ attr.options.callback }}"{% endif -%}
+                        {%- if attr.options.expiredCallback is defined %} data-expired-callback="{{ attr.options.expiredCallback }}"{% endif -%}
+                ></div>
+                <noscript>
+                    <div style="width: 302px; height: 352px;">
+                        <div style="width: 302px; height: 352px; position: relative;">
+                            <div style="width: 302px; height: 352px; position: absolute;">
+                                <iframe src="https://www.google.com/recaptcha/api/fallback?k={{ form.vars.public_key }}"
+                                        frameborder="0" scrolling="no"
+                                        style="width: 302px; height:352px; border-style: none;"
+                                >
+                                </iframe>
+                            </div>
+                            <div style="width: 250px; height: 80px; position: absolute; border-style: none; bottom: 21px; left: 25px; margin: 0; padding: 0; right: 25px;">
+                            <textarea id="g-recaptcha-response"
+                                      name="g-recaptcha-response"
                                       class="g-recaptcha-response"
                                       style="width: 250px; height: 80px; border: 1px solid #c1c1c1; margin: 0; padding: 0; resize: none;"
                             >
                             </textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </noscript>
-        {% else %}
-            <div id="ewz_recaptcha_div"></div>
+                </noscript>
+            {% else %}
+                <div id="ewz_recaptcha_div"></div>
+                <script type="text/javascript">
+                    (function () {
+                        var script = document.createElement('script');
 
-            <script type="text/javascript">
-            (function() {
-                var script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.onload = function() {
-                    Recaptcha.create('{{ form.vars.public_key }}', 'ewz_recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
-                };
-                script.src = '{{ form.vars.url_api }}';
-                {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
-                {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
-                document.getElementsByTagName('head')[0].appendChild(script);
-            })();
-            </script>
+                        script.type = 'text/javascript';
+                        script.onload = function () {
+                            Recaptcha.create('{{ form.vars.public_key }}', 'ewz_recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
+                        };
+
+                        script.src = '{{ form.vars.url_api }}';
+
+                        {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
+                        {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
+
+                        document.getElementsByTagName('head')[0].appendChild(script);
+                    })();
+                </script>
+            {% endif %}
         {% endif %}
-    {% endif %}
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock ewz_recaptcha_widget %}
 

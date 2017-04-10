@@ -9,6 +9,10 @@ use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages your bundle configuration.
+ *
+ * Class EWZRecaptchaExtension
+ *
+ * @package EWZ\Bundle\RecaptchaBundle\DependencyInjection
  */
 class EWZRecaptchaExtension extends Extension
 {
@@ -20,11 +24,11 @@ class EWZRecaptchaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         foreach ($config as $key => $value) {
-            $container->setParameter('ewz_recaptcha.'.$key, $value);
+            $container->setParameter('ewz_recaptcha.' . $key, $value);
         }
 
         $this->registerWidget($container);
@@ -32,26 +36,28 @@ class EWZRecaptchaExtension extends Extension
 
     /**
      * Registers the form widget.
+     *
+     * @param ContainerBuilder $container
      */
     protected function registerWidget(ContainerBuilder $container)
     {
         $templatingEngines = $container->getParameter('templating.engines');
 
         if (in_array('php', $templatingEngines)) {
-            $formRessource = 'EWZRecaptchaBundle:Form';
+            $formResource = 'EWZRecaptchaBundle:Form';
 
             $container->setParameter('templating.helper.form.resources', array_merge(
                 $container->getParameter('templating.helper.form.resources'),
-                array($formRessource)
+                [$formResource]
             ));
         }
 
         if (in_array('twig', $templatingEngines)) {
-            $formRessource = 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig';
+            $formResource = 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig';
 
             $container->setParameter('twig.form.resources', array_merge(
                 $container->getParameter('twig.form.resources'),
-                array($formRessource)
+                [$formResource]
             ));
         }
     }
