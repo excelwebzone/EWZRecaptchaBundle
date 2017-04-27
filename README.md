@@ -120,6 +120,19 @@ public function buildForm(FormBuilder $builder, array $options)
 }
 ```
 
+> *Note that in Symfony versions lower than 2.8 refers to form types by name instead of class name, use:*
+> 
+> ``` php
+> <?php
+> 
+> public function buildForm(FormBuilder $builder, array $options)
+> {
+>    // ...
+>    $builder->add('recaptcha', 'ewz_recaptcha');
+>    // ...
+> }
+> ```
+
 You can pass extra options to reCAPTCHA with the "attr > options" option:
 
 ``` php
