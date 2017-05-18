@@ -1,5 +1,26 @@
 <?php if ($ewz_recaptcha_enabled): ?>
     <?php if (!$ewz_recaptcha_ajax): ?>
+        <?php if ($attr['options']['size'] == 'invisible' && !isset($attr['options']['callback'])): ?>
+            <script type="text/javascript">
+                var onReCaptchaSuccess = function() {
+                    var errorDivs = document.getElementsByClassName('recaptcha-error');
+                    if (errorDivs.length) {
+                        errorDivs[0].className = '';
+                    }
+
+                    var errorMsgs = document.getElementsByClassName('recaptcha-error-message');
+                    if (errorMsgs.length) {
+                        errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+                    }
+
+                    var forms = document.getElementsByClassName('recaptcha-form');
+                    if (forms.length) {
+                        forms[0].submit();
+                    }
+                };
+            </script>
+        <?php endif ?>
+
         <script type="text/javascript" src="<?php echo $url_challenge ?>"
             <?php if (isset($attr['options']['defer']) && $attr['options']['defer']): ?> defer<?php endif ?>
             <?php if (isset($attr['options']['async']) && $attr['options']['async']): ?> async<?php endif ?>
@@ -7,6 +28,7 @@
         <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme'] ?>" data-size="<?php echo $attr['options']['size'] ?>" data-type="<?php echo $attr['options']['type'] ?>" data-sitekey="<?php echo $public_key ?>"
             <?php if (isset($attr['options']['callback'])): ?>data-callback="<?php echo $attr['options']['callback'] ?>"<?php endif ?>
             <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>
+            <?php if (isset($attr['options']['bind'])): ?>data-bind="<?php echo $attr['options']['bind'] ?>"<?php endif ?>
         ></div>
         <noscript>
             <div style="width: 302px; height: 352px;">

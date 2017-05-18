@@ -2,6 +2,27 @@
 {% spaceless %}
     {% if form.vars.ewz_recaptcha_enabled %}
         {% if not form.vars.ewz_recaptcha_ajax %}
+            {% if attr.options.size == 'invisible' and attr.options.callback is not defined %}
+                <script type="text/javascript">
+                    var onReCaptchaSuccess = function() {
+                        var errorDivs = document.getElementsByClassName('recaptcha-error');
+                        if (errorDivs.length) {
+                            errorDivs[0].className = '';
+                        }
+
+                        var errorMsgs = document.getElementsByClassName('recaptcha-error-message');
+                        if (errorMsgs.length) {
+                            errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+                        }
+
+                        var forms = document.getElementsByClassName('recaptcha-form');
+                        if (forms.length) {
+                            forms[0].submit();
+                        }
+                    };
+                </script>
+            {% endif %}
+
             <script type="text/javascript" src="{{ form.vars.url_challenge }}"
                 {%- if attr.options.defer is defined and attr.options.defer %} defer{% endif -%}
                 {%- if attr.options.async is defined and attr.options.async %} async{% endif -%}
@@ -9,6 +30,7 @@
             <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-size="{{ attr.options.size }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}"
                  {%- if attr.options.callback is defined %} data-callback="{{ attr.options.callback }}"{% endif -%}
                  {%- if attr.options.expiredCallback is defined %} data-expired-callback="{{ attr.options.expiredCallback }}"{% endif -%}
+                 {%- if attr.options.bind is defined %} data-bind="{{ attr.options.bind }}"{% endif -%}
             ></div>
             <noscript>
                 <div style="width: 302px; height: 352px;">

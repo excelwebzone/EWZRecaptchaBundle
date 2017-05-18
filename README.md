@@ -121,10 +121,10 @@ public function buildForm(FormBuilder $builder, array $options)
 ```
 
 > *Note that in Symfony versions lower than 2.8 refers to form types by name instead of class name, use:*
-> 
+>
 > ``` php
 > <?php
-> 
+>
 > public function buildForm(FormBuilder $builder, array $options)
 > {
 >    // ...
@@ -157,6 +157,26 @@ public function buildForm(FormBuilder $builder, array $options)
     // ...
 }
 ```
+
+Support Google's Invisible is super easy:
+
+``` php
+<?php
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', EWZRecaptchaType::class, array(
+        'size' => 'invisible',
+        'callback' => 'onReCaptchaSuccess', // will be set by default if not define
+        'bind' => 'btn_submit',             // this is the id of the submit button
+        // ...
+    ));
+    // ...
+}
+```
+
+> Note: If you use the pre-defined callback, you would need to add `recaptcha-form` class to your `<form>` tag.
 
 If you need to configure the language of the captcha depending on your site
 language (multisite languages) you can pass the language with the "language"
