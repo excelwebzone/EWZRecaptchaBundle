@@ -1,6 +1,8 @@
 <?php if ($ewz_recaptcha_enabled): ?>
     <?php if (!$ewz_recaptcha_ajax): ?>
         <?php if ($attr['options']['size'] == 'invisible' && !isset($attr['options']['callback'])): ?>
+            <?php $attr['options']['callback'] = 'onReCaptchaSuccess' ?>
+
             <script type="text/javascript">
                 var onReCaptchaSuccess = function() {
                     var errorDivs = document.getElementsByClassName('recaptcha-error');
