@@ -110,12 +110,12 @@ When creating a new form class add the following line to create the field:
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', EWZRecaptchaType::class);
+    $builder->add('recaptcha', RecaptchaType::class);
     // ...
 }
 ```
@@ -138,12 +138,12 @@ You can pass extra options to reCAPTCHA with the "attr > options" option:
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', EWZRecaptchaType::class, array(
+    $builder->add('recaptcha', RecaptchaType::class, array(
         'attr' => array(
             'options' => array(
                 'theme' => 'light',
@@ -216,13 +216,13 @@ Please note that if you set ```mapped=>false``` then the annotation will not wor
 ``` php
 <?php
 
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
-    $builder->add('recaptcha', EWZRecaptchaType::class, array(
+    $builder->add('recaptcha', RecaptchaType::class, array(
         'attr'        => array(
             'options' => array(
                 'theme' => 'light',
@@ -281,7 +281,7 @@ using JavaScript:
 <div id="recaptcha-container"></div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
+        $.getScript("<?php echo \EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType::RECAPTCHA_API_JS_SERVER ?>", function() {
             Recaptcha.create("<?php echo $form['recaptcha']->get('public_key') ?>", "recaptcha-container", {
                 theme: "clean",
             });
@@ -296,7 +296,7 @@ using JavaScript:
 <div id="recaptcha-container"></div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
+        $.getScript("{{ constant('\\EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\RecaptchaType::RECAPTCHA_API_JS_SERVER') }}", function() {
             Recaptcha.create("{{ form.recaptcha.get('public_key') }}", "recaptcha-container", {
                 theme: "clean"
             });
