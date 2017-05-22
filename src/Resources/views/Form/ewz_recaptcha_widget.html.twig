@@ -3,7 +3,7 @@
     {% if form.vars.ewz_recaptcha_enabled %}
         {% if not form.vars.ewz_recaptcha_ajax %}
             {% if attr.options.size == 'invisible' and attr.options.callback is not defined %}
-                {% set options = options|merge({'callback': 'onReCaptchaSuccess'}) %}
+                {% set options = attr.options|merge({'callback': 'onReCaptchaSuccess'}) %}
                 {% set attr = attr|merge({'options': options}) %}
 
                 <script type="text/javascript">
