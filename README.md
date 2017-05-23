@@ -167,10 +167,18 @@ public function buildForm(FormBuilder $builder, array $options)
 {
     // ...
     $builder->add('recaptcha', EWZRecaptchaType::class, array(
-        'size' => 'invisible',
-        'callback' => 'onReCaptchaSuccess', // will be set by default if not define
-        'bind' => 'btn_submit',             // this is the id of the submit button
-        // ...
+        'attr' => array(
+            'options' => array(
+                'theme' => 'light',
+                'type'  => 'image',
+                'size' => 'invisible',              // set size to invisible
+                'defer' => true,
+                'async' => true
+                'callback' => 'onReCaptchaSuccess', // callback will be set by default if not defined (along with JS function that validate the form on success)
+                'bind' => 'btn_submit',             // this is the id of the form submit button
+                // ...
+             )
+        )
     ));
     // ...
 }
