@@ -174,7 +174,7 @@ public function buildForm(FormBuilder $builder, array $options)
                 'size' => 'invisible',              // set size to invisible
                 'defer' => true,
                 'async' => true
-                'callback' => 'onReCaptchaSuccess', // callback will be set by default if not defined (along with JS funstion that validate the form on success)
+                'callback' => 'onReCaptchaSuccess', // callback will be set by default if not defined (along with JS function that validate the form on success)
                 'bind' => 'btn_submit',             // this is the id of the form submit button
                 // ...
              )
