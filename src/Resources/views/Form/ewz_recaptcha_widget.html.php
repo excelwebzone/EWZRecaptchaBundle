@@ -17,7 +17,9 @@
 
                     var forms = document.getElementsByClassName('recaptcha-form');
                     if (forms.length) {
-                        forms[0].submit();
+                        var recaptchaSubmitEvent = document.createEvent('Event');
+                        recaptchaSubmitEvent.initEvent('submit', true, true);
+                        forms[0].dispatchEvent(recaptchaSubmitEvent);
                     }
                 };
             </script>
