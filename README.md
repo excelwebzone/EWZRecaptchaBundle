@@ -150,7 +150,7 @@ public function buildForm(FormBuilder $builder, array $options)
                 'type'  => 'image',
                 'size'  => 'normal',
                 'defer' => true,
-                'async' => true
+                'async' => true,
             )
         )
     ));
@@ -173,7 +173,7 @@ public function buildForm(FormBuilder $builder, array $options)
                 'type'  => 'image',
                 'size' => 'invisible',              // set size to invisible
                 'defer' => true,
-                'async' => true
+                'async' => true,
                 'callback' => 'onReCaptchaSuccess', // callback will be set by default if not defined (along with JS function that validate the form on success)
                 'bind' => 'btn_submit',             // this is the id of the form submit button
                 // ...
