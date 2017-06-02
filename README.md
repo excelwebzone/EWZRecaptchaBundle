@@ -208,6 +208,7 @@ To validate the field use:
 
 ``` php
 <?php
+#YourBundle\Entity\YourEntity;
 
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
