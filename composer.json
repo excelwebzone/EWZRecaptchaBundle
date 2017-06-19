@@ -28,7 +28,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "EWZ\\Tests\\Bundle\\RecaptchaBundle\\": "Tests"
+      "EWZ\\Tests\\Bundle\\RecaptchaBundle\\": "tests"
     }
   }
 }
