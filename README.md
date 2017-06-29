@@ -86,9 +86,10 @@ You can add HTTP Proxy configuration:
 
 ewz_recaptcha:
     // ...
-    host: proxy.mycompany.com
-    port: 3128
-    auth: proxy_username:proxy_password
+    http_proxy:
+        host: proxy.mycompany.com
+        port: 3128
+        auth: proxy_username:proxy_password
 ```
 
 In case you have turned off the domain name checking on reCAPTCHA's end, you'll need to check the origin of the response by enabling the ``verify_host`` option:
