@@ -4,7 +4,7 @@
         <body>
             <trans-unit id="1">
                 <source>This value is not a valid captcha.</source>
-                <target>Jouw captcha is ongeldig</target>
+                <target>Jouw captcha is ongeldig.</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>The captcha was not resolved on the right domain.</source>
