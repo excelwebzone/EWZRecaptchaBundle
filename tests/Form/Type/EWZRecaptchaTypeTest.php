@@ -84,6 +84,7 @@ class EWZRecaptchaTypeTest extends \PHPUnit_Framework_TestCase
                     'bind' => null,
                     'defer' => false,
                     'async' => false,
+                    'badge' => null,
                 ),
             ),
         );

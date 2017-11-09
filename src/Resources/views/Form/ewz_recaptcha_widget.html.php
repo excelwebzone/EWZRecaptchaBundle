@@ -36,6 +36,7 @@
             <?php if (isset($attr['options']['callback'])): ?>data-callback="<?php echo $attr['options']['callback'] ?>"<?php endif ?>
             <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>
             <?php if (isset($attr['options']['bind'])): ?>data-bind="<?php echo $attr['options']['bind'] ?>"<?php endif ?>
+            <?php if (isset($attr['options']['badge'])): ?>data-badge="<?php echo $attr['options']['badge'] ?>"<?php endif ?>
         ></div>
         <noscript>
             <div style="width: 302px; height: 352px;">
