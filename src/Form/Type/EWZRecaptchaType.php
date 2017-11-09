@@ -112,6 +112,7 @@ class EWZRecaptchaType extends AbstractType
                     'bind' => null,
                     'defer' => false,
                     'async' => false,
+                    'badge' => null,
                 ),
             ),
         ));
