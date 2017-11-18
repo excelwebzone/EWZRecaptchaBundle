@@ -9,6 +9,7 @@ services:
 
     ewz_recaptcha.form.type:
         class: EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType
+        public: true
         arguments:
             - '%ewz_recaptcha.public_key%'
             - '%ewz_recaptcha.enabled%'
@@ -18,12 +19,13 @@ services:
             - { name: form.type }
 
     ewz_recaptcha.validator.true:
-            class: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator
-            arguments:
-                - '%ewz_recaptcha.enabled%'
-                - '%ewz_recaptcha.private_key%'
-                - '@request_stack'
-                - '%ewz_recaptcha.http_proxy%'
-                - '%ewz_recaptcha.verify_host%'
-            tags:
-                - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
+        class: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidator
+        public: true
+        arguments:
+            - '%ewz_recaptcha.enabled%'
+            - '%ewz_recaptcha.private_key%'
+            - '@request_stack'
+            - '%ewz_recaptcha.http_proxy%'
+            - '%ewz_recaptcha.verify_host%'
+        tags:
+            - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
