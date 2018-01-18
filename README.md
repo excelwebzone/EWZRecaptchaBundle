@@ -5,7 +5,7 @@ EWZRecaptchaBundle
 
 This bundle provides easy reCAPTCHA form field for Symfony.
 
-A bridge for the Silex framework has been implemented too : [Jump to documentation](Bridge/README.md).
+A bridge for the Silex framework has been implemented too : [Jump to documentation](src/Bridge/README.md).
 
 ## Installation
 
