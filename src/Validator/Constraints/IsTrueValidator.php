@@ -3,6 +3,7 @@
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ValidatorException;
@@ -45,6 +46,20 @@ class IsTrueValidator extends ConstraintValidator
     protected $verifyHost;
 
     /**
+     * Authorization Checker
+     *
+     * @var AuthorizationChecker
+     */
+    protected $authorizationChecker;
+
+    /**
+     * Trusted Roles
+     *
+     * @var Array
+     */
+    protected $trusted_roles;
+
+    /**
      * The reCAPTCHA server URL's.
      */
     const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
@@ -56,13 +71,15 @@ class IsTrueValidator extends ConstraintValidator
      * @param array        $httpProxy
      * @param bool         $verifyHost
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy, $verifyHost)
+    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy, $verifyHost, AuthorizationCheckerInterface $authorizationChecker, $trusted_roles)
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
         $this->requestStack = $requestStack;
         $this->httpProxy = $httpProxy;
         $this->verifyHost = $verifyHost;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->trusted_roles = $trusted_roles;
     }
 
     /**
@@ -73,6 +90,11 @@ class IsTrueValidator extends ConstraintValidator
         // if recaptcha is disabled, always valid
         if (!$this->enabled) {
             return;
+        }
+
+        // if we have an authorized role
+        if ($this->authorizationChecker->isGranted($this->trusted_roles)) {
+            return true;
         }
 
         // define variable for recaptcha check answer
