@@ -65,13 +65,22 @@ class IsTrueValidator extends ConstraintValidator
     const RECAPTCHA_VERIFY_SERVER = 'https://www.google.com';
 
     /**
-     * @param bool         $enabled
-     * @param string       $privateKey
-     * @param RequestStack $requestStack
-     * @param array        $httpProxy
-     * @param bool         $verifyHost
+     * @param bool                               $enabled
+     * @param string                             $privateKey
+     * @param RequestStack                       $requestStack
+     * @param array                              $httpProxy
+     * @param bool                               $verifyHost
+     * @param AuthorizationCheckerInterface|null $authorizationChecker
+     * @param array                              $trusted_roles
      */
-    public function __construct($enabled, $privateKey, RequestStack $requestStack, array $httpProxy, $verifyHost, AuthorizationCheckerInterface $authorizationChecker, $trusted_roles)
+    public function __construct(
+        $enabled,
+        $privateKey,
+        RequestStack $requestStack,
+        array $httpProxy,
+        $verifyHost,
+        AuthorizationCheckerInterface $authorizationChecker = null,
+        array $trusted_roles = array())
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
@@ -93,7 +102,7 @@ class IsTrueValidator extends ConstraintValidator
         }
 
         // if we have an authorized role
-        if ($this->authorizationChecker->isGranted($this->trusted_roles)) {
+        if ($this->authorizationChecker && $this->authorizationChecker->isGranted($this->trusted_roles)) {
             return true;
         }
 

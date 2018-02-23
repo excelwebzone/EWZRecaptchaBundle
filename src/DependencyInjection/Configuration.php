@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('ajax')->defaultFalse()->end()
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
                 ->booleanNode('locale_from_request')->defaultFalse()->end()
-				->arrayNode('trusted_roles')->prototype('scalar')->end()
+				->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()
             ->end()
         ;
 

@@ -27,7 +27,7 @@ services:
             - '@request_stack'
             - '%ewz_recaptcha.http_proxy%'
             - '%ewz_recaptcha.verify_host%'
-            - '@security.authorization_checker'
+            - '@?security.authorization_checker'
             - '%ewz_recaptcha.trusted_roles%'
         tags:
             - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
