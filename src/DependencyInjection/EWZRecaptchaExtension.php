@@ -50,9 +50,17 @@ class EWZRecaptchaExtension extends Extension
             $formRessource = 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig';
 
             $container->setParameter('twig.form.resources', array_merge(
-                $container->getParameter('twig.form.resources'),
+                $this->getTwigFormResources($container),
                 array($formRessource)
             ));
         }
+    }
+
+    private function getTwigFormResources(ContainerBuilder $container)
+    {
+        if (!$container->hasParameter('twig.form.resources'))
+            return [];
+
+        return $container->getParameter('twig.form.resources');
     }
 }
