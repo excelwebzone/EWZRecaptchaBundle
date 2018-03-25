@@ -64,7 +64,7 @@ class IsTrueValidator extends ConstraintValidator
      * 
      * @var string
      */
-    protected $RECAPTCHA_VERIFY_SERVER;
+    protected $recaptchaVerifyServer;
 
     /**
      * @param bool                               $enabled
@@ -83,7 +83,7 @@ class IsTrueValidator extends ConstraintValidator
         $verifyHost,
         AuthorizationCheckerInterface $authorizationChecker = null,
         array $trusted_roles = array(),
-        $apiHost='www.google.com')
+        $apiHost = 'www.google.com')
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
@@ -92,7 +92,7 @@ class IsTrueValidator extends ConstraintValidator
         $this->verifyHost = $verifyHost;
         $this->authorizationChecker = $authorizationChecker;
         $this->trusted_roles = $trusted_roles;
-        $this->RECAPTCHA_VERIFY_SERVER = 'https://'.$apiHost;
+        $this->recaptchaVerifyServer = 'https://'.$apiHost;
     }
 
     /**
@@ -149,7 +149,7 @@ class IsTrueValidator extends ConstraintValidator
             return false;
         }
 
-        $response = $this->httpGet($this->RECAPTCHA_VERIFY_SERVER, '/recaptcha/api/siteverify', array(
+        $response = $this->httpGet($this->recaptchaVerifyServer, '/recaptcha/api/siteverify', array(
             'secret' => $privateKey,
             'remoteip' => $remoteip,
             'response' => $answer,
