@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('verify_host')->defaultFalse()->end()
                 ->booleanNode('ajax')->defaultFalse()->end()
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
+                ->scalarNode('api_host')->defaultValue('www.google.com')->end()
                 ->booleanNode('locale_from_request')->defaultFalse()->end()
 				->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()
             ->end()
