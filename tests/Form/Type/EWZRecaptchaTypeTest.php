@@ -19,7 +19,7 @@ class EWZRecaptchaTypeTest extends \PHPUnit_Framework_TestCase
     {
         $requestStack = $this->createMock(RequestStack::class);
         $localeResolver = new LocaleResolver('de', false, $requestStack);
-        $this->type = new EWZRecaptchaType('key', true, true, $localeResolver);
+        $this->type = new EWZRecaptchaType('key', true, true, $localeResolver, 'www.google.com');
     }
 
     /**

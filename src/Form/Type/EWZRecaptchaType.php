@@ -15,10 +15,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EWZRecaptchaType extends AbstractType
 {
     /**
-     * The reCAPTCHA server URL's.
+     * The reCAPTCHA server URL.
+     * 
+     * @var string
      */
-    const RECAPTCHA_API_SERVER = 'https://www.google.com/recaptcha/api.js';
-    const RECAPTCHA_API_JS_SERVER = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+    protected $RECAPTCHA_API_SERVER;
+    
+    /**
+     * The reCAPTCHA JS server URL.
+     * 
+     * @var string
+     */
+    protected $RECAPTCHA_API_JS_SERVER;
 
     /**
      * The public key.
@@ -26,6 +34,13 @@ class EWZRecaptchaType extends AbstractType
      * @var string
      */
     protected $publicKey;
+
+    /**
+     * The API server host name.
+     *
+     * @var string
+     */
+    protected $apiHost;
 
     /**
      * Enable recaptcha?
@@ -52,12 +67,15 @@ class EWZRecaptchaType extends AbstractType
      * @param bool           $ajax           Ajax status
      * @param LocaleResolver $localeResolver
      */
-    public function __construct($publicKey, $enabled, $ajax, LocaleResolver $localeResolver)
+    public function __construct($publicKey, $enabled, $ajax, LocaleResolver $localeResolver, $apiHost='www.google.com')
     {
         $this->publicKey = $publicKey;
         $this->enabled = $enabled;
         $this->ajax = $ajax;
+        $this->apiHost = $apiHost;
         $this->localeResolver = $localeResolver;
+        $this->RECAPTCHA_API_JS_SERVER = '//'.$apiHost.'/recaptcha/api/js/recaptcha_ajax.js';
+        $this->RECAPTCHA_API_SERVER = 'https://'.$apiHost.'/recaptcha/api.js';
     }
 
     /**
@@ -68,6 +86,7 @@ class EWZRecaptchaType extends AbstractType
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_enabled' => $this->enabled,
             'ewz_recaptcha_ajax' => $this->ajax,
+            'ewz_recaptcha_apihost' => $this->apiHost
         ));
 
         if (!$this->enabled) {
@@ -80,12 +99,12 @@ class EWZRecaptchaType extends AbstractType
 
         if (!$this->ajax) {
             $view->vars = array_replace($view->vars, array(
-                'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $options['language']),
+                'url_challenge' => sprintf('%s?hl=%s', $this->RECAPTCHA_API_SERVER, $options['language']),
                 'public_key' => $this->publicKey,
             ));
         } else {
             $view->vars = array_replace($view->vars, array(
-                'url_api' => self::RECAPTCHA_API_JS_SERVER,
+                'url_api' => $this->RECAPTCHA_API_JS_SERVER,
                 'public_key' => $this->publicKey,
             ));
         }
@@ -154,5 +173,15 @@ class EWZRecaptchaType extends AbstractType
     public function getPublicKey()
     {
         return $this->publicKey;
+    }
+
+    /**
+     * Gets the API host name.
+     *
+     * @return string The hostname for API
+     */
+    public function getApiHost()
+    {
+        return $this->apiHost;
     }
 }

@@ -79,6 +79,16 @@ ewz_recaptcha:
     ajax: true
 ```
 
+`www.google.com` is blocked in Mainland China, you can override the default server like this:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    api_host: recaptcha.net
+```
+
 You can add HTTP Proxy configuration:
 
 ``` yaml

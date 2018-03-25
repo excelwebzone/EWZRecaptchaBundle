@@ -15,6 +15,7 @@ services:
             - '%ewz_recaptcha.enabled%'
             - '%ewz_recaptcha.ajax%'
             - '@ewz_recaptcha.locale.resolver'
+            - '%ewz_recaptcha.api_host%'
         tags:
             - { name: form.type }
 
@@ -29,5 +30,6 @@ services:
             - '%ewz_recaptcha.verify_host%'
             - '@?security.authorization_checker'
             - '%ewz_recaptcha.trusted_roles%'
+            - '%ewz_recaptcha.api_host%'
         tags:
             - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }

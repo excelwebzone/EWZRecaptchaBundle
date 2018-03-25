@@ -24,6 +24,7 @@ class RecaptchaServiceProvider implements ServiceProviderInterface
         $app['ewz_recaptcha.enabled'] = true;
         $app['ewz_recaptcha.verify_host'] = false;
         $app['ewz_recaptcha.ajax'] = false;
+        $app['ewz_recaptcha.api_host'] = 'www.google.com';
         $app['ewz_recaptcha.http_proxy'] = array(
             'host' => null,
             'port' => null,
