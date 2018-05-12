@@ -3,10 +3,11 @@
 namespace EWZ\Tests\Bundle\RecaptchaBundle\Locale;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class LocaleResolverTest extends \PHPUnit_Framework_TestCase
+class LocaleResolverTest extends TestCase
 {
     /**
      * @test
