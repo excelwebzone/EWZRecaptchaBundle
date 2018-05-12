@@ -1,9 +1,11 @@
 language: php
 
-php:
-  - 5.6
-  - 7.0
-  - 7.1
+sudo: false
+dist: trusty
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 matrix:
   fast_finish: true
@@ -14,14 +16,15 @@ matrix:
     # test the latest stable 3.x release
     - php: 5.6
       env: SYMFONY_VERSION=^3.0
+    - php: 7.0
     # test the latest release (including beta releases)
     - php: 7.1
       env: DEPENDENCIES=beta
+    - php: 7.2
 
 before_script:
   - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
-  - composer self-update
   - composer install
 
 script:
-  - vendor/bin/phpunit
+  - phpunit
