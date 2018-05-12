@@ -11,30 +11,37 @@ matrix:
   fast_finish: true
   include:
     - php: 5.6
-      env: SYMFONY_VERSION=2.8.*
+      env: SYMFONY_VERSION=^2.8
     - php: 5.6
-      env: SYMFONY_VERSION=3.4.*
+      env: SYMFONY_VERSION=^3
 
     - php: 7.0
-      env: SYMFONY_VERSION=2.8.*
+      env: SYMFONY_VERSION=^2.8
     - php: 7.0
-      env: SYMFONY_VERSION=3.4.*
+      env: SYMFONY_VERSION=^3
 
     - php: 7.1
-      env: SYMFONY_VERSION=2.8.*
+      env: SYMFONY_VERSION=^2.8
     - php: 7.1
-      env: SYMFONY_VERSION=3.4.*
+      env: SYMFONY_VERSION=^3
     - php: 7.1
-      env: SYMFONY_VERSION=4.0.*
+      env: SYMFONY_VERSION=^4
 
     - php: 7.2
-      env: SYMFONY_VERSION=2.8.*
+      env: SYMFONY_VERSION=^2.8
     - php: 7.2
-      env: SYMFONY_VERSION=3.4.*
+      env: SYMFONY_VERSION=^3
     - php: 7.2
-      env: SYMFONY_VERSION=4.0.*
+      env: SYMFONY_VERSION=^4
 
 before_script:
+  - |
+    if [ "$SYMFONY_VERSION" != "" ]; then
+      composer require "symfony/form:${SYMFONY_VERSION}" --no-update
+      composer require "symfony/security:${SYMFONY_VERSION}" --no-update
+      composer require "symfony/validator:${SYMFONY_VERSION}" --no-update
+      composer require "symfony/framework-bundle:${SYMFONY_VERSION}" --no-update
+    fi
   - composer install
 
 script:
