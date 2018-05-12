@@ -38,7 +38,6 @@ before_script:
   - |
     if [ "$SYMFONY_VERSION" != "" ]; then
       composer require "symfony/form:${SYMFONY_VERSION}" --no-update
-      composer require "symfony/security:${SYMFONY_VERSION}" --no-update
       composer require "symfony/validator:${SYMFONY_VERSION}" --no-update
       composer require "symfony/framework-bundle:${SYMFONY_VERSION}" --no-update
     fi
