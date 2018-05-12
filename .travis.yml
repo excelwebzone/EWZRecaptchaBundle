@@ -10,20 +10,31 @@ cache:
 matrix:
   fast_finish: true
   include:
-    # test 2.8 LTS
     - php: 5.6
       env: SYMFONY_VERSION=2.8.*
-    # test the latest stable 3.x release
     - php: 5.6
-      env: SYMFONY_VERSION=^3.0
+      env: SYMFONY_VERSION=3.4.*
+
     - php: 7.0
-    # test the latest release (including beta releases)
+      env: SYMFONY_VERSION=2.8.*
+    - php: 7.0
+      env: SYMFONY_VERSION=3.4.*
+
     - php: 7.1
-      env: DEPENDENCIES=beta
+      env: SYMFONY_VERSION=2.8.*
+    - php: 7.1
+      env: SYMFONY_VERSION=3.4.*
+    - php: 7.1
+      env: SYMFONY_VERSION=4.0.*
+
     - php: 7.2
+      env: SYMFONY_VERSION=2.8.*
+    - php: 7.2
+      env: SYMFONY_VERSION=3.4.*
+    - php: 7.2
+      env: SYMFONY_VERSION=4.0.*
 
 before_script:
-  - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
   - composer install
 
 script:
