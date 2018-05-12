@@ -109,7 +109,7 @@ class IsTrueValidator extends ConstraintValidator
 
         // if we have an authorized role
         if ($this->authorizationChecker && $this->authorizationChecker->isGranted($this->trusted_roles)) {
-            return true;
+            return;
         }
 
         // define variable for recaptcha check answer
