@@ -5,16 +5,16 @@
          bootstrap="./tests/bootstrap.php"
          colors="true">
 
-    <testsuites>
-        <testsuite name="EWZRecaptchaBundle">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
+  <testsuites>
+    <testsuite name="EWZRecaptchaBundle">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+  <filter>
+    <whitelist>
+      <directory suffix=".php">src</directory>
+    </whitelist>
+  </filter>
 
 </phpunit>
