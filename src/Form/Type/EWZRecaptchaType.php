@@ -3,6 +3,7 @@
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
@@ -15,14 +16,14 @@ class EWZRecaptchaType extends AbstractType
 {
     /**
      * The reCAPTCHA server URL.
-     *
+     * 
      * @var string
      */
     protected $recaptchaApiServer;
-
+    
     /**
      * The reCAPTCHA JS server URL.
-     *
+     * 
      * @var string
      */
     protected $recaptchaApiJsServer;
@@ -141,7 +142,7 @@ class EWZRecaptchaType extends AbstractType
      */
     public function getParent()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\TextType';
+        return TextType::class;
     }
 
     /**

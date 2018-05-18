@@ -5,7 +5,10 @@ namespace EWZ\Tests\Bundle\RecaptchaBundle\Form\Type;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EWZRecaptchaTypeTest extends TestCase
@@ -15,7 +18,7 @@ class EWZRecaptchaTypeTest extends TestCase
 
     protected function setUp()
     {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock(RequestStack::class);
         $localeResolver = new LocaleResolver('de', false, $requestStack);
         $this->type = new EWZRecaptchaType('key', true, true, $localeResolver, 'www.google.com');
     }
@@ -27,7 +30,8 @@ class EWZRecaptchaTypeTest extends TestCase
     {
         $view = new FormView();
 
-        $form = $this->createMock('Symfony\Component\Form\FormInterface');
+        /** @var FormInterface $form */
+        $form = $this->createMock(FormInterface::class);
 
         $this->assertArrayNotHasKey('ewz_recaptcha_enabled', $view->vars);
         $this->assertArrayNotHasKey('ewz_recaptcha_ajax', $view->vars);
@@ -43,7 +47,7 @@ class EWZRecaptchaTypeTest extends TestCase
      */
     public function getParent()
     {
-        $this->assertSame('Symfony\Component\Form\Extension\Core\Type\TextType', $this->type->getParent());
+        $this->assertSame(TextType::class, $this->type->getParent());
     }
 
     /**

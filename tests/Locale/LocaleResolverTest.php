@@ -4,6 +4,8 @@ namespace EWZ\Tests\Bundle\RecaptchaBundle\Locale;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocaleResolverTest extends TestCase
 {
@@ -12,10 +14,10 @@ class LocaleResolverTest extends TestCase
      */
     public function resolveWithLocaleFromRequest()
     {
-        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $request = $this->createMock(Request::class);
         $request->expects($this->once())->method('getLocale');
 
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock(RequestStack::class);
         $requestStack
             ->expects($this->once())
             ->method('getCurrentRequest')
@@ -30,7 +32,7 @@ class LocaleResolverTest extends TestCase
      */
     public function resolveWithDefaultLocale()
     {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock(RequestStack::class);
         $requestStack
             ->expects($this->never())
             ->method('getCurrentRequest');
