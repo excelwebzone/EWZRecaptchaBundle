@@ -2,6 +2,7 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+use EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod\Post;
 use EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod\ProxyPost;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -119,9 +120,10 @@ class IsTrueValidator extends ConstraintValidator
         $answer = $masterRequest->get('g-recaptcha-response');
 
         // Verify user response with Google
-        $requestMethod = null;
         if (null !== $this->httpProxy['host'] && null !== $this->httpProxy['port']) {
-            $requestMethod = new ProxyPost($this->httpProxy);
+            $requestMethod = new ProxyPost($this->httpProxy, $this->recaptchaVerifyServer);
+        } else {
+            $requestMethod = new Post($this->recaptchaVerifyServer);
         }
         $recaptcha = new ReCaptcha($this->privateKey, $requestMethod);
         $response = $recaptcha->verify($answer, $remoteip);
