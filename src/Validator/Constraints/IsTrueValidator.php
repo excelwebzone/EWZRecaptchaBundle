@@ -2,11 +2,14 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+use EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod\Post;
+use EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod\ProxyPost;
+use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\ValidatorException;
 
 class IsTrueValidator extends ConstraintValidator
 {
@@ -55,13 +58,13 @@ class IsTrueValidator extends ConstraintValidator
     /**
      * Trusted Roles
      *
-     * @var Array
+     * @var array
      */
     protected $trusted_roles;
 
     /**
      * The reCAPTCHA verify server URL.
-     * 
+     *
      * @var string
      */
     protected $recaptchaVerifyServer;
@@ -74,6 +77,7 @@ class IsTrueValidator extends ConstraintValidator
      * @param bool                               $verifyHost
      * @param AuthorizationCheckerInterface|null $authorizationChecker
      * @param array                              $trusted_roles
+     * @param string                             $apiHost
      */
     public function __construct(
         $enabled,
@@ -107,7 +111,7 @@ class IsTrueValidator extends ConstraintValidator
 
         // if we have an authorized role
         if ($this->authorizationChecker && $this->authorizationChecker->isGranted($this->trusted_roles)) {
-            return true;
+            return;
         }
 
         // define variable for recaptcha check answer
@@ -116,88 +120,20 @@ class IsTrueValidator extends ConstraintValidator
         $answer = $masterRequest->get('g-recaptcha-response');
 
         // Verify user response with Google
-        $response = $this->checkAnswer($this->privateKey, $remoteip, $answer);
+        if (null !== $this->httpProxy['host'] && null !== $this->httpProxy['port']) {
+            $requestMethod = new ProxyPost($this->httpProxy, $this->recaptchaVerifyServer);
+        } else {
+            $requestMethod = new Post($this->recaptchaVerifyServer);
+        }
+        $recaptcha = new ReCaptcha($this->privateKey, $requestMethod);
+        $response = $recaptcha->verify($answer, $remoteip);
 
-        if ($response['success'] !== true) {
+        if (!$response->isSuccess()) {
             $this->context->addViolation($constraint->message);
         }
         // Perform server side hostname check
         elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
             $this->context->addViolation($constraint->invalidHostMessage);
         }
-    }
-
-    /**
-     * Calls an HTTP POST function to verify if the user's guess was correct.
-     *
-     * @param string $privateKey
-     * @param string $remoteip
-     * @param string $answer
-     *
-     * @throws ValidatorException When missing remote ip
-     *
-     * @return bool
-     */
-    private function checkAnswer($privateKey, $remoteip, $answer)
-    {
-        if ($remoteip == null || $remoteip == '') {
-            throw new ValidatorException('For security reasons, you must pass the remote ip to reCAPTCHA');
-        }
-
-        // discard spam submissions
-        if ($answer == null || strlen($answer) == 0) {
-            return false;
-        }
-
-        $response = $this->httpGet($this->recaptchaVerifyServer, '/recaptcha/api/siteverify', array(
-            'secret' => $privateKey,
-            'remoteip' => $remoteip,
-            'response' => $answer,
-        ));
-
-        return json_decode($response, true);
-    }
-
-    /**
-     * Submits an HTTP POST to a reCAPTCHA server.
-     *
-     * @param string $host
-     * @param string $path
-     * @param array  $data
-     *
-     * @return array response
-     */
-    private function httpGet($host, $path, $data)
-    {
-        $host = sprintf('%s%s?%s', $host, $path, http_build_query($data));
-
-        $context = $this->getResourceContext();
-
-        return file_get_contents($host, false, $context);
-    }
-
-    /**
-     * @return null|resource
-     */
-    private function getResourceContext()
-    {
-        if (null === $this->httpProxy['host'] || null === $this->httpProxy['port']) {
-            return null;
-        }
-
-        $options = array();
-        foreach (array('http', 'https') as $protocol) {
-            $options[$protocol] = array(
-                'method' => 'GET',
-                'proxy' => sprintf('tcp://%s:%s', $this->httpProxy['host'], $this->httpProxy['port']),
-                'request_fulluri' => true,
-            );
-
-            if (null !== $this->httpProxy['auth']) {
-                $options[$protocol]['header'] = sprintf('Proxy-Authorization: Basic %s', base64_encode($this->httpProxy['auth']));
-            }
-        }
-
-        return stream_context_create($options);
     }
 }

@@ -1,27 +1,48 @@
 language: php
 
-php:
-  - 5.6
-  - 7.0
-  - 7.1
+sudo: false
+dist: trusty
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 matrix:
   fast_finish: true
   include:
-    # test 2.8 LTS
     - php: 5.6
-      env: SYMFONY_VERSION=2.8.*
-    # test the latest stable 3.x release
+      env: SYMFONY_VERSION=^2.8
     - php: 5.6
-      env: SYMFONY_VERSION=^3.0
-    # test the latest release (including beta releases)
+      env: SYMFONY_VERSION=^3
+
+    - php: 7.0
+      env: SYMFONY_VERSION=^2.8
+    - php: 7.0
+      env: SYMFONY_VERSION=^3
+
     - php: 7.1
-      env: DEPENDENCIES=beta
+      env: SYMFONY_VERSION=^2.8
+    - php: 7.1
+      env: SYMFONY_VERSION=^3
+    - php: 7.1
+      env: SYMFONY_VERSION=^4
+
+    - php: 7.2
+      env: SYMFONY_VERSION=^2.8
+    - php: 7.2
+      env: SYMFONY_VERSION=^3
+    - php: 7.2
+      env: SYMFONY_VERSION=^4
 
 before_script:
-  - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
-  - composer self-update
+  - |
+    if [ "$SYMFONY_VERSION" != "" ]; then
+      composer require "symfony/form:${SYMFONY_VERSION}" --no-update
+      composer require "symfony/framework-bundle:${SYMFONY_VERSION}" --no-update
+      composer require "symfony/security-bundle:${SYMFONY_VERSION}" --no-update
+      composer require "symfony/validator:${SYMFONY_VERSION}" --no-update
+    fi
   - composer install
 
 script:
-  - vendor/bin/phpunit
+  - phpunit

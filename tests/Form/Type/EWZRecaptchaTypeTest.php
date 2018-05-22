@@ -4,13 +4,14 @@ namespace EWZ\Tests\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EWZRecaptchaTypeTest extends \PHPUnit_Framework_TestCase
+class EWZRecaptchaTypeTest extends TestCase
 {
     /** @var EWZRecaptchaType */
     protected $type;
