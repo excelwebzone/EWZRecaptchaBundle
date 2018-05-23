@@ -60,7 +60,7 @@ class IsTrueValidator extends ConstraintValidator
      *
      * @var array
      */
-    protected $trusted_roles;
+    protected $trustedRoles;
 
     /**
      * The reCAPTCHA verify server URL.
@@ -76,7 +76,7 @@ class IsTrueValidator extends ConstraintValidator
      * @param array                              $httpProxy
      * @param bool                               $verifyHost
      * @param AuthorizationCheckerInterface|null $authorizationChecker
-     * @param array                              $trusted_roles
+     * @param array                              $trustedRoles
      * @param string                             $apiHost
      */
     public function __construct(
@@ -86,7 +86,7 @@ class IsTrueValidator extends ConstraintValidator
         array $httpProxy,
         $verifyHost,
         AuthorizationCheckerInterface $authorizationChecker = null,
-        array $trusted_roles = array(),
+        array $trustedRoles = array(),
         $apiHost = 'www.google.com')
     {
         $this->enabled = $enabled;
@@ -95,7 +95,7 @@ class IsTrueValidator extends ConstraintValidator
         $this->httpProxy = $httpProxy;
         $this->verifyHost = $verifyHost;
         $this->authorizationChecker = $authorizationChecker;
-        $this->trusted_roles = $trusted_roles;
+        $this->trustedRoles = $trustedRoles;
         $this->recaptchaVerifyServer = 'https://'.$apiHost;
     }
 
@@ -110,7 +110,9 @@ class IsTrueValidator extends ConstraintValidator
         }
 
         // if we have an authorized role
-        if ($this->authorizationChecker && $this->authorizationChecker->isGranted($this->trusted_roles)) {
+        if ($this->authorizationChecker
+            && count($this->trustedRoles) > 0
+            && $this->authorizationChecker->isGranted($this->trustedRoles)) {
             return;
         }
 
