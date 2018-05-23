@@ -2,8 +2,8 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
-use EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod\Post;
-use EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod\ProxyPost;
+use EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\Post;
+use EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\ProxyPost;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;

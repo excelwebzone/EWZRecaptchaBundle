@@ -1,6 +1,6 @@
 <?php
 
-namespace EWZ\Bundle\RecaptchaBundle\ReCaptcha\RequestMethod;
+namespace EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod;
 
 use ReCaptcha\RequestMethod;
 use ReCaptcha\RequestParameters;
