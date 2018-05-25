@@ -280,7 +280,7 @@ However, you can always implement your own custom form widget.
 **Twig**:
 
 ``` jinja
-{% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
+{% form_theme form '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig' %}
 
 {{ form_widget(form.recaptcha, { 'attr': {
     'options' : {
@@ -345,7 +345,7 @@ If you want to use a custom theme, put your chunk of code before setting the the
    <div><a href="javascript:Recaptcha.showhelp()">Help</a></div>
  </div>
 
-{% form_theme form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
+{% form_theme form '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig' %}
 
 {{ form_widget(form.recaptcha, { 'attr': {
     'options' : {
