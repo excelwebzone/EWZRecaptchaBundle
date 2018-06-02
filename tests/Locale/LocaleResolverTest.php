@@ -3,9 +3,8 @@
 namespace EWZ\Tests\Bundle\RecaptchaBundle\Locale;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use Mockery;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocaleResolverTest extends TestCase
 {
@@ -14,17 +13,14 @@ class LocaleResolverTest extends TestCase
      */
     public function resolveWithLocaleFromRequest()
     {
-        $request = $this->createMock(Request::class);
-        $request->expects($this->once())->method('getLocale');
+        $request = Mockery::mock('Symfony\Component\HttpFoundation\Request');
+        $request->shouldReceive('getLocale')->once()->andReturn('foo');
 
-        $requestStack = $this->createMock(RequestStack::class);
-        $requestStack
-            ->expects($this->once())
-            ->method('getCurrentRequest')
-            ->willReturn($request);
+        $requestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->shouldReceive('getCurrentRequest')->once()->andReturn($request);
 
         $resolver = new LocaleResolver('foo', true, $requestStack);
-        $resolver->resolve();
+        $this->assertSame('foo', $resolver->resolve());
     }
 
     /**
@@ -32,12 +28,10 @@ class LocaleResolverTest extends TestCase
      */
     public function resolveWithDefaultLocale()
     {
-        $requestStack = $this->createMock(RequestStack::class);
-        $requestStack
-            ->expects($this->never())
-            ->method('getCurrentRequest');
+        $requestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->shouldReceive('getCurrentRequest')->never();
 
         $resolver = new LocaleResolver('foo', false, $requestStack);
-        $resolver->resolve();
+        $this->assertSame('foo', $resolver->resolve());
     }
 }
