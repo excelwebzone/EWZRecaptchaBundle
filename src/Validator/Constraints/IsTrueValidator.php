@@ -134,7 +134,7 @@ class IsTrueValidator extends ConstraintValidator
             $this->context->addViolation($constraint->message);
         }
         // Perform server side hostname check
-        elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
+        elseif ($this->verifyHost && $response->getHostname() !== $masterRequest->getHost()) {
             $this->context->addViolation($constraint->invalidHostMessage);
         }
     }
