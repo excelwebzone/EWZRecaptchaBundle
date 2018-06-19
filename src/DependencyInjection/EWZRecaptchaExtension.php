@@ -63,7 +63,7 @@ class EWZRecaptchaExtension extends Extension
     private function getTwigFormResources(ContainerBuilder $container)
     {
         if (!$container->hasParameter('twig.form.resources'))
-            return [];
+            return array();
 
         return $container->getParameter('twig.form.resources');
     }
