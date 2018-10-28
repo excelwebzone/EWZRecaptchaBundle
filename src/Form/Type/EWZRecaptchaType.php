@@ -63,7 +63,7 @@ class EWZRecaptchaType extends AbstractType
 
     /**
      * @param string         $publicKey      Recaptcha public key
-     * @param bool           $enabled        Recaptache status
+     * @param bool           $enabled        Recaptcha status
      * @param bool           $ajax           Ajax status
      * @param LocaleResolver $localeResolver
      */
