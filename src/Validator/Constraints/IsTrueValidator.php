@@ -70,6 +70,13 @@ class IsTrueValidator extends ConstraintValidator
     protected $recaptchaVerifyServer;
 
     /**
+     * The timeout for the reCAPTCHA verification.
+     *
+     * @var int|null
+     */
+    private $timeout;
+
+    /**
      * @param bool                               $enabled
      * @param string                             $privateKey
      * @param RequestStack                       $requestStack
@@ -78,6 +85,7 @@ class IsTrueValidator extends ConstraintValidator
      * @param AuthorizationCheckerInterface|null $authorizationChecker
      * @param array                              $trustedRoles
      * @param string                             $apiHost
+     * @param int|null                           $timeout
      */
     public function __construct(
         $enabled,
@@ -87,7 +95,8 @@ class IsTrueValidator extends ConstraintValidator
         $verifyHost,
         AuthorizationCheckerInterface $authorizationChecker = null,
         array $trustedRoles = array(),
-        $apiHost = 'www.google.com')
+        $apiHost = 'www.google.com',
+        $timeout = null)
     {
         $this->enabled = $enabled;
         $this->privateKey = $privateKey;
@@ -97,6 +106,7 @@ class IsTrueValidator extends ConstraintValidator
         $this->authorizationChecker = $authorizationChecker;
         $this->trustedRoles = $trustedRoles;
         $this->recaptchaVerifyServer = 'https://'.$apiHost;
+        $this->timeout = $timeout;
     }
 
     /**
@@ -123,9 +133,9 @@ class IsTrueValidator extends ConstraintValidator
 
         // Verify user response with Google
         if (null !== $this->httpProxy['host'] && null !== $this->httpProxy['port']) {
-            $requestMethod = new ProxyPost($this->httpProxy, $this->recaptchaVerifyServer);
+            $requestMethod = new ProxyPost($this->httpProxy, $this->recaptchaVerifyServer, $this->timeout);
         } else {
-            $requestMethod = new Post($this->recaptchaVerifyServer);
+            $requestMethod = new Post($this->recaptchaVerifyServer, $this->timeout);
         }
         $recaptcha = new ReCaptcha($this->privateKey, $requestMethod);
         $response = $recaptcha->verify($answer, $remoteip);

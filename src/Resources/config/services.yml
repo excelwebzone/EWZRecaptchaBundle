@@ -31,5 +31,6 @@ services:
             - '@?security.authorization_checker'
             - '%ewz_recaptcha.trusted_roles%'
             - '%ewz_recaptcha.api_host%'
+            - '%ewz_recaptcha.timeout%'
         tags:
             - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
