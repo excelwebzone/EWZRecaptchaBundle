@@ -31,7 +31,7 @@ class Post implements RequestMethod
      */
     public function __construct($recaptchaVerifyServer, $timeout)
     {
-        $this->recaptchaVerifyUrl ='https://www.google.com:81/recaptcha/api/siteverify';
+        $this->recaptchaVerifyUrl = ($recaptchaVerifyServer ?: 'https://www.google.com').'/recaptcha/api/siteverify';
         $this->timeout = $timeout;
     }
 
