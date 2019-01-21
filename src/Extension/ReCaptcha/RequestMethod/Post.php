@@ -18,13 +18,21 @@ class Post implements RequestMethod
     private $recaptchaVerifyUrl;
 
     /**
+     * The timeout for the reCAPTCHA verification.
+     *
+     * @var int|null
+     */
+    private $timeout;
+
+    /**
      * Constructor
      *
      * @param string $recaptchaVerifyServer
      */
-    public function __construct($recaptchaVerifyServer)
+    public function __construct($recaptchaVerifyServer, $timeout)
     {
         $this->recaptchaVerifyUrl = ($recaptchaVerifyServer ?: 'https://www.google.com').'/recaptcha/api/siteverify';
+        $this->timeout = $timeout;
     }
 
     /**
@@ -51,6 +59,9 @@ class Post implements RequestMethod
                 $peer_key => 'www.google.com',
             ),
         );
+        if (null !== $this->timeout) {
+            $options['http']['timeout'] = $this->timeout;
+        }
         $context = stream_context_create($options);
         return file_get_contents($this->recaptchaVerifyUrl, false, $context);
     }

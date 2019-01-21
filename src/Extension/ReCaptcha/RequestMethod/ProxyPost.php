@@ -25,15 +25,23 @@ class ProxyPost implements RequestMethod
     private $recaptchaVerifyUrl;
 
     /**
+     * The timeout for the reCAPTCHA verification.
+     *
+     * @var int|null
+     */
+    private $timeout;
+
+    /**
      * Constructor
      *
      * @param array $httpProxy proxy data to connect to
      * @param string $recaptchaVerifyServer
      */
-    public function __construct(array $httpProxy, $recaptchaVerifyServer)
+    public function __construct(array $httpProxy, $recaptchaVerifyServer, $timeout)
     {
         $this->httpProxy = $httpProxy;
         $this->recaptchaVerifyUrl = ($recaptchaVerifyServer ?: 'https://www.google.com').'/recaptcha/api/siteverify';
+        $this->timeout = $timeout;
     }
 
     /**
@@ -64,6 +72,9 @@ class ProxyPost implements RequestMethod
                 'request_fulluri' => true,
             ),
         );
+        if (null !== $this->timeout) {
+            $options['http']['timeout'] = $this->timeout;
+        }
         $context = stream_context_create($options);
         return file_get_contents($this->recaptchaVerifyUrl, false, $context);
     }
