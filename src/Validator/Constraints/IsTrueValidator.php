@@ -129,7 +129,6 @@ class IsTrueValidator extends ConstraintValidator
         // define variable for recaptcha check answer
         $masterRequest = $this->requestStack->getMasterRequest();
         $remoteip = $masterRequest->getClientIp();
-        $answer = $masterRequest->get('g-recaptcha-response');
 
         // Verify user response with Google
         if (null !== $this->httpProxy['host'] && null !== $this->httpProxy['port']) {
@@ -138,7 +137,7 @@ class IsTrueValidator extends ConstraintValidator
             $requestMethod = new Post($this->recaptchaVerifyServer, $this->timeout);
         }
         $recaptcha = new ReCaptcha($this->privateKey, $requestMethod);
-        $response = $recaptcha->verify($answer, $remoteip);
+        $response = $recaptcha->verify($value, $remoteip);
 
         if (!$response->isSuccess()) {
             $this->context->addViolation($constraint->message);
