@@ -1,5 +1,5 @@
 {% block ewz_recaptcha_widget %}
-{% spaceless %}
+{% filter spaceless %}
     {% if form.vars.ewz_recaptcha_enabled %}
         {% if not form.vars.ewz_recaptcha_ajax %}
             {% if attr.options.size == 'invisible' and attr.options.callback is not defined %}
@@ -79,6 +79,6 @@
             </script>
         {% endif %}
     {% endif %}
-{% endspaceless %}
+{% endfilter %}
 {% endblock ewz_recaptcha_widget %}
 
