@@ -34,6 +34,8 @@ $bundles = array(
 
 Add the following to your config file:
 
+**NOTE** If you're using symfony 4, the config will be in `config/packages/ewz_recaptcha.yaml`. The local dev enviroment has its own config in `config/packages/dev/ewz_recaptcha.yaml`.
+
 ``` yaml
 # app/config/config.yml
 
