@@ -16,8 +16,15 @@ php composer.phar require excelwebzone/recaptcha-bundle
 ```
 
 Now, Composer will automatically download all required files, and install them
-for you. All that is left to do is to update your ``AppKernel.php`` file, and
-register the new bundle:
+for you. In Symfony >= 4 you might need to register the new bundle by adding a
+line to ``config/bundle.php``:
+
+```php
+    EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle::class => ['all' => true],
+```
+
+When you are using Symfony 3 you will instead need to update your ``AppKernel.php`` 
+file:
 
 ```php
 <?php
@@ -34,8 +41,10 @@ $bundles = array(
 
 Add the following to your config file:
 
+**NOTE** If you are using a Symfony version previous to version 4, the config will be in `app/config/config.yml`.
+
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     public_key:  here_is_your_public_key
@@ -50,7 +59,7 @@ If you want to use the language default for the reCAPTCHA the same as the
 request locale you must activate the resolver (deactivated by default):
 
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     // ...
@@ -60,7 +69,7 @@ ewz_recaptcha:
 You can easily disable reCAPTCHA (for example in a local or test environment):
 
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     // ...
@@ -70,7 +79,7 @@ ewz_recaptcha:
 Or even load reCAPTCHA using Ajax:
 
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     // ...
@@ -80,7 +89,7 @@ ewz_recaptcha:
 `www.google.com` is blocked in Mainland China, you can override the default server like this:
 
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     // ...
@@ -90,7 +99,7 @@ ewz_recaptcha:
 You can add HTTP Proxy configuration:
 
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     // ...
@@ -103,7 +112,7 @@ ewz_recaptcha:
 In case you have turned off the domain name checking on reCAPTCHA's end, you'll need to check the origin of the response by enabling the ``verify_host`` option:
 
 ``` yaml
-# app/config/config.yml
+# config/packages/ewz_recaptcha.yaml
 
 ewz_recaptcha:
     // ...
