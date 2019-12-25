@@ -62,7 +62,7 @@ before_script:
       composer require "symfony/security-bundle:${SYMFONY_VERSION}" --no-update
       composer require "symfony/validator:${SYMFONY_VERSION}" --no-update
     fi
-  - composer install
+  - COMPOSER_MEMORY_LIMIT=-1 composer install
 
 script:
   - vendor/bin/phpunit
