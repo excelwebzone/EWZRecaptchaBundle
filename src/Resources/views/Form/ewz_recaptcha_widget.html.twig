@@ -37,6 +37,7 @@
             ></script>
             <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-size="{{ attr.options.size }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}"
                  {%- if attr.options.callback is defined %} data-callback="{{ attr.options.callback }}"{% endif -%}
+                 {%- if attr.options.errorCallback is defined %} data-error-callback="{{ attr.options.errorCallback }}"{% endif -%}
                  {%- if attr.options.expiredCallback is defined %} data-expired-callback="{{ attr.options.expiredCallback }}"{% endif -%}
                  {%- if attr.options.bind is defined %} data-bind="{{ attr.options.bind }}"{% endif -%}
                  {%- if attr.options.badge is defined %} data-badge="{{ attr.options.badge }}"{% endif -%}
