@@ -25,24 +25,37 @@ class Post implements RequestMethod
     private $timeout;
 
     /**
-     * Constructor
+     * @var array
+     */
+    private $cache;
+
+    /**
+     * Constructor.
      *
-     * @param string $recaptchaVerifyServer
+     * @param string   $recaptchaVerifyServer
+     * @param int|null $timeout
      */
     public function __construct($recaptchaVerifyServer, $timeout)
     {
         $this->recaptchaVerifyUrl = ($recaptchaVerifyServer ?: 'https://www.google.com').'/recaptcha/api/siteverify';
         $this->timeout = $timeout;
+        $this->cache = [];
     }
 
     /**
      * Submit the POST request with the specified parameters.
      *
      * @param RequestParameters $params Request parameters
+     *
      * @return string Body of the reCAPTCHA response
      */
     public function submit(RequestParameters $params)
     {
+        $cacheKey = $params->toQueryString();
+        if (isset($this->cache[$cacheKey])) {
+            return $this->cache[$cacheKey];
+        }
+
         /**
          * PHP 5.6.0 changed the way you specify the peer name for SSL context options.
          * Using "CN_name" will still work, but it will raise deprecated errors.
@@ -63,6 +76,10 @@ class Post implements RequestMethod
             $options['http']['timeout'] = $this->timeout;
         }
         $context = stream_context_create($options);
-        return file_get_contents($this->recaptchaVerifyUrl, false, $context);
+        $result = file_get_contents($this->recaptchaVerifyUrl, false, $context);
+
+        $this->cache[$cacheKey] = $result;
+
+        return $result;
     }
 }
