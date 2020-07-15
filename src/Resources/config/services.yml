@@ -24,13 +24,32 @@ services:
         public: true
         arguments:
             - '%ewz_recaptcha.enabled%'
-            - '%ewz_recaptcha.private_key%'
+            - '@ewz_recaptcha.recaptcha'
             - '@request_stack'
-            - '%ewz_recaptcha.http_proxy%'
             - '%ewz_recaptcha.verify_host%'
             - '@?security.authorization_checker'
             - '%ewz_recaptcha.trusted_roles%'
-            - '%ewz_recaptcha.api_host%'
-            - '%ewz_recaptcha.timeout%'
         tags:
             - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
+
+    ewz_recaptcha.recaptcha:
+      class: ReCaptcha\ReCaptcha
+      public: false
+      arguments:
+        - '%ewz_recaptcha.private_key%'
+        - '@ewz_recaptcha.extension.recaptcha.request_method.post'
+
+    ewz_recaptcha.extension.recaptcha.request_method.post:
+      class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\Post
+      public: false
+      arguments:
+        - 'https://%ewz_recaptcha.api_host%'
+        - '%ewz_recaptcha.timeout%'
+
+    ewz_recaptcha.extension.recaptcha.request_method.proxy_post:
+      class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\ProxyPost
+      public: false
+      arguments:
+        - '%ewz_recaptcha.http_proxy%'
+        - 'https://%ewz_recaptcha.api_host%'
+        - '%ewz_recaptcha.timeout%'

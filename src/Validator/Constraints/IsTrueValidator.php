@@ -21,11 +21,11 @@ class IsTrueValidator extends ConstraintValidator
     protected $enabled;
 
     /**
-     * Recaptcha Private Key.
+     * Recaptcha.
      *
-     * @var string
+     * @var ReCaptcha
      */
-    protected $privateKey;
+    protected $recaptcha;
 
     /**
      * Request Stack.
@@ -33,13 +33,6 @@ class IsTrueValidator extends ConstraintValidator
      * @var RequestStack
      */
     protected $requestStack;
-
-    /**
-     * HTTP Proxy informations.
-     *
-     * @var array
-     */
-    protected $httpProxy;
 
     /**
      * Enable serverside host check.
@@ -63,50 +56,27 @@ class IsTrueValidator extends ConstraintValidator
     protected $trustedRoles;
 
     /**
-     * The reCAPTCHA verify server URL.
-     *
-     * @var string
-     */
-    protected $recaptchaVerifyServer;
-
-    /**
-     * The timeout for the reCAPTCHA verification.
-     *
-     * @var int|null
-     */
-    private $timeout;
-
-    /**
      * @param bool                               $enabled
-     * @param string                             $privateKey
+     * @param ReCaptcha                          $recaptcha
      * @param RequestStack                       $requestStack
-     * @param array                              $httpProxy
      * @param bool                               $verifyHost
      * @param AuthorizationCheckerInterface|null $authorizationChecker
      * @param array                              $trustedRoles
-     * @param string                             $apiHost
-     * @param int|null                           $timeout
      */
     public function __construct(
         $enabled,
-        $privateKey,
+        ReCaptcha $recaptcha,
         RequestStack $requestStack,
-        array $httpProxy,
         $verifyHost,
         AuthorizationCheckerInterface $authorizationChecker = null,
-        array $trustedRoles = array(),
-        $apiHost = 'www.google.com',
-        $timeout = null)
+        array $trustedRoles = array())
     {
         $this->enabled = $enabled;
-        $this->privateKey = $privateKey;
+        $this->recaptcha = $recaptcha;
         $this->requestStack = $requestStack;
-        $this->httpProxy = $httpProxy;
         $this->verifyHost = $verifyHost;
         $this->authorizationChecker = $authorizationChecker;
         $this->trustedRoles = $trustedRoles;
-        $this->recaptchaVerifyServer = 'https://'.$apiHost;
-        $this->timeout = $timeout;
     }
 
     /**
@@ -132,13 +102,7 @@ class IsTrueValidator extends ConstraintValidator
         $answer = $masterRequest->get('g-recaptcha-response');
 
         // Verify user response with Google
-        if (null !== $this->httpProxy['host'] && null !== $this->httpProxy['port']) {
-            $requestMethod = new ProxyPost($this->httpProxy, $this->recaptchaVerifyServer, $this->timeout);
-        } else {
-            $requestMethod = new Post($this->recaptchaVerifyServer, $this->timeout);
-        }
-        $recaptcha = new ReCaptcha($this->privateKey, $requestMethod);
-        $response = $recaptcha->verify($answer, $remoteip);
+        $response = $this->recaptcha->verify($answer, $remoteip);
 
         if (!$response->isSuccess()) {
             $this->context->addViolation($constraint->message);

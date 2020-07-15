@@ -4,6 +4,7 @@ namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -28,6 +29,11 @@ class EWZRecaptchaExtension extends Extension
         }
 
         $this->registerWidget($container);
+
+        if (null !== $config['http_proxy']['host'] && null !== $config['http_proxy']['port']) {
+            $recaptchaService = $container->findDefinition('ewz_recaptcha.recaptcha');
+            $recaptchaService->replaceArgument(1, new Reference('ewz_recaptcha.extension.recaptcha.request_method.proxy_post'));
+        }
     }
 
     /**
