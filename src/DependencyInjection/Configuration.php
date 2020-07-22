@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('public_key')->isRequired()->end()
                 ->scalarNode('private_key')->isRequired()->end()
-                ->booleanNode('enabled')->defaultTrue()->end()
+                ->scalarNode('enabled')->defaultTrue()->end()
                 ->booleanNode('verify_host')->defaultFalse()->end()
                 ->booleanNode('ajax')->defaultFalse()->end()
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
