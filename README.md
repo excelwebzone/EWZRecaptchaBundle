@@ -34,7 +34,7 @@ $bundles = array(
 
 Add the following to your config file:
 
-**NOTE** If you're using symfony 4, the config will be in `config/packages/ewz_recaptcha.yaml`. The local dev enviroment has its own config in `config/packages/dev/ewz_recaptcha.yaml`.
+**NOTE**: If you're using symfony 4, the config will be in `config/packages/ewz_recaptcha.yaml`. The local dev enviroment has its own config in `config/packages/dev/ewz_recaptcha.yaml`.
 
 ``` yaml
 # app/config/config.yml
@@ -110,6 +110,25 @@ In case you have turned off the domain name checking on reCAPTCHA's end, you'll 
 ewz_recaptcha:
     // ...
     verify_host: true
+```
+
+**NOTE**: If you're using symfony 5 and want to configure the bundle with PHP files instead of YAML, the configuration is like this:
+
+``` php
+// config/packages/ewz_recaptcha.php
+
+<?php declare(strict_types=1);
+
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $configurator): void
+{
+    $configurator->extension('ewz_recaptcha', [
+        'public_key' => 'here_is_your_public_key',
+        'private_key' => 'here_is_your_private_key',
+        'locale_key' => '%kernel.default_locale%'
+    ]);
+};
 ```
 
 Congratulations! You're ready!
