@@ -6,7 +6,7 @@
                 {% set options = attr.options|merge({'callback': 'onReCaptchaSuccess'}) %}
                 {% set attr = attr|merge({'options': options}) %}
 
-                <script type="text/javascript">
+                <script>
                     var onReCaptchaSuccess = function() {
                         var errorDivs = document.getElementsByClassName('recaptcha-error');
                         if (errorDivs.length) {
@@ -31,7 +31,7 @@
                 </script>
             {% endif %}
 
-            <script type="text/javascript" src="{{ form.vars.url_challenge }}"
+            <script src="{{ form.vars.url_challenge }}"
                 {%- if attr.options.defer is defined and attr.options.defer %} defer{% endif -%}
                 {%- if attr.options.async is defined and attr.options.async %} async{% endif -%}
             ></script>
@@ -47,8 +47,7 @@
                     <div style="width: 302px; height: 352px; position: relative;">
                         <div style="width: 302px; height: 352px; position: absolute;">
                             <iframe src="https://{{ form.vars.ewz_recaptcha_apihost }}/recaptcha/api/fallback?k={{ form.vars.public_key }}"
-                                    frameborder="0" scrolling="no"
-                                    style="width: 302px; height:352px; border-style: none;"
+                                    style="width: 302px; height:352px; border-style: none; overflow: hidden;"
                             >
                             </iframe>
                         </div>
@@ -65,7 +64,7 @@
         {% else %}
             <div id="ewz_recaptcha_div"></div>
 
-            <script type="text/javascript">
+            <script>
             (function() {
                 var script = document.createElement('script');
                 script.type = 'text/javascript';

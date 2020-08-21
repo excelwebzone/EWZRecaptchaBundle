@@ -3,7 +3,7 @@
         <?php if ($attr['options']['size'] == 'invisible' && !isset($attr['options']['callback'])): ?>
             <?php $attr['options']['callback'] = 'onReCaptchaSuccess' ?>
 
-            <script type="text/javascript">
+            <script>
                 var onReCaptchaSuccess = function() {
                     var errorDivs = document.getElementsByClassName('recaptcha-error');
                     if (errorDivs.length) {
@@ -28,7 +28,7 @@
             </script>
         <?php endif ?>
 
-        <script type="text/javascript" src="<?php echo $url_challenge ?>"
+        <script src="<?php echo $url_challenge ?>"
             <?php if (isset($attr['options']['defer']) && $attr['options']['defer']): ?> defer<?php endif ?>
             <?php if (isset($attr['options']['async']) && $attr['options']['async']): ?> async<?php endif ?>
         ></script>
@@ -43,8 +43,7 @@
                 <div style="width: 302px; height: 352px; position: relative;">
                     <div style="width: 302px; height: 352px; position: absolute;">
                         <iframe src="https://<?php echo $ewz_recaptcha_apihost ?>/recaptcha/api/fallback?k=<?php echo $public_key ?>"
-                                frameborder="0" scrolling="no"
-                                style="width: 302px; height:352px; border-style: none;"
+                                style="width: 302px; height:352px; border-style: none; overflow: hidden;"
                         >
                         </iframe>
                     </div>
@@ -61,7 +60,7 @@
     <?php else: ?>
         <div id="ewz_recaptcha_div"></div>
 
-        <script type="text/javascript">
+        <script>
         (function() {
             var script = document.createElement('script');
             script.type = 'text/javascript';
