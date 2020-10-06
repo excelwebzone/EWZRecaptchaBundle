@@ -124,9 +124,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $configurator): void
 {
     $configurator->extension('ewz_recaptcha', [
-        'public_key' => 'here_is_your_public_key',
+        'public_key'  => 'here_is_your_public_key',
         'private_key' => 'here_is_your_private_key',
-        'locale_key' => '%kernel.default_locale%'
+        'locale_key'  => '%kernel.default_locale%'
     ]);
 };
 ```
@@ -199,13 +199,13 @@ public function buildForm(FormBuilder $builder, array $options)
     $builder->add('recaptcha', EWZRecaptchaType::class, array(
         'attr' => array(
             'options' => array(
-                'theme' => 'light',
-                'type'  => 'image',
-                'size' => 'invisible',              // set size to invisible
-                'defer' => true,
-                'async' => true,
+                'theme'    => 'light',
+                'type'     => 'image',
+                'size'     => 'invisible',              // set size to invisible
+                'defer'    => true,
+                'async'    => true,
                 'callback' => 'onReCaptchaSuccess', // callback will be set by default if not defined (along with JS function that validate the form on success)
-                'bind' => 'btn_submit',             // this is the id of the form submit button
+                'bind'     => 'btn_submit',             // this is the id of the form submit button
                 // ...
              )
         )
@@ -255,7 +255,7 @@ Please note that if you set ```mapped=>false``` then the annotation will not wor
 <?php
 
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
 
 public function buildForm(FormBuilder $builder, array $options)
 {
@@ -270,7 +270,7 @@ public function buildForm(FormBuilder $builder, array $options)
         ),
         'mapped'      => false,
         'constraints' => array(
-            new RecaptchaTrue()
+            new @Recaptcha\IsTrue()
         )
     ));
     // ...
