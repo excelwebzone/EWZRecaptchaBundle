@@ -3,10 +3,10 @@
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -115,7 +115,7 @@ class EWZRecaptchaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $defaults = array(
             'compound' => false,
             'language' => $this->localeResolver->resolve(),
             'public_key' => null,
@@ -134,7 +134,13 @@ class EWZRecaptchaType extends AbstractType
                     'badge' => null,
                 ),
             ),
-        ));
+        );
+
+        if (!$this->enabled) {
+            $defaults['validation_groups'] = false;
+        }
+
+        $resolver->setDefaults($defaults);
     }
 
     /**
