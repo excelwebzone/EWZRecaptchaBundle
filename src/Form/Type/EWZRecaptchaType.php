@@ -115,7 +115,7 @@ class EWZRecaptchaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $defaults = array(
             'compound' => false,
             'language' => $this->localeResolver->resolve(),
             'public_key' => null,
@@ -134,7 +134,13 @@ class EWZRecaptchaType extends AbstractType
                     'badge' => null,
                 ),
             ),
-        ));
+        );
+
+        if (!$this->enabled) {
+            $defaults['validation_groups'] = false;
+        }
+
+        $resolver->setDefaults($defaults);
     }
 
     /**

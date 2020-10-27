@@ -16,11 +16,11 @@ class EWZRecaptchaTypeTest extends TestCase
     /** @var EWZRecaptchaType */
     protected $type;
 
-    protected function setUp()
+    protected function getType($enabled = true)
     {
         $requestStack = $this->createMock(RequestStack::class);
         $localeResolver = new LocaleResolver('de', false, $requestStack);
-        $this->type = new EWZRecaptchaType('key', true, true, $localeResolver, 'www.google.com');
+        return (new EWZRecaptchaType('key', $enabled, true, $localeResolver, 'www.google.com'));
     }
 
     /**
@@ -36,7 +36,7 @@ class EWZRecaptchaTypeTest extends TestCase
         $this->assertArrayNotHasKey('ewz_recaptcha_enabled', $view->vars);
         $this->assertArrayNotHasKey('ewz_recaptcha_ajax', $view->vars);
 
-        $this->type->buildView($view, $form, array());
+        $this->getType()->buildView($view, $form, array());
 
         $this->assertTrue($view->vars['ewz_recaptcha_enabled']);
         $this->assertTrue($view->vars['ewz_recaptcha_ajax']);
@@ -47,7 +47,7 @@ class EWZRecaptchaTypeTest extends TestCase
      */
     public function getParent()
     {
-        $this->assertSame(TextType::class, $this->type->getParent());
+        $this->assertSame(TextType::class, $this->getType()->getParent());
     }
 
     /**
@@ -55,7 +55,7 @@ class EWZRecaptchaTypeTest extends TestCase
      */
     public function getPublicKey()
     {
-        $this->assertSame('key', $this->type->getPublicKey());
+        $this->assertSame('key', $this->getType()->getPublicKey());
     }
 
     /**
@@ -65,7 +65,7 @@ class EWZRecaptchaTypeTest extends TestCase
     {
         $optionsResolver = new OptionsResolver();
 
-        $this->type->configureOptions($optionsResolver);
+        $this->getType()->configureOptions($optionsResolver);
 
         $options = $optionsResolver->resolve();
 
@@ -96,8 +96,44 @@ class EWZRecaptchaTypeTest extends TestCase
     /**
      * @test
      */
+    public function configureOptionsDisabled()
+    {
+        $optionsResolver = new OptionsResolver();
+
+        $this->getType(false)->configureOptions($optionsResolver);
+
+        $options = $optionsResolver->resolve();
+
+        $expected = array(
+            'compound' => false,
+            'language' => 'de',
+            'public_key' => null,
+            'url_challenge' => null,
+            'url_noscript' => null,
+            'attr' => array(
+                'options' => array(
+                    'theme' => 'light',
+                    'type' => 'image',
+                    'size' => 'normal',
+                    'callback' => null,
+                    'expiredCallback' => null,
+                    'bind' => null,
+                    'defer' => false,
+                    'async' => false,
+                    'badge' => null,
+                ),
+            ),
+            'validation_groups' => false,
+        );
+
+        $this->assertSame($expected, $options);
+    }
+
+    /**
+     * @test
+     */
     public function getBlockPrefix()
     {
-        $this->assertEquals('ewz_recaptcha', $this->type->getBlockPrefix());
+        $this->assertEquals('ewz_recaptcha', $this->getType()->getBlockPrefix());
     }
 }

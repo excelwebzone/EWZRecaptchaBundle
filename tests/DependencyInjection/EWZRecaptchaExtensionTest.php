@@ -95,6 +95,16 @@ class EWZRecaptchaExtensionTest extends TestCase
         );
     }
 
+    public function testDisabledConfiguration()
+    {
+        $this->configuration = new ContainerBuilder();
+        $loader = new EWZRecaptchaExtension();
+        $config = $this->getDisabledConfig();
+        $loader->load([$config], $this->configuration);
+
+        $this->assertParameter(false, 'ewz_recaptcha.enabled');
+    }
+
     private function getSimpleConfig()
     {
         $yaml = <<<EOF
@@ -124,6 +134,18 @@ http_proxy:
     host: 'http://foo.example.com'
     port: 80
     auth: 'bar:baz'
+EOF;
+        $parser = new Parser();
+
+        return $parser->parse($yaml);
+    }
+
+    private function getDisabledConfig()
+    {
+        $yaml = <<<EOF
+public_key: ''
+private_key: ''
+enabled: false
 EOF;
         $parser = new Parser();
 
