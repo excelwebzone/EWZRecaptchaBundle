@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('api_host')->defaultValue('www.google.com')->end()
                 ->booleanNode('locale_from_request')->defaultFalse()->end()
                 ->integerNode('timeout')->min(0)->defaultNull()->end()
-				->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()
+                ->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()
             ->end()
         ;
 

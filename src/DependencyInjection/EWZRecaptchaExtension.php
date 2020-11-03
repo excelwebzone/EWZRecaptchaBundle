@@ -2,11 +2,11 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -68,8 +68,9 @@ class EWZRecaptchaExtension extends Extension
 
     private function getTwigFormResources(ContainerBuilder $container)
     {
-        if (!$container->hasParameter('twig.form.resources'))
+        if (!$container->hasParameter('twig.form.resources')) {
             return [];
+        }
 
         return $container->getParameter('twig.form.resources');
     }

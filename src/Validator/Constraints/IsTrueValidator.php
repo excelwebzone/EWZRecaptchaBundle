@@ -2,8 +2,6 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
-use EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\Post;
-use EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\ProxyPost;
 use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -42,14 +40,14 @@ class IsTrueValidator extends ConstraintValidator
     protected $verifyHost;
 
     /**
-     * Authorization Checker
+     * Authorization Checker.
      *
      * @var AuthorizationChecker
      */
     protected $authorizationChecker;
 
     /**
-     * Trusted Roles
+     * Trusted Roles.
      *
      * @var array
      */

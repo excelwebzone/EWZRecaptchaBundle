@@ -37,7 +37,7 @@ class ProxyPost implements RequestMethod
     private $cache;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array    $httpProxy
      * @param string   $recaptchaVerifyServer

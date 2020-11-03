@@ -146,6 +146,6 @@ EOF;
         $argumentValue = $definition->getArgument($index);
 
         $this->assertInstanceOf(Reference::class, $argumentValue);
-        $this->assertSame($expectedArgumentValue, (string)$argumentValue);
+        $this->assertSame($expectedArgumentValue, (string) $argumentValue);
     }
 }

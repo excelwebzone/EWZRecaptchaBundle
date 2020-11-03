@@ -3,10 +3,10 @@
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -16,14 +16,14 @@ class EWZRecaptchaType extends AbstractType
 {
     /**
      * The reCAPTCHA server URL.
-     * 
+     *
      * @var string
      */
     protected $recaptchaApiServer;
-    
+
     /**
      * The reCAPTCHA JS server URL.
-     * 
+     *
      * @var string
      */
     protected $recaptchaApiJsServer;
@@ -86,7 +86,7 @@ class EWZRecaptchaType extends AbstractType
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_enabled' => $this->enabled,
             'ewz_recaptcha_ajax' => $this->ajax,
-            'ewz_recaptcha_apihost' => $this->apiHost
+            'ewz_recaptcha_apihost' => $this->apiHost,
         ));
 
         if (!$this->enabled) {

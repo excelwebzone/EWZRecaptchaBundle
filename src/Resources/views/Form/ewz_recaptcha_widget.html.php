@@ -1,7 +1,7 @@
 <?php if ($ewz_recaptcha_enabled): ?>
     <?php if (!$ewz_recaptcha_ajax): ?>
-        <?php if ($attr['options']['size'] == 'invisible' && !isset($attr['options']['callback'])): ?>
-            <?php $attr['options']['callback'] = 'onReCaptchaSuccess' ?>
+        <?php if ('invisible' == $attr['options']['size'] && !isset($attr['options']['callback'])): ?>
+            <?php $attr['options']['callback'] = 'onReCaptchaSuccess'; ?>
 
             <script>
                 var onReCaptchaSuccess = function() {
@@ -26,23 +26,23 @@
                     }
                 };
             </script>
-        <?php endif ?>
+        <?php endif; ?>
 
-        <script src="<?php echo $url_challenge ?>"
-            <?php if (isset($attr['options']['defer']) && $attr['options']['defer']): ?> defer<?php endif ?>
-            <?php if (isset($attr['options']['async']) && $attr['options']['async']): ?> async<?php endif ?>
+        <script src="<?php echo $url_challenge; ?>"
+            <?php if (isset($attr['options']['defer']) && $attr['options']['defer']): ?> defer<?php endif; ?>
+            <?php if (isset($attr['options']['async']) && $attr['options']['async']): ?> async<?php endif; ?>
         ></script>
-        <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme'] ?>" data-size="<?php echo $attr['options']['size'] ?>" data-type="<?php echo $attr['options']['type'] ?>" data-sitekey="<?php echo $public_key ?>"
-            <?php if (isset($attr['options']['callback'])): ?>data-callback="<?php echo $attr['options']['callback'] ?>"<?php endif ?>
-            <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback'] ?>"<?php endif ?>
-            <?php if (isset($attr['options']['bind'])): ?>data-bind="<?php echo $attr['options']['bind'] ?>"<?php endif ?>
-            <?php if (isset($attr['options']['badge'])): ?>data-badge="<?php echo $attr['options']['badge'] ?>"<?php endif ?>
+        <div class="g-recaptcha" data-theme="<?php echo $attr['options']['theme']; ?>" data-size="<?php echo $attr['options']['size']; ?>" data-type="<?php echo $attr['options']['type']; ?>" data-sitekey="<?php echo $public_key; ?>"
+            <?php if (isset($attr['options']['callback'])): ?>data-callback="<?php echo $attr['options']['callback']; ?>"<?php endif; ?>
+            <?php if (isset($attr['options']['expiredCallback'])): ?>data-expired-callback="<?php echo $attr['options']['expiredCallback']; ?>"<?php endif; ?>
+            <?php if (isset($attr['options']['bind'])): ?>data-bind="<?php echo $attr['options']['bind']; ?>"<?php endif; ?>
+            <?php if (isset($attr['options']['badge'])): ?>data-badge="<?php echo $attr['options']['badge']; ?>"<?php endif; ?>
         ></div>
         <noscript>
             <div style="width: 302px; height: 352px;">
                 <div style="width: 302px; height: 352px; position: relative;">
                     <div style="width: 302px; height: 352px; position: absolute;">
-                        <iframe src="https://<?php echo $ewz_recaptcha_apihost ?>/recaptcha/api/fallback?k=<?php echo $public_key ?>"
+                        <iframe src="https://<?php echo $ewz_recaptcha_apihost; ?>/recaptcha/api/fallback?k=<?php echo $public_key; ?>"
                                 style="width: 302px; height:352px; border-style: none; overflow: hidden;"
                         >
                         </iframe>
@@ -65,13 +65,13 @@
             var script = document.createElement('script');
             script.type = 'text/javascript';
             script.onload = function() {
-                Recaptcha.create('<?php echo $public_key ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']) ?>);
+                Recaptcha.create('<?php echo $public_key; ?>', 'ewz_recaptcha_div', <?php echo json_encode($attr['options']); ?>);
             };
-            script.src = '<?php echo $url_api ?>';
-            <?php if (isset($attr['options']['defer']) && $attr['options']['defer']): ?>script.defer = true;<?php endif ?>
-            <?php if (isset($attr['options']['async']) && $attr['options']['async']): ?>script.async = true;<?php endif ?>
+            script.src = '<?php echo $url_api; ?>';
+            <?php if (isset($attr['options']['defer']) && $attr['options']['defer']): ?>script.defer = true;<?php endif; ?>
+            <?php if (isset($attr['options']['async']) && $attr['options']['async']): ?>script.async = true;<?php endif; ?>
             document.getElementsByTagName('head')[0].appendChild(script);
         })();
         </script>
-    <?php endif ?>
-<?php endif ?>
+    <?php endif; ?>
+<?php endif; ?>
