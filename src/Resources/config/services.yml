@@ -76,21 +76,3 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: 'ewz_recaptcha.v3.true' }
 
-
-    ewz_recaptcha.widget_resolver:
-        class: EWZ\Bundle\RecaptchaBundle\Resolver\WidgetResolver
-        public: false
-        tags:
-            - { name: 'ewz_recaptcha.widget_resolver', alias: EWZ\Bundle\RecaptchaBundle\Resolver\WidgetResolver }
-
-    ewz_recaptcha.widget.v2:
-        class: EWZ\Bundle\RecaptchaBundle\Widget\WidgetV2
-        public: false
-        tags:
-            - { name: widget.form }
-
-    ewz_recaptcha.widget.v3:
-        class: EWZ\Bundle\RecaptchaBundle\Widget\WidgetV3
-        public: false
-        tags:
-            - { name: widget.form }
