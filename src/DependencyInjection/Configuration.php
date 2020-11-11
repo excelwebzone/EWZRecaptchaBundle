@@ -38,7 +38,7 @@ class Configuration implements ConfigurationInterface
 
                 ->integerNode('version')->min(2)->max(3)->defaultValue(2)->end()
                 ->booleanNode('hide_badge')->defaultValue(false)->end()
-                ->floatNode('score_threshhold')->defaultValue(0.5)->end()
+                ->floatNode('score_threshhold')->min(0.0)->max(1.0)->defaultValue(0.5)->end()
 
                 ->integerNode('timeout')->min(0)->defaultNull()->end()
                 ->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()

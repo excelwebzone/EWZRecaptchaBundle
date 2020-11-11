@@ -2,6 +2,8 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
+use EWZ\Bundle\RecaptchaBundle\DependencyInjection\CompilerPass\WidgetCompilerPass;
+use EWZ\Bundle\RecaptchaBundle\Resolver\WidgetResolver;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class EWZRecaptchaExtension extends Extension
 {
+
     /**
      * {@inheritdoc}
      */
@@ -28,12 +31,13 @@ class EWZRecaptchaExtension extends Extension
             $container->setParameter('ewz_recaptcha.'.$key, $value);
         }
 
-        $this->registerWidget($container);
+        $this->registerWidget($container, $config['version']);
 
         if (null !== $config['http_proxy']['host'] && null !== $config['http_proxy']['port']) {
             $recaptchaService = $container->findDefinition('ewz_recaptcha.recaptcha');
             $recaptchaService->replaceArgument(1, new Reference('ewz_recaptcha.extension.recaptcha.request_method.proxy_post'));
         }
+
     }
 
     /**
@@ -41,7 +45,7 @@ class EWZRecaptchaExtension extends Extension
      *
      * @param ContainerBuilder $container
      */
-    protected function registerWidget(ContainerBuilder $container)
+    protected function registerWidget(ContainerBuilder $container, int $version)
     {
         $templatingEngines = $container->hasParameter('templating.engines')
             ? $container->getParameter('templating.engines')
@@ -58,6 +62,9 @@ class EWZRecaptchaExtension extends Extension
 
         if (in_array('twig', $templatingEngines)) {
             $formResource = '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig';
+            if (3 === $version) {
+                $formResource = '@EWZRecaptcha/Form/v3/ewz_recaptcha_widget.html.twig';
+            }
 
             $container->setParameter('twig.form.resources', array_merge(
                 $this->getTwigFormResources($container),
