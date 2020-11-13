@@ -25,13 +25,6 @@ class Configuration implements ConfigurationInterface
             $rootNode = $treeBuilder->root('ewz_recaptcha');
         }
 
-        $treeBuilder2 = new TreeBuilder('service_definition');
-        $node = $treeBuilder2->getRootNode();
-        $node->prototype('array')
-            ->children()
-            ->scalarNode('service_name')->isRequired()->end()
-            ->end();
-
         $rootNode
             ->children()
                 ->scalarNode('public_key')->isRequired()->end()
