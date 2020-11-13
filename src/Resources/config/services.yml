@@ -59,6 +59,7 @@ services:
         public: true
         arguments:
             - '%ewz_recaptcha.public_key%'
+            - '%ewz_recaptcha.enabled%'
             - '%ewz_recaptcha.hide_badge%'
             - '%ewz_recaptcha.api_host%'
         tags:

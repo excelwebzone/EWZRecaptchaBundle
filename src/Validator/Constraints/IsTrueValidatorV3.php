@@ -91,7 +91,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
      * @param string $token
      * @return bool
      */
-    private function isTokenValid(string $token): bool
+    private function isTokenValid($token)
     {
         try {
             $remoteIp = $this->requestStack->getCurrentRequest()->getClientIp();

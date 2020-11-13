@@ -25,6 +25,13 @@ class Configuration implements ConfigurationInterface
             $rootNode = $treeBuilder->root('ewz_recaptcha');
         }
 
+        $treeBuilder2 = new TreeBuilder('service_definition');
+        $node = $treeBuilder2->getRootNode();
+        $node->prototype('array')
+            ->children()
+            ->scalarNode('service_name')->isRequired()->end()
+            ->end();
+
         $rootNode
             ->children()
                 ->scalarNode('public_key')->isRequired()->end()
@@ -46,6 +53,7 @@ class Configuration implements ConfigurationInterface
         ;
 
         $this->addHttpClientConfiguration($rootNode);
+        $this->addServiceDefinitionConfiguration($rootNode);
 
         return $treeBuilder;
     }
@@ -60,6 +68,26 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('host')->defaultValue(null)->end()
                         ->scalarNode('port')->defaultValue(null)->end()
                         ->scalarNode('auth')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node) {
+        $node
+            ->children()
+                ->arrayNode('service_definition')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('service_name')->isRequired()->end()
+                            ->arrayNode('options')
+                                ->children()
+                                    ->scalarNode('action_name')->end()
+                                    ->scalarNode('script_nonce_csp')->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

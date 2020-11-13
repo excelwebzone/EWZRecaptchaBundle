@@ -3,52 +3,39 @@
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EWZRecaptchaV3Type extends AbstractType
+class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
 {
-    /** 
-     * @var string 
-     */
-    private $publicKey;
 
-    /** 
-     * @var bool 
+    /**
+     * @var bool
      */
     private $hideBadge;
 
-    /** 
-     * @var string 
-     */
-    private $apiHost;
-    
     /**
-     * RecaptchaType constructor.
-     *
+     * EWZRecaptchaV3Type constructor.
      * @param string $publicKey
+     * @param bool $enabled
      * @param bool $hideBadge
      * @param string $apiHost
      */
-    public function __construct(string $publicKey, bool $hideBadge, string $apiHost = 'www.google.com')
+    public function __construct($publicKey, $enabled, $hideBadge, $apiHost = 'www.google.com')
     {
-        $this->publicKey = $publicKey;
+        parent::__construct($publicKey, $enabled, $apiHost);
         $this->hideBadge = $hideBadge;
-        $this->apiHost = $apiHost;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    protected function addCustomVars(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, [
-            'ewz_recaptcha_public_key' => $this->publicKey,
             'ewz_recaptcha_hide_badge' => $this->hideBadge,
-            'ewz_recaptcha_apihost' => $this->apiHost,
             'script_nonce_csp' => $options['script_nonce_csp'] ?? '',
             'action_name' => $options['action_name'] ?? '',
         ]);
@@ -62,9 +49,6 @@ class EWZRecaptchaV3Type extends AbstractType
         $resolver->setDefaults([
             'label' => false,
             'mapped' => false,
-            'constraints' => [
-                new IsTrueV3()
-            ],
             'validation_groups' => [ 'Default' ],
             'script_nonce_csp' => '',
             'action_name' => 'form',
@@ -80,14 +64,6 @@ class EWZRecaptchaV3Type extends AbstractType
     public function getParent(): string
     {
         return HiddenType::class;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'ewz_recaptcha';
     }
 
 }

@@ -1,14 +1,14 @@
 {% block ewz_recaptcha_widget %}
     {% apply spaceless %}
-        <script src="https://{{ form.vars.ewz_recaptcha_apihost }}/recaptcha/api.js?render={{ form.vars.ewz_recaptcha_public_key }}"></script>
+        <script src="{{ form.vars.ewz_recaptcha_apiuri }}?render={{ form.vars.public_key }}"></script>
 
         {% if form.vars.ewz_recaptcha_hide_badge %}
             <link rel="stylesheet" href="{{ asset('/bundles/ewz_recaptcha/css/recaptcha.css') }}">
         {% endif %}
 
-        <script {% if form.vars.script_nonce_csp is defined %}nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
+        <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
             grecaptcha.ready(function () {
-                grecaptcha.execute('{{ form.vars.ewz_recaptcha_public_key }}', { action: '{{ form.vars.action_name|default('form') }}' }).then(function (token) {
+                grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default('form') }}' }).then(function (token) {
                     var recaptchaResponse = document.getElementById('{{ id }}');
                     recaptchaResponse.value = token;
                 });
