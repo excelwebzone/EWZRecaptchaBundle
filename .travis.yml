@@ -54,6 +54,15 @@ matrix:
     - php: 7.4
       env: SYMFONY_VERSION=^5
 
+    - php: 8.0
+      env: SYMFONY_VERSION=^2.8
+    - php: 8.0
+      env: SYMFONY_VERSION=^3
+    - php: 8.0
+      env: SYMFONY_VERSION=^4
+    - php: 8.0
+      env: SYMFONY_VERSION=^5
+
 before_script:
   - |
     if [ "$SYMFONY_VERSION" != "" ]; then
