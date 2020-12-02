@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('service_definition')
-                    ->arrayPrototype()
+                    ->prototype('array')
                         ->children()
                             ->scalarNode('service_name')->isRequired()->end()
                             ->arrayNode('options')
