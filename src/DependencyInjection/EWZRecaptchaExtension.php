@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -43,9 +44,11 @@ class EWZRecaptchaExtension extends Extension
         }
 
         if (3 == $config['version']) {
-            $container->autowire('ewz_recaptcha.form_builder_factory', EWZRecaptchaV3FormBuilderFactory::class);
+            $container->register('ewz_recaptcha.form_builder_factory', EWZRecaptchaV3FormBuilderFactory::class)
+                ->addArgument(new Reference(FormFactoryInterface::class));
         } else {
-            $container->autowire('ewz_recaptcha.form_builder_factory', EWZRecaptchaV2FormBuilderFactory::class);
+            $container->register('ewz_recaptcha.form_builder_factory', EWZRecaptchaV2FormBuilderFactory::class)
+                ->addArgument(new Reference(FormFactoryInterface::class));
         }
         foreach($config['service_definition'] as $serviceDefinition) {
             $container->register('ewz_recaptcha.' . $serviceDefinition['service_name'], FormBuilderInterface::class)
