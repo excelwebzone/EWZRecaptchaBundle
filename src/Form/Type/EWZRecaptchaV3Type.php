@@ -36,8 +36,8 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     {
         $view->vars = array_replace($view->vars, [
             'ewz_recaptcha_hide_badge' => $this->hideBadge,
-            'script_nonce_csp' => $options['script_nonce_csp'] ?? '',
-            'action_name' => $options['action_name'] ?? '',
+            'script_nonce_csp' => isset($options['script_nonce_csp']) ? $options['script_nonce_csp'] : '',
+            'action_name' => isset($options['action_name']) ? $options['action_name'] : '',
         ]);
     }
 
