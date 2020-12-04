@@ -61,7 +61,7 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    public function getParent(): string
+    public function getParent()
     {
         return HiddenType::class;
     }
