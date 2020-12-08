@@ -3,7 +3,7 @@
         <script src="{{ form.vars.ewz_recaptcha_apiuri }}?render={{ form.vars.public_key }}"></script>
 
         {% if form.vars.ewz_recaptcha_hide_badge %}
-            <link rel="stylesheet" href="{{ asset('public/bundles/ewz_recaptcha/css/recaptcha.css') }}">
+            <link rel="stylesheet" href="{{ asset('/bundles/ewz_recaptcha/css/recaptcha.css') }}">
         {% endif %}
 
         <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
