@@ -68,6 +68,7 @@ abstract class AbstractEWZRecaptchaType extends AbstractType
         }
 
         $this->addCustomVars($view, $form, $options);
+
     }
 
     /**

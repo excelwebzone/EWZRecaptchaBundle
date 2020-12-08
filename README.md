@@ -32,16 +32,65 @@ $bundles = array(
 
 ### Step2: Configure the bundle's
 
+> **NOTE**: The configuration options differ between Version 2 and Version 3 of the reCAPTCHA system. Some of the previous options have no effect on Version 3.
+
 Add the following to your config file:
 
-**NOTE**: If you're using symfony 4, the config will be in `config/packages/ewz_recaptcha.yaml`. The local dev enviroment has its own config in `config/packages/dev/ewz_recaptcha.yaml`.
+> **NOTE**: If you're using symfony 4, the config will be in `config/packages/ewz_recaptcha.yaml`. The local dev enviroment has its own config in `config/packages/dev/ewz_recaptcha.yaml`.
+
+#### Main configuration for both v2 and v3
+
+The version setting determines which configuration options are available. Set the version corresponding to your Google reCAPTCHA settings (valid values: 2 or 3):
 
 ``` yaml
 # app/config/config.yml
 
 ewz_recaptcha:
+    // ...
+    version: 2
+```
+
+You can easily disable reCAPTCHA (for example in a local or test environment):
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    enabled: false
+```
+
+Enter the public and private keys here:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
     public_key:  here_is_your_public_key
     private_key: here_is_your_private_key
+
+```
+
+`www.google.com` is blocked in Mainland China, you can override the default server like this (See https://developers.google.com/recaptcha/docs/faq#can-i-use-recaptcha-globally for further information):
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    api_host: recaptcha.net
+```
+
+#### v2 only Configuration
+
+Sets the default locale:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
     # Not needed as "%kernel.default_locale%" is the default value for the locale key
     locale_key:  %kernel.default_locale%
 ```
@@ -59,17 +108,7 @@ ewz_recaptcha:
     locale_from_request: true
 ```
 
-You can easily disable reCAPTCHA (for example in a local or test environment):
-
-``` yaml
-# app/config/config.yml
-
-ewz_recaptcha:
-    // ...
-    enabled: false
-```
-
-Or even load reCAPTCHA using Ajax:
+You can load the reCAPTCHA using Ajax:
 
 ``` yaml
 # app/config/config.yml
@@ -78,17 +117,6 @@ ewz_recaptcha:
     // ...
     ajax: true
 ```
-
-`www.google.com` is blocked in Mainland China, you can override the default server like this:
-
-``` yaml
-# app/config/config.yml
-
-ewz_recaptcha:
-    // ...
-    api_host: recaptcha.net
-```
-
 You can add HTTP Proxy configuration:
 
 ``` yaml
@@ -101,7 +129,6 @@ ewz_recaptcha:
         port: 3128
         auth: proxy_username:proxy_password
 ```
-
 In case you have turned off the domain name checking on reCAPTCHA's end, you'll need to check the origin of the response by enabling the ``verify_host`` option:
 
 ``` yaml
@@ -131,9 +158,35 @@ return static function (ContainerConfigurator $configurator): void
 };
 ```
 
+#### v3 only Configuration
+
+For the v3 reCAPTCHA an information badge is shown. If you inform your users about using the reCAPTCHA on another way, you can hide it with the following option (see https://developers.google.com/recaptcha/docs/faq#hiding-badge for further information):
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    hide_badge: true
+```
+
+To modify the default threshold score of 0.5 set this option (see https://developers.google.com/recaptcha/docs/v3#interpreting_the_score for further information):
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    score_threshold: 0.6
+```
+
 Congratulations! You're ready!
 
 ## Basic Usage
+
+> **NOTE**: The basic usage differs between Version 2 and Version 3 of the reCAPTCHA system.
+
+### v2 Usage
 
 When creating a new form class add the following line to create the field:
 
@@ -276,7 +329,6 @@ public function buildForm(FormBuilder $builder, array $options)
     // ...
 ```
 
-
 The form template resource is now auto registered via an extension of the container.
 However, you can always implement your own custom form widget.
 
@@ -371,4 +423,159 @@ If you want to use a custom theme, put your chunk of code before setting the the
         'theme' : 'custom',
     },
 } }) }}
+```
+
+### v3 Usage
+
+When creating a new form class add the following line to create the field:
+
+``` php
+<?php
+
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', EWZRecaptchaV3Type::class);
+    // ...
+}
+```
+
+You can pass the action to reCAPTCHA with the "action_name" option (see https://developers.google.com/recaptcha/docs/v3#actions for further information)::
+
+``` php
+<?php
+
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', EWZRecaptchaType::class, array(
+        'action_name' => 'contact'
+    ));
+    // ...
+}
+```
+
+To validate the field use:
+
+``` php
+<?php
+
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints as Recaptcha;
+
+/**
+ * @Recaptcha\IsTrueV3
+ */
+public $recaptcha;
+```
+
+Another method would consist to pass the validation constraints as an options of your FormType. This way, your data class contains only meaningful properties.
+If we take the example from above, the buildForm method would look like this. You have to also set ```constraints```:
+
+``` php
+<?php
+
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
+
+public function buildForm(FormBuilder $builder, array $options)
+{
+    // ...
+    $builder->add('recaptcha', EWZRecaptchaV3Type::class, array(
+        'action_name' => 'contact',
+        'constraints' => array(
+            new IsTrueV3()
+        )
+    ));
+    // ...
+```
+
+## Advanced Usage
+
+It is possible to register reCAPTCHA form services. To accomplish this, enter the service definition as follows (in this example we did it in PHP):
+
+``` php
+<?php
+
+$ewzRecaptchaConfiguration = array();
+$ewzRecaptchaConfiguration['enabled'] = isset($_ENV['RECAPTCHA_PUBLIC'], $_ENV['RECAPTCHA_PRIVATE']);
+$ewzRecaptchaConfiguration['public_key'] = $_ENV['RECAPTCHA_PUBLIC'] ?? null;
+$ewzRecaptchaConfiguration['private_key'] = $_ENV['RECAPTCHA_PRIVATE'] ?? null;
+$ewzRecaptchaConfiguration['api_host'] = 'recaptcha.net';
+$ewzRecaptchaConfiguration['version'] = 3;
+
+$ewzRecaptchaConfiguration['service_definition'] = array();
+$ewzRecaptchaConfiguration['service_definition'][] = [
+    'service_name' => 'ContactRecaptchaService',
+    'options' => [
+        'action_name' => 'form'
+    ]
+];
+
+// Add more form services here
+
+// ...
+$container->loadFromExtension('ewz_recaptcha', $ewzRecaptchaConfiguration);
+// ...
+```
+
+Now the services are now accessible with ```ewz_recaptcha.[service_name]```. They can be registered to your form type class:
+
+``` php
+<?php
+
+namespace MyNamespace\DependencyInjection;
+
+use MyNamespace\Form\ContactType;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+
+class ContactFormExtension extends Extension
+{
+
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $container->register(ContactType::class)
+            ->addArgument(new Reference('ewz_recaptcha.ContactRecaptchaService'))
+            ->addTag('form.type');
+    }
+}
+// ...
+```
+
+The form type class itself uses the injected service this way: 
+
+``` php
+<?php
+
+namespace MyNamespace\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class ContactType extends AbstractType
+{
+    /**
+     * @var FormBuilderInterface
+     */
+    private $recaptcha;
+
+    public function __construct(?FormBuilderInterface $recaptcha)
+    {
+        $this->recaptcha = $recaptcha;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        // ...
+        if(null !== $this->recaptcha) {
+            $builder->add($this->recaptcha);
+        }
+        // ...
+    }
+
 ```

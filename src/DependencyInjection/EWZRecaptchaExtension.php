@@ -50,6 +50,7 @@ class EWZRecaptchaExtension extends Extension
             $container->register('ewz_recaptcha.form_builder_factory', EWZRecaptchaV2FormBuilderFactory::class)
                 ->addArgument(new Reference(FormFactoryInterface::class));
         }
+
         foreach($config['service_definition'] as $serviceDefinition) {
             $container->register('ewz_recaptcha.' . $serviceDefinition['service_name'], FormBuilderInterface::class)
                 ->setFactory(array(
