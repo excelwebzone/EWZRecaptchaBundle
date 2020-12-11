@@ -3,7 +3,6 @@
 namespace EWZ\Bundle\RecaptchaBundle\Form\Type;
 
 use EWZ\Bundle\RecaptchaBundle\Locale\LocaleResolver;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -15,22 +14,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EWZRecaptchaType extends AbstractEWZRecaptchaType
 {
     /**
-     * The reCAPTCHA JS server URL.
-     *
-     * @var string
-     */
-    protected $recaptchaApiJsServer;
-
-    /**
      * Use AJAX api?
      *
      * @var bool
      */
     protected $ajax;
 
-    /**
-     * @var LocaleResolver
-     */
+    /** @var LocaleResolver */
     protected $localeResolver;
 
     /**
@@ -42,32 +32,9 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
     public function __construct($publicKey, $enabled, $ajax, LocaleResolver $localeResolver, $apiHost = 'www.google.com')
     {
         parent::__construct($publicKey, $enabled, $apiHost);
+
         $this->ajax = $ajax;
         $this->localeResolver = $localeResolver;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function addCustomVars(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars = array_replace($view->vars, array(
-            'ewz_recaptcha_ajax' => $this->ajax,
-        ));
-
-        if (!isset($options['language'])) {
-            $options['language'] = $this->localeResolver->resolve();
-        }
-
-        if (!$this->ajax) {
-            $view->vars = array_replace($view->vars, array(
-                'url_challenge' => sprintf('%s?hl=%s', $this->recaptchaApiServer, $options['language'])
-            ));
-        } else {
-            $view->vars = array_replace($view->vars, array(
-                'url_api' => sprintf('//%s/recaptcha/api/js/recaptcha_ajax.js', $this->apiHost)
-            ));
-        }
     }
 
     /**
@@ -117,4 +84,27 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
         return isset($this->scripts[$key]) ? $this->scripts[$key] : null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function addCustomVars(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars = array_replace($view->vars, array(
+            'ewz_recaptcha_ajax' => $this->ajax,
+        ));
+
+        if (!isset($options['language'])) {
+            $options['language'] = $this->localeResolver->resolve();
+        }
+
+        if (!$this->ajax) {
+            $view->vars = array_replace($view->vars, array(
+                'url_challenge' => sprintf('%s?hl=%s', $this->recaptchaApiServer, $options['language']),
+            ));
+        } else {
+            $view->vars = array_replace($view->vars, array(
+                'url_api' => sprintf('//%s/recaptcha/api/js/recaptcha_ajax.js', $this->apiHost),
+            ));
+        }
+    }
 }

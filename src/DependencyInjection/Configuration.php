@@ -67,7 +67,8 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node) {
+    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node)
+    {
         $node
             ->children()
                 ->arrayNode('service_definition')

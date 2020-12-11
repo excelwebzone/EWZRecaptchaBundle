@@ -11,37 +11,28 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class IsTrueValidatorV3 extends ConstraintValidator
 {
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $enabled;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $secretKey;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     private $scoreThreshold;
 
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
 
     /**
      * ContainsRecaptchaValidator constructor.
-     * @param bool $enabled
-     * @param string $secretKey
-     * @param float $scoreThreshold
-     * @param RequestStack $requestStack
+     *
+     * @param bool            $enabled
+     * @param string          $secretKey
+     * @param float           $scoreThreshold
+     * @param RequestStack    $requestStack
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -59,7 +50,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
+     * @param mixed      $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
@@ -72,7 +63,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, IsTrueV3::class);
         }
 
-        if ($value === null) {
+        if (null === $value) {
             $value = '';
         }
 
@@ -89,6 +80,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
 
     /**
      * @param string $token
+     *
      * @return bool
      */
     private function isTokenValid($token)
@@ -106,9 +98,9 @@ class IsTrueValidatorV3 extends ConstraintValidator
             return $response->isSuccess();
         } catch (\Exception $exception) {
             $this->logger->error(
-                'reCAPTCHA validator error: ' . $exception->getMessage(),
+                'reCAPTCHA validator error: '.$exception->getMessage(),
                 [
-                    'exception' => $exception
+                    'exception' => $exception,
                 ]
             );
 

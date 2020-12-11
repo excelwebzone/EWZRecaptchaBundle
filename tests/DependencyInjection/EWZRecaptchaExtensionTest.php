@@ -13,9 +13,7 @@ use Symfony\Component\Yaml\Parser;
  */
 class EWZRecaptchaExtensionTest extends TestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
+    /** @var ContainerBuilder */
     private $configuration;
 
     protected function tearDown()

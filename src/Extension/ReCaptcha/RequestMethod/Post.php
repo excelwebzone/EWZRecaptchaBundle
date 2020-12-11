@@ -24,9 +24,7 @@ class Post implements RequestMethod
      */
     private $timeout;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $cache;
 
     /**

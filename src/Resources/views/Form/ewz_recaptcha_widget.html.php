@@ -42,7 +42,7 @@
             <div style="width: 302px; height: 352px;">
                 <div style="width: 302px; height: 352px; position: relative;">
                     <div style="width: 302px; height: 352px; position: absolute;">
-                        <iframe src="https://<?php echo $ewz_recaptcha_apihost; ?>/recaptcha/api/fallback?k=<?php echo $public_key; ?>"
+                        <iframe src="https://<?php echo $ewz_recaptcha_api_host; ?>/recaptcha/api/fallback?k=<?php echo $public_key; ?>"
                                 style="width: 302px; height:352px; border-style: none; overflow: hidden;"
                         >
                         </iframe>

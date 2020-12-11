@@ -9,19 +9,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class LocaleResolver
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $defaultLocale;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $useLocaleFromRequest;
 
-    /**
-     * @var RequestStack
-     */
+    /** @var RequestStack */
     private $requestStack;
 
     /**

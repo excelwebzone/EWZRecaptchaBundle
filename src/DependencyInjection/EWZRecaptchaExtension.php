@@ -2,15 +2,12 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\DependencyInjection;
 
-use EWZ\Bundle\RecaptchaBundle\DependencyInjection\CompilerPass\WidgetCompilerPass;
-use EWZ\Bundle\RecaptchaBundle\Resolver\WidgetResolver;
 use EWZ\Bundle\RecaptchaBundle\Factory\EWZRecaptchaV2FormBuilderFactory;
 use EWZ\Bundle\RecaptchaBundle\Factory\EWZRecaptchaV3FormBuilderFactory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -20,7 +17,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class EWZRecaptchaExtension extends Extension
 {
-
     /**
      * {@inheritdoc}
      */
@@ -51,14 +47,13 @@ class EWZRecaptchaExtension extends Extension
                 ->addArgument(new Reference(FormFactoryInterface::class));
         }
 
-        foreach($config['service_definition'] as $serviceDefinition) {
-            $container->register('ewz_recaptcha.' . $serviceDefinition['service_name'], FormBuilderInterface::class)
+        foreach ($config['service_definition'] as $serviceDefinition) {
+            $container->register('ewz_recaptcha.'.$serviceDefinition['service_name'], FormBuilderInterface::class)
                 ->setFactory(array(
                     new Reference('ewz_recaptcha.form_builder_factory'),
-                    'get'))
+                    'get', ))
                 ->setArguments([$serviceDefinition['options']]);
         }
-
     }
 
     /**

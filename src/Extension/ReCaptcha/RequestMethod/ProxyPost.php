@@ -31,9 +31,7 @@ class ProxyPost implements RequestMethod
      */
     private $timeout;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $cache;
 
     /**

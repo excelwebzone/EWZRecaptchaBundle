@@ -547,7 +547,7 @@ class ContactFormExtension extends Extension
 // ...
 ```
 
-The form type class itself uses the injected service this way: 
+The form type class itself uses the injected service this way:
 
 ``` php
 <?php
@@ -559,9 +559,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ContactType extends AbstractType
 {
-    /**
-     * @var FormBuilderInterface
-     */
+    /** @var FormBuilderInterface */
     private $recaptcha;
 
     public function __construct(?FormBuilderInterface $recaptcha)

@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class EWZRecaptchaV2FormBuilderFactory
 {
-
     private $builder;
 
     public function __construct(FormFactoryInterface $builder)
@@ -20,9 +19,8 @@ class EWZRecaptchaV2FormBuilderFactory
     {
         return $this->builder->createBuilder(EWZRecaptchaType::class, null, [
                 'constraints' => array(
-                    new IsTrue()
-                )
+                    new IsTrue(),
+                ),
             ]);
     }
-
 }
