@@ -33,23 +33,47 @@ services:
             - { name: validator.constraint_validator, alias: 'ewz_recaptcha.true' }
 
     ewz_recaptcha.recaptcha:
-      class: ReCaptcha\ReCaptcha
-      public: false
-      arguments:
-        - '%ewz_recaptcha.private_key%'
-        - '@ewz_recaptcha.extension.recaptcha.request_method.post'
+        class: ReCaptcha\ReCaptcha
+        public: false
+        arguments:
+            - '%ewz_recaptcha.private_key%'
+            - '@ewz_recaptcha.extension.recaptcha.request_method.post'
 
     ewz_recaptcha.extension.recaptcha.request_method.post:
-      class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\Post
-      public: false
-      arguments:
-        - 'https://%ewz_recaptcha.api_host%'
-        - '%ewz_recaptcha.timeout%'
+        class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\Post
+        public: false
+        arguments:
+            - 'https://%ewz_recaptcha.api_host%'
+            - '%ewz_recaptcha.timeout%'
 
     ewz_recaptcha.extension.recaptcha.request_method.proxy_post:
-      class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\ProxyPost
-      public: false
-      arguments:
-        - '%ewz_recaptcha.http_proxy%'
-        - 'https://%ewz_recaptcha.api_host%'
-        - '%ewz_recaptcha.timeout%'
+        class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\ProxyPost
+        public: false
+        arguments:
+            - '%ewz_recaptcha.http_proxy%'
+            - 'https://%ewz_recaptcha.api_host%'
+            - '%ewz_recaptcha.timeout%'
+
+    ewz_recaptcha.v3.form.type:
+        class: EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type
+        public: true
+        arguments:
+            - '%ewz_recaptcha.public_key%'
+            - '%ewz_recaptcha.enabled%'
+            - '%ewz_recaptcha.hide_badge%'
+            - '%ewz_recaptcha.api_host%'
+        tags:
+            - { name: form.type }
+
+    ewz_recaptcha.validator.v3.true:
+        class: EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueValidatorV3
+        public: true
+        arguments:
+            - '%ewz_recaptcha.enabled%'
+            - '%ewz_recaptcha.private_key%'
+            - '%ewz_recaptcha.score_threshold%'
+            - '@request_stack'
+            - '@logger'
+        tags:
+            - { name: validator.constraint_validator, alias: 'ewz_recaptcha.v3.true' }
+

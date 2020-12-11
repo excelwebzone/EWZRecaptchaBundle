@@ -35,12 +35,18 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
                 ->scalarNode('api_host')->defaultValue('www.google.com')->end()
                 ->booleanNode('locale_from_request')->defaultFalse()->end()
+
+                ->integerNode('version')->min(2)->max(3)->defaultValue(2)->end()
+                ->booleanNode('hide_badge')->defaultValue(false)->end()
+                ->floatNode('score_threshold')->min(0.0)->max(1.0)->defaultValue(0.5)->end()
+
                 ->integerNode('timeout')->min(0)->defaultNull()->end()
                 ->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()
             ->end()
         ;
 
         $this->addHttpClientConfiguration($rootNode);
+        $this->addServiceDefinitionConfiguration($rootNode);
 
         return $treeBuilder;
     }
@@ -55,6 +61,26 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('host')->defaultValue(null)->end()
                         ->scalarNode('port')->defaultValue(null)->end()
                         ->scalarNode('auth')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node) {
+        $node
+            ->children()
+                ->arrayNode('service_definition')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('service_name')->isRequired()->end()
+                            ->arrayNode('options')
+                                ->children()
+                                    ->scalarNode('action_name')->end()
+                                    ->scalarNode('script_nonce_csp')->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
