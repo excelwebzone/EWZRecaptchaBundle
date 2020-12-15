@@ -51,7 +51,8 @@ class EWZRecaptchaExtension extends Extension
             $container->register('ewz_recaptcha.'.$serviceDefinition['service_name'], FormBuilderInterface::class)
                 ->setFactory(array(
                     new Reference('ewz_recaptcha.form_builder_factory'),
-                    'get', ))
+                    'get',
+                ))
                 ->setArguments([$serviceDefinition['options']]);
         }
     }

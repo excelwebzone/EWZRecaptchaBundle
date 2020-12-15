@@ -20,9 +20,9 @@ class EWZRecaptchaV3FormBuilderFactory
         $constraint = array(
             'constraints' => array(
                 new IsTrueV3(),
-            ), );
-
-        return $this->builder->createBuilder(EWZRecaptchaV3Type::class, null, array_merge($options, $constraint)
+            ),
         );
+
+        return $this->builder->createBuilder(EWZRecaptchaV3Type::class, null, array_merge($options, $constraint));
     }
 }
