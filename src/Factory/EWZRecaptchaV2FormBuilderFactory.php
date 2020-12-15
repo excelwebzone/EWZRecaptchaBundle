@@ -15,12 +15,14 @@ class EWZRecaptchaV2FormBuilderFactory
         $this->builder = $builder;
     }
 
-    public function get()
+    public function get(array $options = array())
     {
-        return $this->builder->createBuilder(EWZRecaptchaType::class, null, [
-                'constraints' => array(
-                    new IsTrue(),
-                ),
-            ]);
+        $constraint = array(
+            'constraints' => array(
+                new IsTrue(),
+            ),
+        );
+
+        return $this->builder->createBuilder(EWZRecaptchaType::class, null, array_merge($options, $constraint));
     }
 }
