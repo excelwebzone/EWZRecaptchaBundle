@@ -1,7 +1,7 @@
 EWZRecaptchaBundle
 ==================
 
-[![Build Status](https://api.travis-ci.org/excelwebzone/EWZRecaptchaBundle.svg)](https://travis-ci.org/excelwebzone/EWZRecaptchaBundle)
+[![Actions Status](https://github.com/excelwebzone/EWZRecaptchaBundle/workflows/CI/badge.svg)](https://github.com/excelwebzone/EWZRecaptchaBundle/actions)
 
 This bundle provides easy reCAPTCHA form field for Symfony.
 

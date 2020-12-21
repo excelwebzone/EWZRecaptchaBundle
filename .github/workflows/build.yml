@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  ewz:
+    name: Symfony ${{ matrix.symfony }} (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [5.6, 7.0, 7.1, 7.2, 7.3, 7.4]
+        symfony: [2.8, 3.4, 4.4, 5.2]
+        exclude:
+          - php: 5.6
+            symfony: 4.4
+          - php: 7.0
+            symfony: 4.4
+          - php: 5.6
+            symfony: 5.2
+          - php: 7.0
+            symfony: 5.2
+          - php: 7.1
+            symfony: 5.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.php }}-composer-
+
+      - name: Install dependencies
+        run: |
+          composer require "symfony/form:^${{ matrix.symfony }}" --no-update
+          composer require "symfony/framework-bundle:^${{ matrix.symfony }}" --no-update
+          composer require "symfony/security-bundle:^${{ matrix.symfony }}" --no-update
+          composer require "symfony/validator:^${{ matrix.symfony }}" --no-update
+
+      - name: Install dependencies PHP
+        run: |
+          composer install
+
+      - name: Run tests
+        run: vendor/bin/phpunit
