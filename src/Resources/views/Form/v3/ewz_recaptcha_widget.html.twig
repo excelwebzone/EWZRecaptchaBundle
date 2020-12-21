@@ -1,5 +1,6 @@
 {% block ewz_recaptcha_widget %}
-  {% apply spaceless %}
+{% apply spaceless %}
+  {% if form.vars.ewz_recaptcha_enabled %}
     <script src="{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}"></script>
 
     {% if form.vars.ewz_recaptcha_hide_badge %}
@@ -17,5 +18,6 @@
 
     {{ form_label(form) }}
     {{ form_widget(form) }}
-  {% endapply %}
+  {% endif %}
+{% endapply %}
 {% endblock %}
