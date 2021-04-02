@@ -38,6 +38,11 @@ class EWZRecaptchaExtension extends Extension
             $recaptchaService->replaceArgument(1, new Reference('ewz_recaptcha.extension.recaptcha.request_method.proxy_post'));
         }
 
+        if (true === $config['use_curl']) {
+            $recaptchaService = $container->findDefinition('ewz_recaptcha.recaptcha');
+            $recaptchaService->replaceArgument(1, new Reference('ewz_recaptcha.extension.recaptcha.request_method.curl_post'));
+        }
+
         if (3 == $config['version']) {
             $container->register('ewz_recaptcha.form_builder_factory', EWZRecaptchaV3FormBuilderFactory::class)
                 ->addArgument(new Reference('form.factory'));

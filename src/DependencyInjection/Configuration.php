@@ -35,6 +35,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('locale_key')->defaultValue('%kernel.default_locale%')->end()
                 ->scalarNode('api_host')->defaultValue('www.google.com')->end()
                 ->booleanNode('locale_from_request')->defaultFalse()->end()
+                ->booleanNode('use_curl')->defaultFalse()->end()
+
 
                 ->integerNode('version')->min(2)->max(3)->defaultValue(2)->end()
                 ->booleanNode('hide_badge')->defaultValue(false)->end()

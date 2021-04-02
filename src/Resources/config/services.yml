@@ -46,6 +46,13 @@ services:
             - 'https://%ewz_recaptcha.api_host%'
             - '%ewz_recaptcha.timeout%'
 
+    ewz_recaptcha.extension.recaptcha.request_method.curl_post:
+      class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\CurlPost
+      public: false
+      arguments:
+        - 'https://%ewz_recaptcha.api_host%'
+        - '%ewz_recaptcha.timeout%'
+        -
     ewz_recaptcha.extension.recaptcha.request_method.proxy_post:
         class: EWZ\Bundle\RecaptchaBundle\Extension\ReCaptcha\RequestMethod\ProxyPost
         public: false
