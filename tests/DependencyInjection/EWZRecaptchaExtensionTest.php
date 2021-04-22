@@ -16,7 +16,7 @@ class EWZRecaptchaExtensionTest extends TestCase
     /** @var ContainerBuilder */
     private $configuration;
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->configuration = null;
     }

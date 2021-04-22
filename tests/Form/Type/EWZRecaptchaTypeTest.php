@@ -16,7 +16,7 @@ class EWZRecaptchaTypeTest extends TestCase
     /** @var EWZRecaptchaType */
     protected $type;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $requestStack = $this->createMock(RequestStack::class);
         $localeResolver = new LocaleResolver('de', false, $requestStack);
