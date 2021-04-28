@@ -91,7 +91,6 @@ class IsTrueValidatorV3 extends ConstraintValidator
             $recaptcha = new ReCaptcha($this->secretKey);
 
             $response = $recaptcha
-                ->setExpectedAction('form')
                 ->setScoreThreshold($this->scoreThreshold)
                 ->verify($token, $remoteIp);
 
