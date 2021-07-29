@@ -2,6 +2,10 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+/**
+ * @Annotation
+ * @Target("PROPERTY")
+ */
 class IsTrueV3 extends IsTrue
 {
     /**
