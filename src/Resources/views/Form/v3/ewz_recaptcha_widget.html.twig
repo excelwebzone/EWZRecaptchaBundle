@@ -1,19 +1,25 @@
 {% block ewz_recaptcha_widget %}
 {% apply spaceless %}
   {% if form.vars.ewz_recaptcha_enabled %}
-    <script src="{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}"></script>
-
     {% if form.vars.ewz_recaptcha_hide_badge %}
       <link rel="stylesheet" href="{{ asset('/bundles/ewz_recaptcha/css/recaptcha.css') }}">
     {% endif %}
 
     <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
-      grecaptcha.ready(function () {
-        grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default('form') }}' }).then(function (token) {
-          var recaptchaResponse = document.getElementById('{{ id }}');
-          recaptchaResponse.value = token;
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.onload = function() {
+        grecaptcha.ready(function () {
+          grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default('form') }}' }).then(function (token) {
+            var recaptchaResponse = document.getElementById('{{ id }}');
+            recaptchaResponse.value = token;
+          });
         });
-      });
+      };
+      script.src = '{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}';
+      {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
+      {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
+      document.getElementsByTagName('head')[0].appendChild(script);
     </script>
 
     {{ form_label(form) }}
