@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
 {
+    public const DEFAULT_ACTION_NAME = 'form';
+
     /** @var bool */
     private $hideBadge;
 

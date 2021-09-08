@@ -2,8 +2,10 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
 use Psr\Log\LoggerInterface;
 use ReCaptcha\ReCaptcha;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -87,11 +89,12 @@ class IsTrueValidatorV3 extends ConstraintValidator
     {
         try {
             $remoteIp = $this->requestStack->getCurrentRequest()->getClientIp();
+            $action = $this->getActionName();
 
             $recaptcha = new ReCaptcha($this->secretKey);
 
             $response = $recaptcha
-                ->setExpectedAction('form')
+                ->setExpectedAction($action)
                 ->setScoreThreshold($this->scoreThreshold)
                 ->verify($token, $remoteIp);
 
@@ -106,5 +109,17 @@ class IsTrueValidatorV3 extends ConstraintValidator
 
             return false;
         }
+    }
+
+    private function getActionName(): string
+    {
+        $object = $this->context->getObject();
+        $action = null;
+
+        if ($object instanceof FormInterface) {
+            $action = $object->getConfig()->getOption('action_name');
+        }
+
+        return $action ?: EWZRecaptchaV3Type::DEFAULT_ACTION_NAME;
     }
 }
