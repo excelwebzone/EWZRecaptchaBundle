@@ -94,10 +94,15 @@ class IsTrueValidator extends ConstraintValidator
             return;
         }
 
+        if (\is_callable([$this->requestStack, 'getMainRequest'])) {
+            $request = $this->requestStack->getMainRequest();   // symfony 5.3+
+        } else {
+            $request = $this->requestStack->getMasterRequest();
+        }
+
+        $remoteip = $request->getClientIp();
         // define variable for recaptcha check answer
-        $masterRequest = $this->requestStack->getMasterRequest();
-        $remoteip = $masterRequest->getClientIp();
-        $answer = $masterRequest->get('g-recaptcha-response');
+        $answer = $request->get('g-recaptcha-response');
 
         // Verify user response with Google
         $response = $this->recaptcha->verify($answer, $remoteip);
@@ -106,7 +111,7 @@ class IsTrueValidator extends ConstraintValidator
             $this->context->addViolation($constraint->message);
         }
         // Perform server side hostname check
-        elseif ($this->verifyHost && $response->getHostname() !== $masterRequest->getHost()) {
+        elseif ($this->verifyHost && $response->getHostname() !== $request->getHost()) {
             $this->context->addViolation($constraint->invalidHostMessage);
         }
     }
