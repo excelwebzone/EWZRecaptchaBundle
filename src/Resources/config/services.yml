@@ -70,7 +70,7 @@ services:
         public: true
         arguments:
             - '%ewz_recaptcha.enabled%'
-            - '%ewz_recaptcha.private_key%'
+            - '@ewz_recaptcha.recaptcha'
             - '%ewz_recaptcha.score_threshold%'
             - '@request_stack'
             - '@logger'

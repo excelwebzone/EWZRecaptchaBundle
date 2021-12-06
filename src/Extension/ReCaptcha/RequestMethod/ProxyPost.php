@@ -67,10 +67,11 @@ class ProxyPost implements RequestMethod
          * PHP 5.6.0 changed the way you specify the peer name for SSL context options.
          * Using "CN_name" will still work, but it will raise deprecated errors.
          */
+        $auth = !empty($this->httpProxy['auth']) ? sprintf('Proxy-Authorization: Basic %s', base64_encode($this->httpProxy['auth'])) : '';
         $peerKey = version_compare(PHP_VERSION, '5.6.0', '<') ? 'CN_name' : 'peer_name';
         $options = array(
             'http' => array(
-                'header' => "Content-type: application/x-www-form-urlencoded\r\n".sprintf('Proxy-Authorization: Basic %s', base64_encode($this->httpProxy['auth'])),
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n".$auth,
                 'method' => 'POST',
                 'content' => $params->toQueryString(),
                 // Force the peer to validate (not needed in 5.6.0+, but still works)
