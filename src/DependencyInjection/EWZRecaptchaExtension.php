@@ -19,7 +19,7 @@ class EWZRecaptchaExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -38,7 +38,7 @@ class EWZRecaptchaExtension extends Extension
             $recaptchaService->replaceArgument(1, new Reference('ewz_recaptcha.extension.recaptcha.request_method.proxy_post'));
         }
 
-        if (3 == $config['version']) {
+        if (3 === $config['version']) {
             $container->register('ewz_recaptcha.form_builder_factory', EWZRecaptchaV3FormBuilderFactory::class)
                 ->addArgument(new Reference('form.factory'));
         } else {
@@ -61,13 +61,13 @@ class EWZRecaptchaExtension extends Extension
      *
      * @param ContainerBuilder $container
      */
-    protected function registerWidget(ContainerBuilder $container, $version = 2)
+    protected function registerWidget(ContainerBuilder $container, int $version = 2): void
     {
         $templatingEngines = $container->hasParameter('templating.engines')
             ? $container->getParameter('templating.engines')
             : array('twig');
 
-        if (in_array('php', $templatingEngines)) {
+        if (in_array('php', $templatingEngines, true)) {
             $formResource = 'EWZRecaptchaBundle:Form';
 
             $container->setParameter('templating.helper.form.resources', array_merge(
@@ -76,7 +76,7 @@ class EWZRecaptchaExtension extends Extension
             ));
         }
 
-        if (in_array('twig', $templatingEngines)) {
+        if (in_array('twig', $templatingEngines, true)) {
             $formResource = '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig';
             if (3 === $version) {
                 $formResource = '@EWZRecaptcha/Form/v3/ewz_recaptcha_widget.html.twig';

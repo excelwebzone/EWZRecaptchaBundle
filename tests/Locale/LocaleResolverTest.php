@@ -12,7 +12,7 @@ class LocaleResolverTest extends TestCase
     /**
      * @test
      */
-    public function resolveWithLocaleFromRequest()
+    public function resolveWithLocaleFromRequest(): void
     {
         $request = $this->createMock(Request::class);
         $request->expects($this->once())->method('getLocale');
@@ -30,7 +30,7 @@ class LocaleResolverTest extends TestCase
     /**
      * @test
      */
-    public function resolveWithDefaultLocale()
+    public function resolveWithDefaultLocale(): void
     {
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack
