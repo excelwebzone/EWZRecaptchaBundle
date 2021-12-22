@@ -55,7 +55,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
      * @param mixed      $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$this->enabled) {
             return;
@@ -85,7 +85,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
      *
      * @return bool
      */
-    private function isTokenValid($token)
+    private function isTokenValid(string $token): bool
     {
         try {
             $remoteIp = $this->requestStack->getCurrentRequest()->getClientIp();
@@ -99,7 +99,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
                 ->verify($token, $remoteIp);
 
             return $response->isSuccess();
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             $this->logger->error(
                 'reCAPTCHA validator error: '.$exception->getMessage(),
                 [

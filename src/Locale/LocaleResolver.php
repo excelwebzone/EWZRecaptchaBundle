@@ -23,7 +23,7 @@ final class LocaleResolver
      * @param bool         $useLocaleFromRequest
      * @param RequestStack $requestStack
      */
-    public function __construct($defaultLocale, $useLocaleFromRequest, RequestStack $requestStack)
+    public function __construct(string $defaultLocale, bool $useLocaleFromRequest, RequestStack $requestStack)
     {
         $this->defaultLocale = $defaultLocale;
         $this->useLocaleFromRequest = $useLocaleFromRequest;
@@ -33,7 +33,7 @@ final class LocaleResolver
     /**
      * @return string The resolved locale key, depending on configuration
      */
-    public function resolve()
+    public function resolve(): string
     {
         return $this->useLocaleFromRequest
             ? $this->requestStack->getCurrentRequest()->getLocale()

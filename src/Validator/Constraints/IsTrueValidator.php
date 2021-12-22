@@ -62,11 +62,11 @@ class IsTrueValidator extends ConstraintValidator
      * @param array                              $trustedRoles
      */
     public function __construct(
-        $enabled,
+        bool $enabled,
         ReCaptcha $recaptcha,
         RequestStack $requestStack,
-        $verifyHost,
-        AuthorizationCheckerInterface $authorizationChecker = null,
+        bool $verifyHost,
+        ?AuthorizationCheckerInterface $authorizationChecker = null,
         array $trustedRoles = array())
     {
         $this->enabled = $enabled;
@@ -80,7 +80,7 @@ class IsTrueValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         // if recaptcha is disabled, always valid
         if (!$this->enabled) {

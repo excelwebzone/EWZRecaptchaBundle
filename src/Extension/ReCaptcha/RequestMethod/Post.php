@@ -33,7 +33,7 @@ class Post implements RequestMethod
      * @param string   $recaptchaVerifyServer
      * @param int|null $timeout
      */
-    public function __construct($recaptchaVerifyServer, $timeout)
+    public function __construct(string $recaptchaVerifyServer, ?int $timeout)
     {
         $this->recaptchaVerifyUrl = ($recaptchaVerifyServer ?: 'https://www.google.com').'/recaptcha/api/siteverify';
         $this->timeout = $timeout;
@@ -47,7 +47,7 @@ class Post implements RequestMethod
      *
      * @return string Body of the reCAPTCHA response
      */
-    public function submit(RequestParameters $params)
+    public function submit(RequestParameters $params): string
     {
         $cacheKey = $params->toQueryString();
         if (isset($this->cache[$cacheKey])) {

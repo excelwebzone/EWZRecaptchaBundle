@@ -11,7 +11,7 @@ class IsTrueV3 extends IsTrue
     /**
      * {@inheritdoc}
      */
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'ewz_recaptcha.v3.true';
     }
