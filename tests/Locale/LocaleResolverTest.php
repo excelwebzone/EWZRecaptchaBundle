@@ -12,10 +12,11 @@ class LocaleResolverTest extends TestCase
     /**
      * @test
      */
-    public function resolveWithLocaleFromRequest()
+    public function resolveWithLocaleFromRequest(): void
     {
+        $locale = 'locale';
         $request = $this->createMock(Request::class);
-        $request->expects($this->once())->method('getLocale');
+        $request->expects($this->once())->method('getLocale')->willReturn($locale);
 
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack
@@ -24,13 +25,13 @@ class LocaleResolverTest extends TestCase
             ->willReturn($request);
 
         $resolver = new LocaleResolver('foo', true, $requestStack);
-        $resolver->resolve();
+        self::assertSame($locale, $resolver->resolve());
     }
 
     /**
      * @test
      */
-    public function resolveWithDefaultLocale()
+    public function resolveWithDefaultLocale(): void
     {
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack

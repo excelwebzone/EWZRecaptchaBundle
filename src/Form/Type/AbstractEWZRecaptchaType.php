@@ -38,10 +38,10 @@ abstract class AbstractEWZRecaptchaType extends AbstractType
 
     /**
      * @param string $publicKey Recaptcha public key
-     * @param bool   $enabled   Recaptcha status
+     * @param bool $enabled   Recaptcha status
      * @param string $apiHost   Api host
      */
-    public function __construct($publicKey, $enabled, $apiHost = 'www.google.com')
+    public function __construct(string $publicKey, bool $enabled, string $apiHost = 'www.google.com')
     {
         $this->publicKey = $publicKey;
         $this->enabled = $enabled;
@@ -52,7 +52,7 @@ abstract class AbstractEWZRecaptchaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_enabled' => $this->enabled,
@@ -71,7 +71,7 @@ abstract class AbstractEWZRecaptchaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'ewz_recaptcha';
     }
@@ -81,7 +81,7 @@ abstract class AbstractEWZRecaptchaType extends AbstractType
      *
      * @return string The javascript source URL
      */
-    public function getPublicKey()
+    public function getPublicKey(): string
     {
         return $this->publicKey;
     }
@@ -91,10 +91,10 @@ abstract class AbstractEWZRecaptchaType extends AbstractType
      *
      * @return string The hostname for API
      */
-    public function getApiHost()
+    public function getApiHost(): string
     {
         return $this->apiHost;
     }
 
-    abstract protected function addCustomVars(FormView $view, FormInterface $form, array $options);
+    abstract protected function addCustomVars(FormView $view, FormInterface $form, array $options): void;
 }

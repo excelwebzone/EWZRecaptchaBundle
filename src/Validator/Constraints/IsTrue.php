@@ -25,7 +25,7 @@ class IsTrue extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'ewz_recaptcha.true';
     }

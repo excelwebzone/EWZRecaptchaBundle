@@ -41,7 +41,7 @@ class ProxyPost implements RequestMethod
      * @param string   $recaptchaVerifyServer
      * @param int|null $timeout
      */
-    public function __construct(array $httpProxy, $recaptchaVerifyServer, $timeout)
+    public function __construct(array $httpProxy, string $recaptchaVerifyServer, ?int $timeout)
     {
         $this->httpProxy = $httpProxy;
         $this->recaptchaVerifyUrl = ($recaptchaVerifyServer ?: 'https://www.google.com').'/recaptcha/api/siteverify';
@@ -56,7 +56,7 @@ class ProxyPost implements RequestMethod
      *
      * @return string Body of the reCAPTCHA response
      */
-    public function submit(RequestParameters $params)
+    public function submit(RequestParameters $params): string
     {
         $cacheKey = $params->toQueryString();
         if (isset($this->cache[$cacheKey])) {

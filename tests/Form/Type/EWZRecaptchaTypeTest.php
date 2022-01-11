@@ -26,7 +26,7 @@ class EWZRecaptchaTypeTest extends TestCase
     /**
      * @test
      */
-    public function buildView()
+    public function buildView(): void
     {
         $view = new FormView();
 
@@ -45,7 +45,7 @@ class EWZRecaptchaTypeTest extends TestCase
     /**
      * @test
      */
-    public function getParent()
+    public function getParent(): void
     {
         $this->assertSame(TextType::class, $this->type->getParent());
     }
@@ -53,7 +53,7 @@ class EWZRecaptchaTypeTest extends TestCase
     /**
      * @test
      */
-    public function getPublicKey()
+    public function getPublicKey(): void
     {
         $this->assertSame('key', $this->type->getPublicKey());
     }
@@ -61,7 +61,7 @@ class EWZRecaptchaTypeTest extends TestCase
     /**
      * @test
      */
-    public function configureOptions()
+    public function configureOptions(): void
     {
         $optionsResolver = new OptionsResolver();
 
@@ -96,7 +96,7 @@ class EWZRecaptchaTypeTest extends TestCase
     /**
      * @test
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): void
     {
         $this->assertEquals('ewz_recaptcha', $this->type->getBlockPrefix());
     }

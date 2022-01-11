@@ -18,11 +18,11 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
      * EWZRecaptchaV3Type constructor.
      *
      * @param string $publicKey
-     * @param bool   $enabled
+     * @param bool $enabled
      * @param bool   $hideBadge
      * @param string $apiHost
      */
-    public function __construct($publicKey, $enabled, $hideBadge, $apiHost = 'www.google.com')
+    public function __construct(string $publicKey, bool $enabled, bool $hideBadge, string $apiHost = 'www.google.com')
     {
         parent::__construct($publicKey, $enabled, $apiHost);
 
@@ -32,7 +32,7 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => false,
@@ -49,7 +49,7 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return HiddenType::class;
     }
@@ -57,12 +57,12 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    protected function addCustomVars(FormView $view, FormInterface $form, array $options)
+    protected function addCustomVars(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars = array_replace($view->vars, [
             'ewz_recaptcha_hide_badge' => $this->hideBadge,
-            'script_nonce_csp' => isset($options['script_nonce_csp']) ? $options['script_nonce_csp'] : '',
-            'action_name' => isset($options['action_name']) ? $options['action_name'] : '',
+            'script_nonce_csp' => $options['script_nonce_csp'] ?? '',
+            'action_name' => $options['action_name'] ?? '',
         ]);
     }
 }

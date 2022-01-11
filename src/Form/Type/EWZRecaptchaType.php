@@ -29,7 +29,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      * @param bool           $ajax           Ajax status
      * @param LocaleResolver $localeResolver
      */
-    public function __construct($publicKey, $enabled, $ajax, LocaleResolver $localeResolver, $apiHost = 'www.google.com')
+    public function __construct(string $publicKey, bool $enabled, bool $ajax, LocaleResolver $localeResolver, string $apiHost = 'www.google.com')
     {
         parent::__construct($publicKey, $enabled, $apiHost);
 
@@ -40,7 +40,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'compound' => false,
@@ -67,7 +67,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }
@@ -87,7 +87,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
     /**
      * {@inheritdoc}
      */
-    protected function addCustomVars(FormView $view, FormInterface $form, array $options)
+    protected function addCustomVars(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars = array_replace($view->vars, array(
             'ewz_recaptcha_ajax' => $this->ajax,

@@ -21,7 +21,7 @@ class EWZRecaptchaExtensionTest extends TestCase
         $this->configuration = null;
     }
 
-    public function testSimpleConfiguration()
+    public function testSimpleConfiguration(): void
     {
         $this->configuration = new ContainerBuilder();
         $loader = new EWZRecaptchaExtension();
@@ -57,7 +57,7 @@ class EWZRecaptchaExtensionTest extends TestCase
         );
     }
 
-    public function testSimpleV3Configuration()
+    public function testSimpleV3Configuration(): void
     {
         $this->configuration = new ContainerBuilder();
         $loader = new EWZRecaptchaExtension();
@@ -74,7 +74,7 @@ class EWZRecaptchaExtensionTest extends TestCase
 
     }
 
-    public function testFullConfiguration()
+    public function testFullConfiguration(): void
     {
         $this->configuration = new ContainerBuilder();
         $loader = new EWZRecaptchaExtension();
@@ -145,22 +145,22 @@ EOF;
         return $parser->parse($yaml);
     }
 
-    private function assertParameter($value, $key)
+    private function assertParameter($value, $key): void
     {
         $this->assertSame($value, $this->configuration->getParameter($key), sprintf('%s parameter is correct', $key));
     }
 
-    private function assertHasDefinition($id)
+    private function assertHasDefinition($id): void
     {
         $this->assertTrue(($this->configuration->hasDefinition($id) ?: $this->configuration->hasAlias($id)));
     }
 
-    private function assertNotHasDefinition($id)
+    private function assertNotHasDefinition($id): void
     {
         $this->assertFalse(($this->configuration->hasDefinition($id) ?: $this->configuration->hasAlias($id)));
     }
 
-    private function assertDefinitionHasReferenceArgument($id, $index, $expectedArgumentValue)
+    private function assertDefinitionHasReferenceArgument($id, $index, $expectedArgumentValue): void
     {
         $definition = $this->configuration->getDefinition($id);
         $argumentValue = $definition->getArgument($index);
