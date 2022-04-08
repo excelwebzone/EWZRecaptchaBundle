@@ -7,17 +7,24 @@
       <link rel="stylesheet" href="{{ asset('/bundles/ewzrecaptcha/css/recaptcha.css') }}">
     {% endif %}
 
-    <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
-      grecaptcha.ready(function () {
-        grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
-          var recaptchaResponse = document.getElementById('{{ id }}');
-          recaptchaResponse.value = token;
-        });
-      });
-    </script>
-
     {{ form_label(form) }}
     {{ form_widget(form) }}
+
+    <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
+      var grecaptchaInput = document.getElementById('{{ id }}');
+      grecaptchaInput.value = ''; // Always reset the value to get a brand new challenge
+      var grecaptchaForm = grecaptchaInput.form;
+      grecaptchaForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        grecaptcha.ready(function () {
+          grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
+            grecaptchaInput.value = token;
+            grecaptchaForm.submit();
+          });
+        });
+      }, false);
+    </script>
   {% endif %}
 {% endapply %}
 {% endblock %}
