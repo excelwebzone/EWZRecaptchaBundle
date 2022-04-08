@@ -70,8 +70,8 @@ services:
         public: true
         arguments:
             - '%ewz_recaptcha.enabled%'
-            - '%ewz_recaptcha.private_key%'
             - '%ewz_recaptcha.score_threshold%'
+            - '@ewz_recaptcha.recaptcha'
             - '@request_stack'
             - '@logger'
         tags:

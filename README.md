@@ -82,6 +82,19 @@ ewz_recaptcha:
     api_host: recaptcha.net
 ```
 
+You can add HTTP Proxy configuration:
+
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    http_proxy:
+        host: proxy.mycompany.com
+        port: 3128
+        auth: proxy_username:proxy_password
+```
+
 #### v2 only Configuration
 
 Sets the default locale:
@@ -117,18 +130,7 @@ ewz_recaptcha:
     // ...
     ajax: true
 ```
-You can add HTTP Proxy configuration:
 
-``` yaml
-# app/config/config.yml
-
-ewz_recaptcha:
-    // ...
-    http_proxy:
-        host: proxy.mycompany.com
-        port: 3128
-        auth: proxy_username:proxy_password
-```
 In case you have turned off the domain name checking on reCAPTCHA's end, you'll need to check the origin of the response by enabling the ``verify_host`` option:
 
 ``` yaml

@@ -32,21 +32,21 @@ class IsTrueValidatorV3 extends ConstraintValidator
      * ContainsRecaptchaValidator constructor.
      *
      * @param bool            $enabled
-     * @param string          $secretKey
      * @param float           $scoreThreshold
+     * @param ReCaptcha       $scoreThreshold
      * @param RequestStack    $requestStack
      * @param LoggerInterface $logger
      */
     public function __construct(
         bool $enabled,
-        string $secretKey,
         float $scoreThreshold,
+        ReCaptcha $reCaptcha,
         RequestStack $requestStack,
         LoggerInterface $logger
     ) {
         $this->enabled = $enabled;
-        $this->secretKey = $secretKey;
         $this->scoreThreshold = $scoreThreshold;
+        $this->reCaptcha = $reCaptcha;
         $this->requestStack = $requestStack;
         $this->logger = $logger;
     }
@@ -91,9 +91,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
             $remoteIp = $this->requestStack->getCurrentRequest()->getClientIp();
             $action = $this->getActionName();
 
-            $recaptcha = new ReCaptcha($this->secretKey);
-
-            $response = $recaptcha
+            $response = $this->reCaptcha
                 ->setExpectedAction($action)
                 ->setScoreThreshold($this->scoreThreshold)
                 ->verify($token, $remoteIp);
