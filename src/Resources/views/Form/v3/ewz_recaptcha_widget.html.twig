@@ -20,7 +20,7 @@
         grecaptcha.ready(function () {
           grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
             grecaptchaInput.value = token;
-            grecaptchaForm.submit();
+            HTMLFormElement.prototype.submit.call(grecaptchaForm);
           });
         });
       }, false);
