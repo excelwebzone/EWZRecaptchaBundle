@@ -24,7 +24,7 @@ class IsTrue extends Constraint
     }
 
     /**
-     * {@inheritdoc}
+     * @return string|string[]
      */
     public function getTargets()
     {
