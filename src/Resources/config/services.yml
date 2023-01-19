@@ -35,6 +35,7 @@ services:
     ewz_recaptcha.recaptcha:
         class: ReCaptcha\ReCaptcha
         public: false
+        lazy: true
         arguments:
             - '%ewz_recaptcha.private_key%'
             - '@ewz_recaptcha.extension.recaptcha.request_method.post'
