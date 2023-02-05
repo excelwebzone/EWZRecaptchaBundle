@@ -18,12 +18,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('ewz_recaptcha');
 
-        if (method_exists($treeBuilder, 'getRootNode')) {
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('ewz_recaptcha');
-        }
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
@@ -51,7 +46,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addHttpClientConfiguration(ArrayNodeDefinition $node)
+    private function addHttpClientConfiguration(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -67,7 +62,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node)
+    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node): void
     {
         $node
             ->children()

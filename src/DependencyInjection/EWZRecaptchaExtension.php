@@ -58,8 +58,6 @@ class EWZRecaptchaExtension extends Extension
 
     /**
      * Registers the form widget.
-     *
-     * @param ContainerBuilder $container
      */
     protected function registerWidget(ContainerBuilder $container, int $version = 2): void
     {

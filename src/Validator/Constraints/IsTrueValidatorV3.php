@@ -29,6 +29,11 @@ class IsTrueValidatorV3 extends ConstraintValidator
     private $logger;
 
     /**
+     * @var ReCaptcha
+     */
+    private $reCaptcha;
+
+    /**
      * ContainsRecaptchaValidator constructor.
      *
      * @param bool            $enabled
