@@ -17,7 +17,12 @@
 
         window['recaptchaOnloadCallback_{{ id }}_done'] = false;
         window['recaptchaOnloadCallback_{{ id }}'] = function() {
-          form.addEventListener('submit', function(e) {
+          addEventListener('submit', function(e) {
+            var element = document.querySelector('#{{ id }}');
+            var form = element.form;
+            if (e.target !== form) {
+              return
+            }
             if (!window['recaptchaOnloadCallback_{{ id }}_done']) {
               e.preventDefault(); // stop form submit
               e.stopPropagation(); // stop also events
@@ -25,6 +30,7 @@
                 element.value = token;
                 window['recaptchaOnloadCallback_{{ id }}_done'] = true;
                 form.querySelector('[type="submit"]').click(); // trigger also events
+                window['recaptchaOnloadCallback_{{ id }}_done'] = false;
               });
             }
           }, true) // execute before other submit listeners
