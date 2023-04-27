@@ -21,6 +21,9 @@ class IsTrueValidatorV3 extends ConstraintValidator
 
     /** @var float */
     private $scoreThreshold;
+    
+    /** @var ReCaptcha */
+    private $reCaptcha;
 
     /** @var RequestStack */
     private $requestStack;
