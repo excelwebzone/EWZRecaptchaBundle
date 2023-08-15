@@ -7,7 +7,6 @@
       <link rel="stylesheet" href="{{ asset('/bundles/ewzrecaptcha/css/recaptcha.css') }}">
     {% endif %}
 
-    {{ form_label(form) }}
     {{ form_widget(form) }}
 
     <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
