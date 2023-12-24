@@ -1,5 +1,5 @@
 {
-  "name": "excelwebzone/recaptcha-bundle",
+  "name": "svc/recaptcha-bundle",
   "description": "This bundle provides easy reCAPTCHA form field integration",
   "keywords": [
     "recaptcha"
@@ -42,5 +42,9 @@
     "symfony": {
       "allow-contrib": "true"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --testdox",
+    "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse src/ --level 5"
   }
 }
