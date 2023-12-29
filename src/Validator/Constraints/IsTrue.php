@@ -26,7 +26,7 @@ class IsTrue extends Constraint
     /**
      * @return string|string[]
      */
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return Constraint::PROPERTY_CONSTRAINT;
     }

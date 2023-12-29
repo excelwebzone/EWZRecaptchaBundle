@@ -18,10 +18,10 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      *
      * @var bool
      */
-    protected $ajax;
+    protected bool $ajax;
 
     /** @var LocaleResolver */
-    protected $localeResolver;
+    protected LocaleResolver $localeResolver;
 
     /**
      * @param string         $publicKey      Recaptcha public key
@@ -42,7 +42,8 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            [
             'compound' => false,
             'language' => $this->localeResolver->resolve(),
             'public_key' => null,
@@ -61,7 +62,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
                     'badge' => null,
                 ),
             ),
-        ));
+    ]);
     }
 
     /**
@@ -79,7 +80,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      *
      * @return string The javascript source URL
      */
-    public function getScriptURL($key)
+    public function getScriptURL(string $key): ?string
     {
         return isset($this->scripts[$key]) ? $this->scripts[$key] : null;
     }

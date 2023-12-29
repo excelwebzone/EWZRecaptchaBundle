@@ -12,7 +12,7 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     public const DEFAULT_ACTION_NAME = 'form';
 
     /** @var bool */
-    private $hideBadge;
+    private bool $hideBadge;
 
     /**
      * EWZRecaptchaV3Type constructor.
@@ -47,7 +47,8 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     }
 
     /**
-     * {@inheritdoc}
+     * 
+     * @return string
      */
     public function getParent(): string
     {

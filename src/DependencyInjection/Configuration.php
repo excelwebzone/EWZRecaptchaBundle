@@ -51,7 +51,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addHttpClientConfiguration(ArrayNodeDefinition $node)
+    private function addHttpClientConfiguration(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
@@ -67,7 +67,7 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node)
+    private function addServiceDefinitionConfiguration(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
