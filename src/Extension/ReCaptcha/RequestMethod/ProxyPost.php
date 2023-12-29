@@ -15,24 +15,24 @@ class ProxyPost implements RequestMethod
      *
      * @var array
      */
-    private array $httpProxy;
+    private $httpProxy;
 
     /**
      * The reCAPTCHA verify server URL.
      *
      * @var string
      */
-    private string $recaptchaVerifyUrl;
+    private $recaptchaVerifyUrl;
 
     /**
      * The timeout for the reCAPTCHA verification.
      *
      * @var int|null
      */
-    private ?int $timeout;
+    private $timeout;
 
     /** @var array */
-    private array $cache;
+    private $cache;
 
     /**
      * Constructor.

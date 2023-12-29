@@ -16,22 +16,22 @@ use function is_string;
 class IsTrueValidatorV3 extends ConstraintValidator
 {
     /** @var bool */
-    private bool $enabled;
+    private $enabled;
 
     /** @var string */
-    private string $secretKey;
+    private $secretKey;
 
     /** @var float */
-    private float $scoreThreshold;
+    private $scoreThreshold;
     
     /** @var ReCaptcha */
-    private ReCaptcha $reCaptcha;
+    private $reCaptcha;
 
     /** @var RequestStack */
-    private RequestStack $requestStack;
+    private $requestStack;
 
     /** @var LoggerInterface */
-    private LoggerInterface $logger;
+    private $logger;
 
     /**
      * ContainsRecaptchaValidator constructor.

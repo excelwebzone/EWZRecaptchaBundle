@@ -15,17 +15,17 @@ class Post implements RequestMethod
      *
      * @var string
      */
-    private string $recaptchaVerifyUrl;
+    private $recaptchaVerifyUrl;
 
     /**
      * The timeout for the reCAPTCHA verification.
      *
      * @var int|null
      */
-    private ?int $timeout;
+    private $timeout;
 
     /** @var array */
-    private array $cache;
+    private $cache;
 
     /**
      * Constructor.

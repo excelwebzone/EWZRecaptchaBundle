@@ -18,10 +18,10 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      *
      * @var bool
      */
-    protected bool $ajax;
+    protected $ajax;
 
     /** @var LocaleResolver */
-    protected LocaleResolver $localeResolver;
+    protected $localeResolver;
 
     /**
      * @param string         $publicKey      Recaptcha public key
@@ -66,7 +66,8 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
     }
 
     /**
-     * {@inheritdoc}
+     * 
+     * @return string
      */
     public function getParent(): string
     {

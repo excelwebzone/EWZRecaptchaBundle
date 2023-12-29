@@ -2,11 +2,13 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+use Attribute;
+
 /**
  * @Annotation
  * @Target("PROPERTY")
  */
-#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::IS_REPEATABLE)]
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 class IsTrueV3 extends IsTrue
 {
     /**

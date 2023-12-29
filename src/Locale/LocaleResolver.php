@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class LocaleResolver
 {
     /** @var string */
-    private string $defaultLocale;
+    private $defaultLocale;
 
     /** @var bool */
-    private bool $useLocaleFromRequest;
+    private $useLocaleFromRequest;
 
     /** @var RequestStack */
-    private RequestStack $requestStack;
+    private $requestStack;
 
     /**
      * @param string       $defaultLocale

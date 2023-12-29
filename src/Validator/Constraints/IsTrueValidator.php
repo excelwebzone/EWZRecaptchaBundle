@@ -24,14 +24,14 @@ class IsTrueValidator extends ConstraintValidator
      *
      * @var ReCaptcha
      */
-    protected ReCaptcha $recaptcha;
+    protected $recaptcha;
 
     /**
      * Request Stack.
      *
      * @var RequestStack
      */
-    protected RequestStack $requestStack;
+    protected $requestStack;
 
     /**
      * Enable serverside host check.
@@ -44,14 +44,14 @@ class IsTrueValidator extends ConstraintValidator
      * 
      * @var AuthorizationChecker|null
      */
-    protected ?AuthorizationCheckerInterface $authorizationChecker;
+    protected $authorizationChecker;
 
     /**
      * Trusted Roles.
      *
      * @var array
      */
-    protected array $trustedRoles;
+    protected $trustedRoles;
 
     /**
      * @param bool                               $enabled
