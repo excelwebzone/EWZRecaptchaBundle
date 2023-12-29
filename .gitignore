@@ -5,4 +5,4 @@
 phpunit.xml
 vendor/
 composer.lock
-/nbproject/private/
+/nbproject/
