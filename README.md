@@ -4,6 +4,10 @@ EWZRecaptchaBundle
 [![Actions Status](https://github.com/excelwebzone/EWZRecaptchaBundle/workflows/CI/badge.svg)](https://github.com/excelwebzone/EWZRecaptchaBundle/actions)
 
 This bundle provides easy reCAPTCHA form field for Symfony.
+This is a fork of excelwebzone/EWZRecaptchaBundle compliant with Symfony 7.0 requirements.
+
+## Changelog
+29-12-2023: This fork fix some minor bugs of the original bundle.
 
 ## Installation
 
