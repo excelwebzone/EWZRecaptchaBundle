@@ -1,17 +1,17 @@
 {
-  "name": "excelwebzone/recaptcha-bundle",
-  "description": "This bundle provides easy reCAPTCHA form field integration",
+  "name": "snipershady/recaptcha-bundle",
+  "description": "This bundle provides easy reCAPTCHA form field integration. This is a fork of excelwebzone/EWZRecaptchaBundle but updated to symfony 7.0 requirementss",
   "keywords": [
     "recaptcha"
   ],
-  "homepage": "https://github.com/excelwebzone/EWZRecaptchaBundle",
+  "homepage": "https://github.com/snipershady/EWZRecaptchaBundle",
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [
     {
-      "name": "Michael H. Arieli",
-      "email": "excelwebzone@gmail.com",
-      "homepage": "http://excelwebzone.com/"
+      "name": "Stefano Perrini",
+      "email": "snipershady@gmail.com",
+      "homepage": "https://www.spinfo.it"
     }
   ],
   "require": {
