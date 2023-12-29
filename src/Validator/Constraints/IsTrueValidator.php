@@ -41,11 +41,10 @@ class IsTrueValidator extends ConstraintValidator
     protected bool $verifyHost;
 
     /**
-     * Authorization Checker.
-     *
-     * @var AuthorizationChecker
+     * 
+     * @var AuthorizationChecker|null
      */
-    protected AuthorizationChecker $authorizationChecker;
+    protected ?AuthorizationCheckerInterface $authorizationChecker;
 
     /**
      * Trusted Roles.
