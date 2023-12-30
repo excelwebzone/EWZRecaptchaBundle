@@ -72,8 +72,8 @@ class ProxyPost implements RequestMethod
          * Using "CN_name" will still work, but it will raise deprecated errors.
          */
         $peerKey = version_compare(PHP_VERSION, '5.6.0', '<') ? 'CN_name' : 'peer_name';
-        $options = array(
-            'http' => array(
+        $options = [
+            'http' => [
                 'header' => sprintf("Content-type: application/x-www-form-urlencoded\r\n%s", $proxyAuth),
                 'method' => 'POST',
                 'content' => $params->toQueryString(),
@@ -85,8 +85,8 @@ class ProxyPost implements RequestMethod
                 'proxy' => sprintf('tcp://%s:%s', $this->httpProxy['host'], $this->httpProxy['port']),
                 // While this is a non-standard request format, some proxy servers require it.
                 'request_fulluri' => true,
-            ),
-        );
+                ],
+            ];
         if (null !== $this->timeout) {
             $options['http']['timeout'] = $this->timeout;
         }

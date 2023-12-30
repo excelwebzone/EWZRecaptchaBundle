@@ -67,7 +67,7 @@ class EWZRecaptchaExtension extends Extension
             ? $container->getParameter('templating.engines')
             : array('twig');
 
-        if (in_array('php', $templatingEngines, true)) {
+        if (is_array($templatingEngines) && in_array('php', $templatingEngines, true)) {
             $formResource = 'EWZRecaptchaBundle:Form';
 
             $container->setParameter('templating.helper.form.resources', array_merge(
@@ -89,7 +89,12 @@ class EWZRecaptchaExtension extends Extension
         }
     }
 
-    private function getTwigFormResources(ContainerBuilder $container)
+    /**
+     * 
+     * @param ContainerBuilder $container
+     * @return array|string|false
+     */
+    private function getTwigFormResources(ContainerBuilder $container): array|string|false
     {
         if (!$container->hasParameter('twig.form.resources')) {
             return [];

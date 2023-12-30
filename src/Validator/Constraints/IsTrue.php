@@ -2,13 +2,14 @@
 
 namespace EWZ\Bundle\RecaptchaBundle\Validator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * @Annotation
  * @Target("PROPERTY")
  */
-#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::IS_REPEATABLE)]
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 class IsTrue extends Constraint
 {
     public $message = 'This value is not a valid captcha.';
@@ -26,7 +27,7 @@ class IsTrue extends Constraint
     /**
      * @return string|string[]
      */
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return Constraint::PROPERTY_CONSTRAINT;
     }

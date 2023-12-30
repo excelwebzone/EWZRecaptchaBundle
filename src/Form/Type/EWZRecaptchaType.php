@@ -42,7 +42,8 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            [
             'compound' => false,
             'language' => $this->localeResolver->resolve(),
             'public_key' => null,
@@ -61,11 +62,12 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
                     'badge' => null,
                 ),
             ),
-        ));
+    ]);
     }
 
     /**
-     * {@inheritdoc}
+     * 
+     * @return string
      */
     public function getParent(): string
     {
@@ -79,7 +81,7 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      *
      * @return string The javascript source URL
      */
-    public function getScriptURL($key)
+    public function getScriptURL(string $key): ?string
     {
         return isset($this->scripts[$key]) ? $this->scripts[$key] : null;
     }
@@ -89,22 +91,22 @@ class EWZRecaptchaType extends AbstractEWZRecaptchaType
      */
     protected function addCustomVars(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars = array_replace($view->vars, array(
+        $view->vars = array_replace($view->vars, [
             'ewz_recaptcha_ajax' => $this->ajax,
-        ));
+    ]);
 
         if (!isset($options['language'])) {
             $options['language'] = $this->localeResolver->resolve();
         }
 
         if (!$this->ajax) {
-            $view->vars = array_replace($view->vars, array(
+            $view->vars = array_replace($view->vars, [
                 'url_challenge' => sprintf('%s?hl=%s', $this->recaptchaApiServer, $options['language']),
-            ));
+        ]);
         } else {
-            $view->vars = array_replace($view->vars, array(
+            $view->vars = array_replace($view->vars, [
                 'url_api' => sprintf('//%s/recaptcha/api/js/recaptcha_ajax.js', $this->apiHost),
-            ));
+        ]);
         }
     }
 }

@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Throwable;
+use function is_string;
 
 class IsTrueValidatorV3 extends ConstraintValidator
 {
@@ -36,7 +38,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
      *
      * @param bool            $enabled
      * @param float           $scoreThreshold
-     * @param ReCaptcha       $scoreThreshold
+     * @param ReCaptcha       $reCaptcha
      * @param RequestStack    $requestStack
      * @param LoggerInterface $logger
      */
@@ -100,7 +102,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
                 ->verify($token, $remoteIp);
 
             return $response->isSuccess();
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->logger->error(
                 'reCAPTCHA validator error: '.$exception->getMessage(),
                 [

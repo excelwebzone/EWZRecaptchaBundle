@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use function is_callable;
 
 class IsTrueValidator extends ConstraintValidator
 {
@@ -16,7 +17,7 @@ class IsTrueValidator extends ConstraintValidator
      *
      * @var bool
      */
-    protected $enabled;
+    protected bool $enabled;
 
     /**
      * Recaptcha.
@@ -37,12 +38,11 @@ class IsTrueValidator extends ConstraintValidator
      *
      * @var bool
      */
-    protected $verifyHost;
+    protected bool $verifyHost;
 
     /**
-     * Authorization Checker.
-     *
-     * @var AuthorizationChecker
+     * 
+     * @var AuthorizationChecker|null
      */
     protected $authorizationChecker;
 
@@ -67,7 +67,7 @@ class IsTrueValidator extends ConstraintValidator
         RequestStack $requestStack,
         bool $verifyHost,
         ?AuthorizationCheckerInterface $authorizationChecker = null,
-        array $trustedRoles = array())
+        array $trustedRoles = [])
     {
         $this->enabled = $enabled;
         $this->recaptcha = $recaptcha;
@@ -94,7 +94,7 @@ class IsTrueValidator extends ConstraintValidator
             return;
         }
 
-        if (\is_callable([$this->requestStack, 'getMainRequest'])) {
+        if (is_callable([$this->requestStack, 'getMainRequest'])) {
             $request = $this->requestStack->getMainRequest();   // symfony 5.3+
         } else {
             $request = $this->requestStack->getMasterRequest();

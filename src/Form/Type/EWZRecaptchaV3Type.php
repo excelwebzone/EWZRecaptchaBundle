@@ -47,7 +47,8 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     }
 
     /**
-     * {@inheritdoc}
+     * 
+     * @return string
      */
     public function getParent(): string
     {
