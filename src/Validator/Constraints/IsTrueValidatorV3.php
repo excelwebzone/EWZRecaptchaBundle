@@ -60,7 +60,7 @@ class IsTrueValidatorV3 extends ConstraintValidator
      * @param mixed      $value
      * @param Constraint $constraint
      */
-    public function validate(mixed $value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$this->enabled) {
             return;

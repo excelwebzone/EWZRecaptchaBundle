@@ -67,7 +67,7 @@ class IsTrueValidator extends ConstraintValidator
         RequestStack $requestStack,
         bool $verifyHost,
         ?AuthorizationCheckerInterface $authorizationChecker = null,
-        array $trustedRoles = array())
+        array $trustedRoles = [])
     {
         $this->enabled = $enabled;
         $this->recaptcha = $recaptcha;

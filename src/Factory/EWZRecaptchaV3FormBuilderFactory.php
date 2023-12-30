@@ -16,7 +16,7 @@ class EWZRecaptchaV3FormBuilderFactory
         $this->builder = $builder;
     }
 
-    public function get(array $options = array()) :FormBuilderInterface
+    public function get(array $options = []) :FormBuilderInterface
     {
         $constraint = [
             'constraints' => [
