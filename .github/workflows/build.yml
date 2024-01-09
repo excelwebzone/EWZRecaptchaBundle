@@ -14,13 +14,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.1, 7.2, 7.3, 7.4, 8.0, 8.1]
-        symfony: [2.8, 3.4, 4.4, 5.2, 6.0]
+        php: [7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2]
+        symfony: [2.8, 3.4, 4.4, 5.2, 6.0, 7.0]
         exclude:
+          # Symfony 5 requires PHP >= 7.2
           - php: 7.1
             symfony: 5.2
-          - php: 8.0
-            symfony: 3.4
+          # Symfony 6 requires PHP >= 8.0
           - php: 7.1
             symfony: 6.0
           - php: 7.2
@@ -29,9 +29,22 @@ jobs:
             symfony: 6.0
           - php: 7.4
             symfony: 6.0
+          # Symfony 7 requires PHP >= 8.2
+          - php: 7.1
+            symfony: 7.0
+          - php: 7.2
+            symfony: 7.0
+          - php: 7.3
+            symfony: 7.0
+          - php: 7.4
+            symfony: 7.0
+          - php: 8.0
+            symfony: 7.0
+          - php: 8.1
+            symfony: 7.0
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -44,7 +57,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
