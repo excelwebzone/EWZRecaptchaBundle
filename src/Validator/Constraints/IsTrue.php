@@ -24,9 +24,9 @@ class IsTrue extends Constraint
     }
 
     /**
-     * @return string|string[]
+     * {@inheritdoc}
      */
-    public function getTargets()
+    public function getTargets(): string
     {
         return Constraint::PROPERTY_CONSTRAINT;
     }
