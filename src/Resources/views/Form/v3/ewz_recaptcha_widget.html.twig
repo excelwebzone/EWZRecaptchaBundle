@@ -1,7 +1,9 @@
 {% block ewz_recaptcha_widget %}
 {% apply spaceless %}
   {% if form.vars.ewz_recaptcha_enabled %}
-    <script src="{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}"></script>
+    {% if form.vars.ewz_external_recaptcha_assets %}
+      <script src="{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}"></script>
+    {% endif %}
 
     {% if form.vars.ewz_recaptcha_hide_badge %}
       <link rel="stylesheet" href="{{ asset('/bundles/ewzrecaptcha/css/recaptcha.css') }}">
@@ -15,6 +17,18 @@
       var grecaptchaForm = grecaptchaInput.form;
       grecaptchaForm.addEventListener('submit', function (e) {
         e.preventDefault();
+
+        {% if form.vars.ewz_external_recaptcha_assets %}
+        if (!Object.hasOwn(window, "grecaptcha")) {
+          console.error('Recaptcha not found');
+
+          {% if form.vars.external_recaptcha_assets_missing_message is not null %}
+            alert({{ form.vars.external_recaptcha_assets_missing_message|trans }});
+
+          {% endif %}
+          return;
+        }
+        {% endif %}
 
         grecaptcha.ready(function () {
           grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
