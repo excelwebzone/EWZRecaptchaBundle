@@ -102,7 +102,7 @@ class IsTrueValidator extends ConstraintValidator
 
         $remoteip = $request->getClientIp();
         // define variable for recaptcha check answer
-        $answer = $request->get('g-recaptcha-response');
+        $answer = $request->get('g-recaptcha-response', $value);
 
         // Verify user response with Google
         $response = $this->recaptcha->verify($answer, $remoteip);
