@@ -42,6 +42,8 @@ class Configuration implements ConfigurationInterface
 
                 ->integerNode('timeout')->min(0)->defaultNull()->end()
                 ->arrayNode('trusted_roles')->prototype('scalar')->treatNullLike(array())->end()
+                ->booleanNode('external_recaptcha_assets')->defaultTrue()->end()
+                ->scalarNode('external_recaptcha_assets_missing_message')->defaultNull()->end()
             ->end()
         ;
 

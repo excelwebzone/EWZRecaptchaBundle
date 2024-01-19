@@ -13,6 +13,11 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
 
     /** @var bool */
     private $hideBadge;
+    /** @var bool */
+    private $externalRecaptcha;
+
+    /** @var string|null */
+    private $externalRecaptchaMissingMessage;
 
     /**
      * EWZRecaptchaV3Type constructor.
@@ -20,13 +25,16 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
      * @param string $publicKey
      * @param bool $enabled
      * @param bool   $hideBadge
+     * @param bool   $externalRecaptcha
      * @param string $apiHost
      */
-    public function __construct(string $publicKey, bool $enabled, bool $hideBadge, string $apiHost = 'www.google.com')
+    public function __construct(string $publicKey, bool $enabled, bool $hideBadge, bool $externalRecaptcha, ?string $externalRecaptchaMissingMessage, string $apiHost = 'www.google.com')
     {
         parent::__construct($publicKey, $enabled, $apiHost);
 
         $this->hideBadge = $hideBadge;
+        $this->externalRecaptcha = $externalRecaptcha;
+        $this->externalRecaptchaMissingMessage = $externalRecaptchaMissingMessage;
     }
 
     /**
@@ -61,6 +69,8 @@ class EWZRecaptchaV3Type extends AbstractEWZRecaptchaType
     {
         $view->vars = array_replace($view->vars, [
             'ewz_recaptcha_hide_badge' => $this->hideBadge,
+            'ewz_external_recaptcha_assets' => $this->externalRecaptcha,
+            'external_recaptcha_assets_missing_message' => $this->externalRecaptchaMissingMessage,
             'script_nonce_csp' => $options['script_nonce_csp'] ?? '',
             'action_name' => $options['action_name'] ?? '',
         ]);

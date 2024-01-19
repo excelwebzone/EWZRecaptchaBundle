@@ -62,6 +62,7 @@ services:
             - '%ewz_recaptcha.public_key%'
             - '%ewz_recaptcha.enabled%'
             - '%ewz_recaptcha.hide_badge%'
+            - '%ewz_recaptcha.external_recaptcha_assets%'
             - '%ewz_recaptcha.api_host%'
         tags:
             - { name: form.type }
