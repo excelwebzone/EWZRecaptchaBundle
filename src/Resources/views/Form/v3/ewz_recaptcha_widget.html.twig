@@ -29,7 +29,11 @@
               grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
                 element.value = token;
                 window['recaptchaOnloadCallback_{{ id }}_done'] = true;
-                form.querySelector('[type="submit"]').click(); // trigger also events
+                if (e.submitter) {
+                  e.submitter.click(); // trigger also events
+                } else {
+                  form.submit();
+                }
                 window['recaptchaOnloadCallback_{{ id }}_done'] = false;
               });
             }
