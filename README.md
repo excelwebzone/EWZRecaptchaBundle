@@ -182,6 +182,16 @@ ewz_recaptcha:
     score_threshold: 0.6
 ```
 
+To disable loading recaptcha script from external source (most often for GDPR)
+``` yaml
+# app/config/config.yml
+
+ewz_recaptcha:
+    // ...
+    external_recaptcha_assets: true
+    external_recaptcha_assets_missing_message: ~
+```
+
 Congratulations! You're ready!
 
 ## Basic Usage

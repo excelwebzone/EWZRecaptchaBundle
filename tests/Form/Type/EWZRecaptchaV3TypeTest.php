@@ -19,7 +19,7 @@ class EWZRecaptchaV3TypeTest extends TestCase
     protected function setUp(): void
     {
         $requestStack = $this->createMock(RequestStack::class);
-        $this->type = new EWZRecaptchaV3Type('key', true, true, 'www.google.com');
+        $this->type = new EWZRecaptchaV3Type('key', true, true, true, null, 'www.google.com');
     }
 
     /**
