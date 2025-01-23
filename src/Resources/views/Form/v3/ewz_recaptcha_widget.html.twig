@@ -1,7 +1,5 @@
 {% block ewz_recaptcha_widget %}
   {% if form.vars.ewz_recaptcha_enabled %}
-    <script src="{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}"></script>
-
     {% if form.vars.ewz_recaptcha_hide_badge %}
       <link rel="stylesheet" href="{{ asset('/bundles/ewzrecaptcha/css/recaptcha.css') }}">
     {% endif %}
@@ -9,19 +7,66 @@
     {{ form_widget(form) }}
 
     <script{% if form.vars.script_nonce_csp is defined and form.vars.script_nonce_csp is not same as('') %} nonce="{{ form.vars.script_nonce_csp }}"{% endif %}>
-      var grecaptchaInput = document.getElementById('{{ id }}');
-      grecaptchaInput.value = ''; // Always reset the value to get a brand new challenge
-      var grecaptchaForm = grecaptchaInput.form;
-      grecaptchaForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+      (function(){
+        var element = document.querySelector('#{{ id }}');
+        var form = element.form;
 
-        grecaptcha.ready(function () {
-          grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
-            grecaptchaInput.value = token;
-            HTMLFormElement.prototype.submit.call(grecaptchaForm);
-          });
-        });
-      }, false);
+        // recaptcha callback for this form
+
+        window['recaptchaOnloadCallback_{{ id }}_done'] = false;
+        window['recaptchaOnloadCallback_{{ id }}'] = function() {
+          addEventListener('submit', function(e) {
+            var element = document.querySelector('#{{ id }}');
+            var form = element.form;
+            if (e.target !== form) {
+              return
+            }
+            if (!window['recaptchaOnloadCallback_{{ id }}_done']) {
+              e.preventDefault(); // stop form submit
+              e.stopPropagation(); // stop also events
+              grecaptcha.execute('{{ form.vars.public_key }}', { action: '{{ form.vars.action_name|default(constant('EWZ\\Bundle\\RecaptchaBundle\\Form\\Type\\EWZRecaptchaV3Type::DEFAULT_ACTION_NAME')) }}' }).then(function (token) {
+                element.value = token;
+                window['recaptchaOnloadCallback_{{ id }}_done'] = true;
+                if (e.submitter) {
+                  e.submitter.click(); // trigger also events
+                } else {
+                  form.submit();
+                }
+                window['recaptchaOnloadCallback_{{ id }}_done'] = false;
+              });
+            }
+          }, true) // execute before other submit listeners
+        };
+
+        // recaptcha load for this form
+
+        var loadJS = function () {
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = '{{ form.vars.ewz_recaptcha_api_uri }}?render={{ form.vars.public_key }}&onload=recaptchaOnloadCallback_{{ id }}';
+          script.async = true;
+          document.body.appendChild(script);
+        };
+
+        // detect when form is visible
+
+        if (!('IntersectionObserver' in window) ||
+            !('IntersectionObserverEntry' in window) ||
+            !('intersectionRatio' in window.IntersectionObserverEntry.prototype)) {
+          loadJS();
+        } else {
+          var observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+              if (entry.intersectionRatio > 0) {
+                observer.disconnect();
+                loadJS();
+              }
+            });
+          }, { root: null });
+
+          observer.observe(form);
+        }
+      })();
     </script>
   {% endif %}
 {% endblock %}
